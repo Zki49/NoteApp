@@ -12,7 +12,7 @@ class User extends Model{
 
     public function persist() : User {
         if(self::get_member_by_pseudo($this->pseudo))
-            self::execute("UPDATE Members SET password=:password, picture_path=:picture, profile=:profile WHERE pseudo=:pseudo ", 
+            self::execute("UPDATE Members SET password=:password WHERE pseudo=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
             self::execute("INSERT INTO Members(pseudo,password,profile,picture_path) VALUES(:pseudo,:password,:profile,:picture_path)", 
@@ -26,7 +26,7 @@ class User extends Model{
         if ($query->rowCount() == 0) {
             return false;
         } else {
-            return new User($data["pseudo"], $data["password"], $data["profile"], $data["picture_path"]);
+            return new User($data["mail"], $data["hashed_password"]);
         }
     }
 
