@@ -17,7 +17,7 @@ public function index(): void{
         if (empty($errors)) {
             echo" $pseudo";
             $this->log_user(User::get_member_by_pseudo($pseudo));
-            (new View("test"))->show(); 
+            (new View("signup"))->show(); 
         }
     }
     (new View("login"))->show(["pseudo" => $pseudo, "password" => $password, "errors" => $errors]);
