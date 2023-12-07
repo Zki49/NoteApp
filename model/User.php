@@ -35,7 +35,7 @@ class User extends Model{
         $data = $query->fetchAll();
         $results = [];
         foreach ($data as $row) {
-            $results[] = new User($row["pseudo"], $row["password"], $row["profile"], $row["picture_path"]);
+            $results[] = new User($row["pseudo"], $row["password"]);
         }
         return $results;
     }
