@@ -5,18 +5,20 @@ class User extends Model{
 
 
     
-    public function __construct(public string $pseudo, public string $hashed_password) {
+    public function __construct(public string $pseudo, public string $hashed_password,public string $fullname,public string  $role,private int $id) {
+        
+    
 
     }
 
 
     public function persist() : User {
         if(self::get_member_by_pseudo($this->pseudo))
-            self::execute("UPDATE Members SET password=:password WHERE pseudo=:pseudo ", 
+            self::execute("UPDATE users SET password=:password WHERE pseudo=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
-            self::execute("INSERT INTO Members(pseudo,password,profile,picture_path) VALUES(:pseudo,:password,:profile,:picture_path)", 
-                          ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
+            self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
+                          ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
         return $this;
     }
 
@@ -26,7 +28,7 @@ class User extends Model{
         if ($query->rowCount() == 0) {
             return false;
         } else {
-            return new User($data["mail"], $data["hashed_password"]);
+            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"],$data["id"]);
         }
     }
 
@@ -35,7 +37,7 @@ class User extends Model{
         $data = $query->fetchAll();
         $results = [];
         foreach ($data as $row) {
-            $results[] = new User($row["pseudo"], $row["password"]);
+            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"],$row["id"]);
         }
         return $results;
     }

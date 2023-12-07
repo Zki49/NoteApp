@@ -7,6 +7,9 @@ abstract class Note  extends Model{
                                  DateTime $editedat,bool $pinned,bool $archived) {
        
     }
+
+    abstract public static function get_note_by_id(int $id):Note;
+    abstract public static function get_notes_by_user(User $user):Note;
     
 
 }
