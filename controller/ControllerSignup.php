@@ -18,7 +18,7 @@ class ControllerSignup extends Controller{
             $password = $_POST['password'];
             $confirmPassword = $_POST['confirm_password'];
 
-            $member = new User($pseudo, Tools::my_hash($password));
+            $member = new User($pseudo, Tools::my_hash($password),$pseudo,"user");
             $errors = User::validate_unicity_mail($mail);
             $errors = User::validate_unicity($pseudo);
             $errors = array_merge($errors, $member->validate());

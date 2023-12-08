@@ -5,18 +5,18 @@ class User extends Model{
 
 
     
-    public function __construct(public string $pseudo, public string $hashed_password) {
+    public function __construct(public string $pseudo, public string $hashed_password , private string $fullname, private string $role) {
 
     }
 
 
     public function persist() : User {
         if(self::get_member_by_pseudo($this->pseudo))
-            self::execute("UPDATE Users SET password=:password WHERE pseudo=:pseudo ", 
+            self::execute("UPDATE users SET password=:password WHERE mail=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
-            self::execute("INSERT INTO Users(pseudo,password) VALUES(:pseudo,:password)", 
-                          ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
+            self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
+                          ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
         return $this;
     }
 
@@ -26,7 +26,7 @@ class User extends Model{
         if ($query->rowCount() == 0) {
             return false;
         } else {
-            return new User($data["mail"], $data["hashed_password"]);
+            return new User($data["mail"], $data["hashed_password"], $data["fullname"] , $data["role"]);
         }
     }
 
