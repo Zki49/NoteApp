@@ -5,13 +5,13 @@ class User extends Model{
 
 
     
-    public function __construct(private string $pseudo, private string $hashed_password,private string $fullname,private string  $role,private int $id) {
+    public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role,private int $id) {
         
     
 
     }
     public function get_mail() : string{
-        return $this->pseudo;
+        return $this->mail;
     }
     public function get_fullnam() : string{
         return $this->fullname;
@@ -19,17 +19,17 @@ class User extends Model{
 
 
     public function persist() : User {
-        if(self::get_user_by_pseudo($this->pseudo))
-            self::execute("UPDATE users SET password=:password WHERE pseudo=:pseudo ", 
-                          [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
+        if(self::get_user_by_mail($this->mail))
+            self::execute("UPDATE users SET password=:password WHERE mail=:pseudo ", 
+                          [ "pseudo"=>$this->mail, "password"=>$this->hashed_password]);
         else
             self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
-                          ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
+                          ["pseudo"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
         return $this;
     }
 
-    public static function get_user_by_pseudo(string $pseudo) : User|false {
-        $query = self::execute("SELECT * FROM users where mail = :pseudo", ["pseudo"=>$pseudo]);
+    public static function get_user_by_mail(string $mail) : User|false {
+        $query = self::execute("SELECT * FROM users where mail = :mail", ["mail"=>$mail]);
         $data = $query->fetch(); // un seul résultat au maximum
         if ($query->rowCount() == 0) {
             return false;
@@ -77,7 +77,7 @@ class User extends Model{
     
     public static function validate_unicity(string $pseudo) : array {
         $errors = [];
-        $member = self::get_user_by_pseudo($pseudo);
+        $member = self::get_user_by_mail($pseudo);
         if ($member) {
             $errors[] = "This user already exists.";
         } 
@@ -90,7 +90,7 @@ class User extends Model{
 
     public function validate() : array {
         $errors = [];
-        if (!strlen($this->pseudo) > 0) {
+        if (!strlen($this->fullname) > 0) {
             $errors[] = "Pseudo is required.";
         } if (!(strlen($this->pseudo) >= 3 && strlen($this->pseudo) <= 16)) {
             $errors[] = "Pseudo length must be between 3 and 16.";
@@ -102,7 +102,7 @@ class User extends Model{
     
     public static function validate_login(string $pseudo, string $password) : array {
         $errors = [];
-        $member = User::get_user_by_pseudo($pseudo);
+        $member = User::get_user_by_mail($pseudo);
         if ($member) {
             if (!self::check_password($password, $member->hashed_password)) {
                 $errors[] = "Wrong password. Please try again.";
@@ -113,20 +113,6 @@ class User extends Model{
         return $errors;
     }
 
-    public static function validate_photo(array $file) : array {
-        $errors = [];
-        if (isset($file['name']) && $file['name'] != '') {
-            if ($file['error'] == 0) {
-                $valid_types = ["image/gif", "image/jpeg", "image/png"];
-                if (!in_array($_FILES['image']['type'], $valid_types)) {
-                    $errors[] = "Unsupported image format : gif, jpg/jpeg or png.";
-                }
-            } else {
-                $errors[] = "Error while uploading file.";
-            }
-        }
-        return $errors;
-    }
 }
 
 ?>
