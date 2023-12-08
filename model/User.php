@@ -12,16 +12,26 @@ class User extends Model{
 
     public function persist() : User {
         if(self::get_member_by_pseudo($this->pseudo))
-            self::execute("UPDATE Members SET password=:password WHERE pseudo=:pseudo ", 
+            self::execute("UPDATE Users SET password=:password WHERE pseudo=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
-            self::execute("INSERT INTO Members(pseudo,password,profile,picture_path) VALUES(:pseudo,:password,:profile,:picture_path)", 
+            self::execute("INSERT INTO Users(pseudo,password) VALUES(:pseudo,:password)", 
                           ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         return $this;
     }
 
     public static function get_member_by_pseudo(string $pseudo) : User|false {
         $query = self::execute("SELECT * FROM users where mail = :pseudo", ["pseudo"=>$pseudo]);
+        $data = $query->fetch(); // un seul résultat au maximum
+        if ($query->rowCount() == 0) {
+            return false;
+        } else {
+            return new User($data["mail"], $data["hashed_password"]);
+        }
+    }
+
+    public static function get_member_by_mail(string $mail) : User|false {
+        $query = self::execute("SELECT * FROM users where mail = :mail", ["mail"=>$mail]);
         $data = $query->fetch(); // un seul résultat au maximum
         if ($query->rowCount() == 0) {
             return false;
@@ -61,6 +71,15 @@ class User extends Model{
     public static function validate_unicity(string $pseudo) : array {
         $errors = [];
         $member = self::get_member_by_pseudo($pseudo);
+        if ($member) {
+            $errors[] = "This user already exists.";
+        } 
+        return $errors;
+    }
+
+    public static function validate_unicity_mail(string $mail) : array {
+        $errors = [];
+        $member = self::get_member_by_mail($mail);
         if ($member) {
             $errors[] = "This user already exists.";
         } 
