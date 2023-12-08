@@ -19,7 +19,7 @@ class User extends Model{
 
 
     public function persist() : User {
-        if(self::get_member_by_pseudo($this->pseudo))
+        if(self::get_user_by_pseudo($this->pseudo))
             self::execute("UPDATE users SET password=:password WHERE pseudo=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
@@ -77,7 +77,7 @@ class User extends Model{
     
     public static function validate_unicity(string $pseudo) : array {
         $errors = [];
-        $member = self::get_member_by_pseudo($pseudo);
+        $member = self::get_user_by_pseudo($pseudo);
         if ($member) {
             $errors[] = "This user already exists.";
         } 
@@ -102,7 +102,7 @@ class User extends Model{
     
     public static function validate_login(string $pseudo, string $password) : array {
         $errors = [];
-        $member = User::get_member_by_pseudo($pseudo);
+        $member = User::get_user_by_pseudo($pseudo);
         if ($member) {
             if (!self::check_password($password, $member->hashed_password)) {
                 $errors[] = "Wrong password. Please try again.";
