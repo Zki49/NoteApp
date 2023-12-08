@@ -14,7 +14,7 @@ class User extends Model{
 
     public function persist() : User {
         if(self::get_member_by_pseudo($this->pseudo))
-            self::execute("UPDATE users SET password=:password WHERE pseudo=:pseudo ", 
+            self::execute("UPDATE users SET password=:password WHERE mail=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
             self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
