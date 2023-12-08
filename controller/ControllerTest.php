@@ -6,7 +6,7 @@ class ControllerTest extends Controller {
         if ($this->user_logged()) {
             $user=  $this->get_user_or_redirect();
 
-            (new View("test"))->show(["pseudo"=>"$user->pseudo"]);
+            (new View("test"))->show(["user"=>$user]);
             
         } else {
             (new View("login"))->show(["pseudo"=>"","password"=>"","errors"=>""]);

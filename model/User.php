@@ -5,10 +5,16 @@ class User extends Model{
 
 
     
-    public function __construct(public string $pseudo, public string $hashed_password,public string $fullname,public string  $role,private int $id) {
+    public function __construct(private string $pseudo, private string $hashed_password,private string $fullname,private string  $role,private int $id) {
         
     
 
+    }
+    public function get_mail() : string{
+        return $this->pseudo;
+    }
+    public function get_fullnam() : string{
+        return $this->fullname;
     }
 
 
@@ -22,8 +28,17 @@ class User extends Model{
         return $this;
     }
 
-    public static function get_member_by_pseudo(string $pseudo) : User|false {
+    public static function get_user_by_pseudo(string $pseudo) : User|false {
         $query = self::execute("SELECT * FROM users where mail = :pseudo", ["pseudo"=>$pseudo]);
+        $data = $query->fetch(); // un seul résultat au maximum
+        if ($query->rowCount() == 0) {
+            return false;
+        } else {
+            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"],$data["id"]);
+        }
+    }
+    public static function get_user_by_id(int $id) : User|false {
+        $query = self::execute("SELECT * FROM users where id = :id", ["id"=>$id]);
         $data = $query->fetch(); // un seul résultat au maximum
         if ($query->rowCount() == 0) {
             return false;

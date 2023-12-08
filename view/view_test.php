@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST)){
-   $pseudo=$_POST["pseudo"];
-    echo"$pseudo";
+   $user=$_POST["user"];
+    echo"$user->get_mail()";
 }
 echo"<h1>cc<h1>";
 
