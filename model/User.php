@@ -3,14 +3,7 @@ require_once "framework/Model.php";
 
 class User extends Model{
 
-
-    
-<<<<<<< HEAD
     public function __construct(public string $pseudo, public string $hashed_password, private string $fullname, private string $role) {
-=======
-    public function __construct(public string $pseudo, public string $hashed_password , private string $fullname, private string $role) {
->>>>>>> b85bf74ece5055fa916e20fcb6d3e13d42c28026
-
     }
 
 
@@ -19,13 +12,10 @@ class User extends Model{
             self::execute("UPDATE users SET password=:password WHERE mail=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
-<<<<<<< HEAD
+
         self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
         ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
-=======
-            self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
-                          ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
->>>>>>> b85bf74ece5055fa916e20fcb6d3e13d42c28026
+
         return $this;
     }
 
@@ -95,22 +85,18 @@ class User extends Model{
         return $errors;
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b85bf74ece5055fa916e20fcb6d3e13d42c28026
     private static function check_password(string $clear_password, string $hash) : bool {
         return $hash === Tools::my_hash($clear_password);
     }
 
     public function validate() : array {
         $errors = [];
-        if (!strlen($this->pseudo) > 0) {
-            $errors[] = "Pseudo is required.";
-        } if (!(strlen($this->pseudo) >= 3 && strlen($this->pseudo) <= 16)) {
-            $errors[] = "Pseudo length must be between 3 and 16.";
-        } if (!(preg_match("/^[a-zA-Z][a-zA-Z0-9]*$/", $this->pseudo))) {
-            $errors[] = "Pseudo must start by a letter and must contain only letters and numbers.";
+        if (!strlen($this->fullname) > 0) {
+            $errors[] = "Name is required.";
+        } if (!(strlen($this->fullname) >= 3 && strlen($this->fullname) <= 16)) {
+            $errors[] = "Name length must be between 3 and 16.";
+        } if (!(preg_match("/^[a-zA-Z][a-zA-Z0-9]*$/", $this->fullname))) {
+            $errors[] = "Name must start by a letter and must contain only letters and numbers.";
         }
         return $errors;
     }

@@ -18,18 +18,16 @@
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">Email:</label>
-<<<<<<< HEAD
-                    <input type="email" class="form-control" id="email" name="email" value="<?= $mail ?>" required>
-=======
-                    <input type="email" class="form-control" id="email" name="email" value="<?= $mail ?> "required>
->>>>>>> b85bf74ece5055fa916e20fcb6d3e13d42c28026
+                    <input type="email" class="form-control" id="email" name="email" value="<?= $email ?> "required>
+
                 </div>
 
                 <!-- Name -->
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" value="<?= $pseudo ?>"required>
+                    <input type="text" class="form-control" id="name" name="name" value="<?= $name ?>"required>
                 </div>
+            
 
                 <!-- Password -->
                 <div class="form-group">
@@ -40,7 +38,7 @@
                 <!-- Confirm Password -->
                 <div class="form-group">
                     <label for="confirm_password">Confirm Password:</label>
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="<?= $confirmPassword ?>" required>
+                    <input type="text" class="form-control" id="confirm_password" name="confirm_password" value="<?= $confirm_password ?>" required>
                 </div>
 
                 <!-- Submit Button -->

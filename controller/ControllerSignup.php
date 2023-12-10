@@ -6,25 +6,25 @@ require_once "model/User.php";
 class ControllerSignup extends Controller{
 
     public function index() : void {
-        $mail = '';
-        $pseudo = '';
+        $email = '';
+        $name = '';
         $password = '';
-        $confirmPassword = '';
+        $confirm_password = '';
         $errors = [];
 
 
         if (isset($_POST['email']) && isset($_POST['name']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
-            $mail = $_POST['email'];
-            $pseudo = $_POST['name'];
+            $email = $_POST['email'];
+            $name = $_POST['name'];
             $password = $_POST['password'];
-            $confirmPassword = $_POST['confirm_password'];
+            $confirm_password = $_POST['confirm_password'];
 
 
-            $member = new User($pseudo, Tools::my_hash($password),$pseudo,"user");
-            $errors = User::validate_unicity_mail($mail);
-            $errors = User::validate_unicity($pseudo);
+            $member = new User($email, Tools::my_hash($password),$name,"user");
+            $errors = User::validate_unicity_mail($email);
+            $errors = User::validate_unicity($name);
             $errors = array_merge($errors, $member->validate());
-            $errors = array_merge($errors, User::validate_passwords($password, $confirmPassword));
+            $errors = array_merge($errors, User::validate_passwords($password, $confirm_password));
 
             if (count($errors) == 0) { 
                 $member->persist(); //sauve l'utilisateur
@@ -32,7 +32,7 @@ class ControllerSignup extends Controller{
                 $this->log_user($member, "Test" );
             }            
         }
-        (new View("signup"))->show(["mail" => $mail,"pseudo" => $pseudo, "password" => $password,"confirmPassword" =>$confirmPassword ,"errors" => $errors]);   
+        (new View("signup"))->show(["email" => $email,"name" => $name, "password" => $password,"confirm_password" =>$confirm_password ,"errors" => $errors]);   
     }
 }
 ?>
