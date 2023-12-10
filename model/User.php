@@ -5,7 +5,11 @@ class User extends Model{
 
 
     
+<<<<<<< HEAD
     public function __construct(public string $pseudo, public string $hashed_password, private string $fullname, private string $role) {
+=======
+    public function __construct(public string $pseudo, public string $hashed_password , private string $fullname, private string $role) {
+>>>>>>> b85bf74ece5055fa916e20fcb6d3e13d42c28026
 
     }
 
@@ -15,8 +19,13 @@ class User extends Model{
             self::execute("UPDATE users SET password=:password WHERE mail=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
+<<<<<<< HEAD
         self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
         ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
+=======
+            self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
+                          ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
+>>>>>>> b85bf74ece5055fa916e20fcb6d3e13d42c28026
         return $this;
     }
 
@@ -86,7 +95,10 @@ class User extends Model{
         return $errors;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b85bf74ece5055fa916e20fcb6d3e13d42c28026
     private static function check_password(string $clear_password, string $hash) : bool {
         return $hash === Tools::my_hash($clear_password);
     }

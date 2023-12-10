@@ -12,11 +12,13 @@ class ControllerSignup extends Controller{
         $confirmPassword = '';
         $errors = [];
 
-        if (isset($_POST['mail']) && isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['confirmPassword'])) {
-            $mail = $_POST['mail'];
-            $pseudo = $_POST['pseudo'];
+
+        if (isset($_POST['email']) && isset($_POST['name']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
+            $mail = $_POST['email'];
+            $pseudo = $_POST['name'];
             $password = $_POST['password'];
-            $confirmPassword = $_POST['confirmPassword'];
+            $confirmPassword = $_POST['confirm_password'];
+
 
             $member = new User($pseudo, Tools::my_hash($password),$pseudo,"user");
             $errors = User::validate_unicity_mail($mail);
@@ -26,7 +28,8 @@ class ControllerSignup extends Controller{
 
             if (count($errors) == 0) { 
                 $member->persist(); //sauve l'utilisateur
-                $this->log_user($member,"test");
+
+                $this->log_user($member, "Test" );
             }            
         }
         (new View("signup"))->show(["mail" => $mail,"pseudo" => $pseudo, "password" => $password,"confirmPassword" =>$confirmPassword ,"errors" => $errors]);   
