@@ -5,18 +5,18 @@ class User extends Model{
 
 
     
-    public function __construct(public string $pseudo, public string $hashed_password) {
+    public function __construct(public string $pseudo, public string $hashed_password, private string $fullname, private string $role) {
 
     }
 
 
     public function persist() : User {
         if(self::get_member_by_pseudo($this->pseudo))
-            self::execute("UPDATE Members SET password=:password WHERE pseudo=:pseudo ", 
+            self::execute("UPDATE users SET password=:password WHERE mail=:pseudo ", 
                           [ "pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
         else
-            self::execute("INSERT INTO Members(pseudo,password,profile,picture_path) VALUES(:pseudo,:password,:profile,:picture_path)", 
-                          ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password]);
+        self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
+        ["pseudo"=>$this->pseudo, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
         return $this;
     }
 
@@ -26,7 +26,17 @@ class User extends Model{
         if ($query->rowCount() == 0) {
             return false;
         } else {
-            return new User($data["mail"], $data["hashed_password"]);
+            return new User($data["mail"], $data["hashed_password"], $data["fullname"] , $data["role"]);
+        }
+    }
+
+    public static function get_member_by_mail(string $mail) : User|false {
+        $query = self::execute("SELECT * FROM users where mail = :mail", ["mail"=>$mail]);
+        $data = $query->fetch(); // un seul résultat au maximum
+        if ($query->rowCount() == 0) {
+            return false;
+        } else {
+            return new User($data["mail"], $data["hashed_password"], $data["fullname"] , $data["role"]);
         }
     }
 
@@ -66,6 +76,16 @@ class User extends Model{
         } 
         return $errors;
     }
+
+    public static function validate_unicity_mail(string $mail) : array {
+        $errors = [];
+        $member = self::get_member_by_mail($mail);
+        if ($member) {
+            $errors[] = "This user already exists.";
+        } 
+        return $errors;
+    }
+
 
     private static function check_password(string $clear_password, string $hash) : bool {
         return $hash === Tools::my_hash($clear_password);
