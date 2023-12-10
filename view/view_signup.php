@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" >
 <head>
     <meta charset="UTF-8">
     <base href="<?= $web_root ?>"/>
@@ -10,48 +10,50 @@
 <body>
 
 <div class="container mt-5">
+<div class="p-3 mb-2 bg-body text-body">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h2 class="mb-4">Signup</h2>
+            <h2 class="text-center">Signup</h2>
             <form id="signupForm" action="signup/index" method="post">
 
-                <!-- Email -->
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?= $email ?> "required>
-
+                 
+                <div class="input-group mb-3">
+                <span class="input-group-text"  class="bi bi-key" id="basic-addon1">@</span>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= $email ?> "required>
                 </div>
-
-                <!-- Name -->
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" value="<?= $name ?>"required>
+                
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" value="<?= $name ?>"required>
                 </div>
             
 
-                <!-- Password -->
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" value="<?= $password ?>"required>
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="<?= $password ?>"required>
                 </div>
 
-                <!-- Confirm Password -->
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password:</label>
-                    <input type="text" class="form-control" id="confirm_password" name="confirm_password" value="<?= $confirm_password ?>" required>
+                
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm your Password" value="<?= $confirm_password ?>" required>
                 </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary">Signup</button>
-
+                
+                <div class="text-center d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-primary">Signup</button>
+                </div>
                 <?php
                 if(!empty($errors)){ 
-                foreach ($errors as $error): ?>
-                <li><?= $error ?></li>
+                    foreach ($errors as $error): ?>
+                        <li><?= $error ?></li>
                 <?php endforeach;}?>
 
             </form>
         </div>
+    </div>
     </div>
 </div>
 
