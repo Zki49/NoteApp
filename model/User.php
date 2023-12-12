@@ -19,11 +19,19 @@ class User extends Model{
     public function get_id():int{
         return $this->id;
     }
+    public function set_password(String $password): array{
+        $errors = validate_password($password)
+        //demande pourquoi le if ne va pas 
+         if(empty($errors)){
+           $this->hashed_password = Tools::my_hash($password);
+         }
+        return $errors;
+    }
 
     public function persist() : User {
         if(self::get_user_by_mail($this->mail))
-            self::execute("UPDATE users SET password=:password WHERE mail=:mail ", 
-                          [ "pseudo"=>$this->mail, "password"=>$this->hashed_password]);
+            self::execute("UPDATE users SET password=:password ,mail=:mail ,full_name =:fullname ,role =:role WHERE mail=:mail ", 
+                          [ "mail"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
         else
             self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:mail,:password,:fullname,:role)", 
                           ["pseudo"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
@@ -77,10 +85,10 @@ class User extends Model{
         return $errors;
     }
     
-    public static function validate_unicity(string $pseudo) : array {
+    public static function validate_unicity(string $mail) : array {
         $errors = [];
-        $member = self::get_user_by_mail($pseudo);
-        if ($member) {
+        $user = self::get_user_by_mail($mail);
+        if ($user) {
             $errors[] = "This user already exists.";
         } 
         return $errors;
