@@ -16,14 +16,16 @@ class User extends Model{
     public function get_fullnam() : string{
         return $this->fullname;
     }
-
+    public function get_id():int{
+        return $this->id;
+    }
 
     public function persist() : User {
         if(self::get_user_by_mail($this->mail))
-            self::execute("UPDATE users SET password=:password WHERE mail=:pseudo ", 
+            self::execute("UPDATE users SET password=:password WHERE mail=:mail ", 
                           [ "pseudo"=>$this->mail, "password"=>$this->hashed_password]);
         else
-            self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:pseudo,:password,:fullname,:role)", 
+            self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:mail,:password,:fullname,:role)", 
                           ["pseudo"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
         return $this;
     }
@@ -92,23 +94,21 @@ class User extends Model{
         $errors = [];
         if (!strlen($this->fullname) > 0) {
             $errors[] = "Pseudo is required.";
-        } if (!(strlen($this->pseudo) >= 3 && strlen($this->pseudo) <= 16)) {
-            $errors[] = "Pseudo length must be between 3 and 16.";
-        } if (!(preg_match("/^[a-zA-Z][a-zA-Z0-9]*$/", $this->pseudo))) {
-            $errors[] = "Pseudo must start by a letter and must contain only letters and numbers.";
+        } if (!(strlen($this->fullname) >= 3)) {
+            $errors[] = "Fullname length must be 3 .";
         }
         return $errors;
     }
     
-    public static function validate_login(string $pseudo, string $password) : array {
+    public static function validate_login(string $mail, string $password) : array {
         $errors = [];
-        $member = User::get_user_by_mail($pseudo);
-        if ($member) {
-            if (!self::check_password($password, $member->hashed_password)) {
+        $user= User::get_user_by_mail($mail);
+        if ($user) {
+            if (!self::check_password($password, $user->hashed_password)) {
                 $errors[] = "Wrong password. Please try again.";
             }
         } else {
-            $errors[] = "Can't find a member with the pseudo '$pseudo'. Please sign up.";
+            $errors[] = "Can't find a member with the mail '$mail'. Please sign up.";
         }
         return $errors;
     }
