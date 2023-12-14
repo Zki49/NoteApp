@@ -16,7 +16,8 @@ class Notecheck extends Note{
         }
         
     }
-    public static function get_notes_by_user(User $user): Notecheck |false {
+    //a modififfier vers =>  un array de notes
+    public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("SELECT * FROM check_listnotes nt ,notes n where n.owner= :idowner and nt.id = n.id", ["idowner"=>$user->get_id()] );
         $data = $query->fetch(); // un seul résultat au maximum
         if ($query->rowCount() == 0) { 
