@@ -6,17 +6,17 @@ class User extends Model{
 
 
     
-    public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role) {
-        
-    
+    public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role,private int $id ) {
+        }
 
-
-    }
     public function get_mail() : string{
         return $this->mail;
     }
     public function get_fullnam() : string{
         return $this->fullname;
+    }
+    public function get_id():int{
+        return $this->id;
     }
    public function set_mail(string $mail){
     $errors = User::validate_unicity_mail($mail);
@@ -50,10 +50,10 @@ class User extends Model{
             return false;
         } else {
 
-            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"]);
+            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"],$data["id"]);
         }
     }
-   /* a decomenter si on en a bespon 
+   // besoin pour les notes 
     public static function get_user_by_id(int $id) : User|false {
         $query = self::execute("SELECT * FROM users where id = :id", ["id"=>$id]);
 
@@ -65,14 +65,14 @@ class User extends Model{
             return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"],$data["id"]);
 
         }
-    }*/
+    }
 
     public static function get_members() : array {
         $query = self::execute("SELECT * FROM users", []);
         $data = $query->fetchAll();
         $results = [];
         foreach ($data as $row) {
-            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"]);
+            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"],$data["id"]);
         }
         return $results;
     }
