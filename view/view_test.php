@@ -24,7 +24,7 @@ echo"<h1>cc<h1>";
   <ul class="nav flex-column">
   <li class="nav-item">
     <a class="link-light link-offset-2" aria-current="page" href="#">My Notes</a>
-    µ<a href="#" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Light link</a>
+    <!--<a href="#" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Light link</a>-->
 
   </li>
   <li class="nav-item">
