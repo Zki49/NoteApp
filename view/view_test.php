@@ -1,5 +1,10 @@
 <?php
+if(isset($_POST)){
+   $user=$_POST["user"];
+    echo"$user->get_mail()";
+}
 echo"<h1>cc<h1>";
+
 
 ?>
 <!DOCTYPE html>
@@ -44,3 +49,6 @@ echo"<h1>cc<h1>";
 
 </body>
 </html>
+
+
+
