@@ -23,5 +23,6 @@ public function index(): void{
     (new View("login"))->show(["pseudo" => $pseudo, "password" => $password, "errors" => $errors]);
 
   }
+  
 }
 ?>
