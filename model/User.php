@@ -67,12 +67,12 @@ class User extends Model{
         }
     }
 
-    public static function get_members() : array {
+    public static function get_users() : array {
         $query = self::execute("SELECT * FROM users", []);
         $data = $query->fetchAll();
         $results = [];
         foreach ($data as $row) {
-            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"],$data["id"]);
+            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"],$row["id"]);
         }
         return $results;
     }

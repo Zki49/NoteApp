@@ -25,8 +25,8 @@ class Notecheck extends Note{
         } else {
             $results = [];
             foreach ($data as $row) {
-                $results[] = new Notecheck($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
-                $data["archived"],$data["weight"],$data["content"]);
+                $results[] = new Notecheck($row["title"],$user,$row["created_at"],$row["edited_at"],$row["pinned"],
+                $row["archived"],$row["weight"],$row["content"]);
             }
             return $results;
         }
