@@ -6,7 +6,7 @@ class User extends Model{
 
 
     
-    public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role,private int $id) {
+    public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role) {
         
     
 
@@ -18,9 +18,12 @@ class User extends Model{
     public function get_fullnam() : string{
         return $this->fullname;
     }
-    public function get_id():int{
-        return $this->id;
+   public function set_mail(string $mail){
+    $errors = User::validate_unicity_mail($mail);
+    if(empty($errors)){
+        $this->mail=$mail;
     }
+   }
     public function set_password(String $password): void{
         $errors = User::validate_password($password);
          if(empty($errors)){
@@ -47,9 +50,10 @@ class User extends Model{
             return false;
         } else {
 
-            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"],$data["id"]);
+            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"]);
         }
     }
+   /* a decomenter si on en a bespon 
     public static function get_user_by_id(int $id) : User|false {
         $query = self::execute("SELECT * FROM users where id = :id", ["id"=>$id]);
 
@@ -61,14 +65,14 @@ class User extends Model{
             return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"],$data["id"]);
 
         }
-    }
+    }*/
 
     public static function get_members() : array {
         $query = self::execute("SELECT * FROM users", []);
         $data = $query->fetchAll();
         $results = [];
         foreach ($data as $row) {
-            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"],$row["id"]);
+            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"]);
         }
         return $results;
     }
@@ -102,7 +106,7 @@ class User extends Model{
 
     public static function validate_unicity_mail(string $mail) : array {
         $errors = [];
-        $member = self::get_member_by_mail($mail);
+        $member = self::get_user_by_mail($mail);
         if ($member) {
             $errors[] = "This user already exists.";
         } 
@@ -118,12 +122,14 @@ class User extends Model{
         if (!strlen($this->fullname) > 0) {
 
             $errors[] = "Name is required.";
-        } if (!(strlen($this->fullname) >= 3 && strlen($this->fullname) <= 16)) {
-            $errors[] = "Name length must be between 3 and 16.";
-        } if (!(preg_match("/^[a-zA-Z][a-zA-Z0-9]*$/", $this->fullname))) {
-            $errors[] = "Name must start by a letter and must contain only letters and numbers.";
+            //juste plus que 3 pour le nom 
+        } if (!(strlen($this->fullname) >= 3 )) {
+            $errors[] = "Fullname lenght must be 3.";
+            //ca doit pas etre la 
+        } //if (!(preg_match("/^[a-zA-Z][a-zA-Z0-9]*$/", $this->fullname))) {
+            //$errors[] = "Name must start by a letter and must contain only letters and numbers.";
 
-        }
+        //}
         return $errors;
     }
     
