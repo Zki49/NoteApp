@@ -25,7 +25,7 @@ class User extends Model{
         if ($query->rowCount() == 0) {
             return false;
         } else {
-            return new User($data["mail"], $data["hashed_password"], $data["fullname"] , $data["role"]);
+            return new User($data["mail"], $data["hashed_password"], $data["full_name"] , $data["role"]);
         }
     }
 

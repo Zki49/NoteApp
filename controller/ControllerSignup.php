@@ -28,7 +28,6 @@ class ControllerSignup extends Controller{
 
             if (count($errors) == 0) { 
                 $member->persist(); //sauve l'utilisateur
-
                 $this->log_user($member, "Test" );
             }            
         }
