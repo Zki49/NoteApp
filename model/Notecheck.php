@@ -16,15 +16,19 @@ class Notecheck extends Note{
         }
         
     }
-    //a modififfier vers =>  un array de notes
+    //encore un peut de mofi et on y est 
     public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("SELECT * FROM check_listnotes nt ,notes n where n.owner= :idowner and nt.id = n.id", ["idowner"=>$user->get_id()] );
         $data = $query->fetch(); // un seul résultat au maximum
         if ($query->rowCount() == 0) { 
             return false;
         } else {
-            return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
-                                $data["archived"],$data["weight"],$data["content"]);
+            $results = [];
+            foreach ($data as $row) {
+                $results[] = new Notecheck($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
+                $data["archived"],$data["weight"],$data["content"]);
+            }
+            return $results;
         }
     } 
 }
