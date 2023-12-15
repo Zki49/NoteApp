@@ -11,7 +11,7 @@ abstract class Note  extends Model{
     }
 
     abstract public static function get_note_by_id(int $id):Note |false;
-    abstract public static function get_notes_by_user(User $user):Note |false ;
+    abstract public static function get_notes_by_user(User $user):array |false ;
     
     public function pinned(): bool{
         return $this->pinned;

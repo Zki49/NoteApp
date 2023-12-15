@@ -19,13 +19,11 @@ class User extends Model{
     public function get_id():int{
         return $this->id;
     }
-    public function set_password(String $password): array{
-        $errors = validate_password($password)
-        //demande pourquoi le if ne va pas 
+    public function set_password(String $password): void{
+        $errors = User::validate_password($password);
          if(empty($errors)){
            $this->hashed_password = Tools::my_hash($password);
          }
-        return $errors;
     }
 
     public function persist() : User {

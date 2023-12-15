@@ -17,7 +17,8 @@ class Notetext extends Note{
         }
         
     }
-    public static function get_notes_by_user(User $user): Notetext |false {
+    //a modififfier vers =>  un array de notes
+    public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("SELECT * FROM text_notes nt ,notes n where n.owner= :idowner and nt.id = n.id", ["idowner"=>$user->get_id()] );
         $data = $query->fetch(); // un seul résultat au maximum
         if ($query->rowCount() == 0) { 
