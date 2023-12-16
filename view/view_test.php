@@ -14,89 +14,14 @@
 </head>
 <body class="bg-dark">
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
-
-    <style>
-        /* Ajoutez ici votre style personnalisé si nécessaire */
-        .half-width {
-            width: 40%; /* La carte occupe la moitié de la largeur de son contenant */
-            margin: 10px; 
-            background-color: black; /* Fond de la carte en noir */
-            color: white; /* Texte en blanc */
-            border: 1px solid white; /* Bordure blanche autour de la carte */
-            border-radius: 10px; /* Coins arrondis */
-        }
-
-        .card-title {
-            border-bottom: 1px solid white; /* Bordure blanche en bas du titre */
-            padding-bottom: 10px; /* Espace sous le titre */
-        }
-        .d-flex{
-          border-top: 1px solid white; /* Bordure blanche en bas du titre */
-            padding-top: 10px; /* Espace sous le titre */
-        }
-
-        .truncate-text {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3; /* Affiche uniquement 3 lignes */
-            -webkit-box-orient: vertical;
-        }
-    </style>
-
-
-    <div class="container">
-        <div class="card half-width">
-            <div class="card-body">
-                <h5 class="card-title">Titre de la carte</h5>
-                <p class="card-text truncate-text">
-                    Texte sur le corps de la carte. Vous pouvez ajouter ici toutes les informations que vous
-                    
-                </p>
-                <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
-                        <<
-                    </button>
-                
-                
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#previousModal">
-                        >>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal pour la suite du texte -->
-    <div class="modal fade" id="nextModal" tabindex="-1" role="dialog" aria-labelledby="nextModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="nextModalLabel">Suite du texte</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Texte continué... Vous pouvez ajouter ici toutes les informations supplémentaires que vous
-                        souhaitez. Si le texte dépasse trois lignes, il sera tronqué et un bouton "Précédent" sera
-                        affiché.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Précédent</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-  
-
-
-
-
+<?php
+   // idee pour affiche toute les notes 
+   if(!empty($array_notes)){ 
+       foreach($array_notes as $notes){
+         (new View("note"))->show($notes);
+      }
+  }
+?>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header bg-dark">
     <h5 class="offcanvas-title text-avertissement" id="offcanvasScrollingLabel">NoteApp</h5>

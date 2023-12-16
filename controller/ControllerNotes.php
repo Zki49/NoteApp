@@ -14,7 +14,9 @@ class ControllerNotes extends Controller{
         $array_notesCheck = Notecheck::get_notes_by_user($user);
         $array_note = array_merge($array_notes,$array_notesCheck);/*donne un seul tableau avec toute les notes 
                                                                    et on peut les identifier gracce a la methode 
-                                                                   are you check*/
+                                                                   are you check qui dit si cest une check notes ou pas*/
+                                                              
+      ( new view("test"))->show($array_notes);
     }
 
 }
