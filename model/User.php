@@ -6,17 +6,16 @@ class User extends Model{
 
 
     
-    public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role,private int $id ) {
-        }
+    public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role) {
+    
+    }
+
 
     public function get_mail() : string{
         return $this->mail;
     }
     public function get_fullnam() : string{
         return $this->fullname;
-    }
-    public function get_id():int{
-        return $this->id;
     }
    public function set_mail(string $mail){
     $errors = User::validate_unicity_mail($mail);

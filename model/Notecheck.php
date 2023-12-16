@@ -18,8 +18,12 @@ class Notecheck extends Note{
     }
     //encore un peut de mofi et on y est 
     public static function get_notes_by_user(User $user): array |false {
-        $query = self::execute("SELECT * FROM check_listnotes nt ,notes n where n.owner= :idowner and nt.id = n.id", ["idowner"=>$user->get_id()] );
-        $data = $query->fetch(); // un seul résultat au maximum
+        $query = self::execute("select * FROM checklist_notes cn 
+                                join notes n  on cn.id=n.id 
+                                join users u on u.id=n.owner
+                                join checklist_note_items cni on cni.checklist_note=cn.id
+                                WHERE u.mail =", ["mail"=>$user->get_mail()] );
+        $data = $query->fetch();
         if ($query->rowCount() == 0) { 
             return false;
         } else {
