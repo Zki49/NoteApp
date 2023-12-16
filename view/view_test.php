@@ -14,7 +14,9 @@
 </head>
 <body class="bg-dark">
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
+
 <?php
+(new View("note"))->show();
    // idee pour affiche toute les notes 
    if(!empty($array_notes)){ 
        foreach($array_notes as $notes){
