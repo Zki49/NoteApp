@@ -34,6 +34,13 @@ class Notecheck extends Note{
             }
             return $results;
         }
-    } 
+    }
+
+     public function are_you_check(): bool{
+            return true;
+     }
+     
+
 }
+
 ?>
