@@ -14,12 +14,16 @@
 </head>
 <body class="bg-dark">
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
-
+<div class ="mt-5">
 <?php
 (new View("note"))->show();
+(new View("notecheck"))->show();
    // idee pour affiche toute les notes 
    if(!empty($array_notes)){ 
        foreach($array_notes as $notes){
+        //demander a la note es ce quelle est check ou pas 
+        //si check view check sinon notes 
+        //faut juste metre en page  deux par page 
          (new View("note"))->show($notes);
       }
   }
@@ -47,6 +51,7 @@
   </li>
 </ul>
   </div>
+</div>
 </div>
 
 
