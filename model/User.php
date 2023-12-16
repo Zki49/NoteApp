@@ -49,7 +49,7 @@ class User extends Model{
             return false;
         } else {
 
-            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"],$data["id"]);
+            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"]);
         }
     }
    // besoin pour les notes 
@@ -61,7 +61,7 @@ class User extends Model{
             return false;
         } else {
 
-            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"],$data["id"]);
+            return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"]);
 
         }
     }
@@ -71,7 +71,7 @@ class User extends Model{
         $data = $query->fetchAll();
         $results = [];
         foreach ($data as $row) {
-            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"],$row["id"]);
+            $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"]);
         }
         return $results;
     }

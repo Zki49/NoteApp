@@ -24,9 +24,7 @@ class Notetext extends Note{
                                 join users u on u.id=n.owner
                                 WHERE u.mail =:mail", ["mail"=>$user->get_mail()] );
         $data = $query->fetch(); 
-        if ($query->rowCount() == 0) { 
-            return false;
-        } else {
+        
             $results = [];
             foreach ($data as $row) {
                 $results[] = new Notetext($row["title"],$user,$row["created_at"],$row["edited_at"],$row["pinned"],
@@ -34,7 +32,7 @@ class Notetext extends Note{
             }
             return $results;
             
-        }
+        
     }
     public function are_you_check(): bool{
         return false ;

@@ -22,6 +22,10 @@
             border-bottom: 1px solid white; /* Bordure blanche en bas du titre */
             padding-bottom: 10px; /* Espace sous le titre */
         }
+        .d-flex{
+            border-top: 1px solid white; /* Bordure blanche en bas du titre */
+            padding-top: 10px;
+        }
 
         .truncate-text {
             overflow: hidden;
