@@ -15,19 +15,36 @@
 <body class="bg-dark">
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
 <div class ="mt-5">
+  <div class="row">
 <?php
+/*le deux view qui suiv sont destine a disparaitre par la suite 
+*/ 
+ //$notes= new Notetext("cc",User::get_user_by_mail("boverhaegen@epfc.eu"),new DateTime(17-12-20223),new DateTime(17-12-2023),false,false,1,"cccccc");
+echo"<div class=col-6>";
 (new View("note"))->show();
+echo"</div>";
+echo"<div class=col-6>";
 (new View("notecheck"))->show();
+echo"</div>";
    // idee pour affiche toute les notes 
-   if(!empty($array_notes)){ 
+   if(!empty($array_notes)){
+     
+      echo"<div class=row>";
        foreach($array_notes as $notes){
-        //demander a la note es ce quelle est check ou pas 
-        //si check view check sinon notes 
-        //faut juste metre en page  deux par page 
-         (new View("note"))->show($notes);
+            echo"<div class=col-6>";
+            if($notes->are_you_check()){
+              echo"<div class=col-6>";
+              (new View("notecheck"))->show(["notes"=>$notes]);
+            }else{
+              echo"<div class=col-6>";
+              (new View("note"))->show(["notes"=>$notes]);
+            }
+            echo"</div>";   
       }
+      echo"</div>";
   }
 ?>
+  </div>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header bg-dark">
     <h5 class="offcanvas-title text-avertissement" id="offcanvasScrollingLabel">NoteApp</h5>

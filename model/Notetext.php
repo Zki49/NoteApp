@@ -6,6 +6,10 @@ class Notetext extends Note{
     public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private string $description) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight);
     }
+    public function get_description():string{
+        return $this->description;
+    }
+
     public static function get_note_by_id(int $id): Notetext |false{
         $query = self::execute("SELECT * FROM text_notes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
         $data = $query->fetch(); // un seul résultat au maximum

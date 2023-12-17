@@ -17,6 +17,9 @@ abstract class Note  extends Model{
     public function pinned(): bool{
         return $this->pinned;
     }
+    public function get_title():string{
+        return $this->title;
+    }
 
     public function set_pinned () :bool {
         $this->pinned= !$this->pinned;

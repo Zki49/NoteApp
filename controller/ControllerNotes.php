@@ -16,7 +16,7 @@ class ControllerNotes extends Controller{
                                                                    et on peut les identifier gracce a la methode 
                                                                    are you check qui dit si cest une check notes ou pas*/
                                                               
-      ( new view("test"))->show($array_notes);
+      ( new view("test"))->show(["array_notes"=>$array_notes]);
     }
 
 }

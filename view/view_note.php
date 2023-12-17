@@ -10,7 +10,7 @@
     <style>
         /* Ajoutez ici votre style personnalisé si nécessaire */
         .half-width {
-            width: 40%; /* La carte occupe la moitié de la largeur de son contenant */
+        /* width: 40%;*/ /* La carte occupe la moitié de la largeur de son contenant */
             margin: 10px; 
             background-color: black; /* Fond de la carte en noir */
             color: white; /* Texte en blanc */
@@ -42,11 +42,13 @@
     <div class="container">
         <div class="card half-width">
             <div class="card-body">
-                <h5 class="card-title">Titre de la carte</h5>
+                <h5 class="card-title"><!---remetre une balise php //$notes->get_title();
+                ?>-->titre</h5>
                 <p class="card-text truncate-text">
-                    Texte sur le corps de la carte. Vous pouvez ajouter ici toutes les informations que vous
-                    souhaitez. Si le texte dépasse trois lignes, il sera tronqué et un bouton "Suivant" sera
-                    affiché.
+                <!--remetre des balise php// $notes->get_description();?>-->
+                melkenlknkrngbkmrg,;nbmkjrg;,nbkj;g,nbkjt;g,nbkjgnbkjg;,bn kjg;,bnkjgf;b,n kjgf;,bn kjf;g,bn kjfg;bn gkjfb;n 
+                ;b;ngdkbj;nfgbj;ngjk;bnklg;bnlgfbnlgbnhkfgn;bkjlgbnkjg;bnkjg;nbkgj;,bnktjg;nbktjg;,bnkjg;nbkjgbn kjg;,bn kjt;g,nb
+                kfsbjokrhjitybhjigjhbighbjgbhjgrjbhjrbvhjb
                 </p>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">

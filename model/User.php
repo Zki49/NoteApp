@@ -10,7 +10,22 @@ class User extends Model{
     
     }
 
+    public function edit_profil(User $user ,string $mail ,string $password,string $fullname):void{
+       if($user->fullname!=$fullname){
+         $errors= User ::check_fullname($fullname);
+         if(empty($errors)){
+            $this->fullname=$fullname;
+         }
+       }
+       if($user->mail!=$mail){
+         $errors= User ::validate_unicity($mail);
+         if(empty($errors)){
+            $this->mail=$mail;
+         }
+       }
+       
 
+    }
     public function get_mail() : string{
         return $this->mail;
     }
@@ -114,6 +129,16 @@ class User extends Model{
 
     private static function check_password(string $clear_password, string $hash) : bool {
         return $hash === Tools::my_hash($clear_password);
+    }
+    private static function check_fullname(string $fullname):array{
+        $errors=[];
+        if(strlen($fullname)<=0){
+            $errors []="Name is riquired";
+        }
+        if(strlen($fullname)<3){
+            $errors []="Fullname lenght must be 3.";
+        }
+        return$errors;
     }
 
     public function validate() : array {

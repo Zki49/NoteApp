@@ -10,7 +10,7 @@
     <style>
         /* Ajoutez ici votre style personnalisé si nécessaire */
         .half-width {
-            width: 40%; /* La carte occupe la moitié de la largeur de son contenant */
+           /* width: 40%; *//* La carte occupe la moitié de la largeur de son contenant */
             margin: 10px; /* Pour centrer la carte sur la page */
             background-color: black; /* Fond de la carte en noir */
             color: white; /* Texte en blanc */
@@ -35,11 +35,13 @@
     <div class="container">
         <div class="card half-width">
             <div class="card-body">
-                <h5 class="card-title">Titre de la carte</h5>
+                <h5 class="card-title"><!---remetre iun php  $notes->get_title();
+                ?>-->titre</h5>
                 <div class="hidden-checkboxes">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="checkbox1">
                         <label class="form-check-label" for="checkbox1">
+                            <!--ici je pense quon fera un tableaux pour les check dans check note a voir  -->
                             Option 1
                         </label>
                     </div>
