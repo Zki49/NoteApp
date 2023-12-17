@@ -10,20 +10,26 @@ class User extends Model{
     
     }
 
-    public function edit_profil(User $user ,string $mail ,string $password,string $fullname):void{
-       if($user->fullname!=$fullname){
+    public function edit_profil(User $user ,string $mail ,string $password,string $confirm_password,string $fullname):void{
+      //peut etre ajoute par le suite une upgrade de role ???? 
+
+        if($user->fullname!==$fullname){
          $errors= User ::check_fullname($fullname);
          if(empty($errors)){
             $this->fullname=$fullname;
          }
        }
-       if($user->mail!=$mail){
-         $errors= User ::validate_unicity($mail);
+       if($user->mail!==$mail){
+         $this->set_mail($mail);
+         
+       }
+       if($user->hashed_password!==Tools::my_hash($password)){
+         $errors= User ::validate_passwords($password,$confirm_password);
          if(empty($errors)){
-            $this->mail=$mail;
+            $this->set_password($password);
          }
        }
-       
+
 
     }
     public function get_mail() : string{
@@ -32,7 +38,7 @@ class User extends Model{
     public function get_fullnam() : string{
         return $this->fullname;
     }
-   public function set_mail(string $mail){
+   private function set_mail(string $mail):void{
     $errors = User::validate_unicity_mail($mail);
     if(empty($errors)){
         $this->mail=$mail;
