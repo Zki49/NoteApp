@@ -47,21 +47,21 @@ echo"</div>";
   </div>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header bg-dark">
-    <h5 class="offcanvas-title text-avertissement" id="offcanvasScrollingLabel">NoteApp</h5>
-    <button type="button" class="btn-close"  data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel"><p class="text-warning">NoteApp</p></h5>
+    <button type="button" class="btn-close"  data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-heart"></i></button>
   </div>
   <div class="offcanvas-body bg-dark">
   <ul class="nav flex-column">
   <li class="nav-item">
-    <a class="link-light link-offset-2" aria-current="page" href="#">My Notes</a>
-    <!--<a href="#" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Light link</a>-->
+  <a class="nav-link link-secondary" href="#">My Notes</a>
+      <!--<a href="#" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Light link</a>-->
 
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">My archives</a>
+    <a class="nav-link link-secondary" href="#">My archives</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Settings</a>
+    <a class="nav-link link-secondary" href="#">Settings</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
@@ -70,9 +70,6 @@ echo"</div>";
   </div>
 </div>
 </div>
-
-
-
 </body>
 </html>
 
