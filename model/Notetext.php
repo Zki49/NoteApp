@@ -27,10 +27,7 @@ class Notetext extends Note{
                                FROM text_notes nt 
                                join notes n  on nt.id=n.id 
                                join users u on u.id=n.owner
-                               WHERE u.mail =:mail
-                               and n.archived = 0
-                               and n.id not in (SELECT note_shares.note
-                                                FROM note_shares)   ", ["mail"=>$user->get_mail()] );
+                               WHERE u.mail =:mail ", ["mail"=>$user->get_mail()] );
                                 
         $data = $query->fetch(); 
         
