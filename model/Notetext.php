@@ -23,10 +23,15 @@ class Notetext extends Note{
     }
     //a modififfier encore un peut la requete 
     public static function get_notes_by_user(User $user): array |false {
-        $query = self::execute("select * FROM text_notes nt 
-                                join notes n  on nt.id=n.id 
-                                join users u on u.id=n.owner
-                                WHERE u.mail =:mail", ["mail"=>$user->get_mail()] );
+        $query = self::execute("select * 
+                               FROM text_notes nt 
+                               join notes n  on nt.id=n.id 
+                               join users u on u.id=n.owner
+                               WHERE u.mail =:mail
+                               and n.archived = 0
+                               and n.id not in (SELECT note_shares.note
+                                                FROM note_shares)   ", ["mail"=>$user->get_mail()] );
+                                
         $data = $query->fetch(); 
         
             $results = [];
