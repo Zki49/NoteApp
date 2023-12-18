@@ -16,7 +16,7 @@ class Notetext extends Note{
         if ($query->rowCount() == 0) { 
             return false;
         } else {
-            return new Notetext($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
+            return new Notetext($data["title"],User::get_user_by_id($data["owner"]),new DateTime($data["created_at"]),new DateTime($data["edited_at"]),$data["pinned"],
                                 $data["archived"],$data["weight"],$data["content"]);
         }
         
