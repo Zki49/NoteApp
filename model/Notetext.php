@@ -3,7 +3,7 @@
 class Notetext extends Note{
 
     //demande pk redef les atribut deja def dans la classe parent 
-    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private string $description) {
+    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string $description) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight);
     }
     public function get_description():string{
@@ -16,8 +16,8 @@ class Notetext extends Note{
         if ($query->rowCount() == 0) { 
             return false;
         } else {
-            return new Notetext($data["title"],User::get_user_by_id($data["owner"]),new DateTime($data["created_at"]),new DateTime($data["edited_at"]),$data["pinned"],
-                                $data["archived"],$data["weight"],$data["content"]);
+            return new Notetext($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"]===1?true:false,
+                                $data["archived"]===1?true:false,$data["weight"],$data["content"]);
         }
         
     }
@@ -33,8 +33,8 @@ class Notetext extends Note{
         
             $results = [];
             foreach ($data as $row) {
-                $results[] = new Notetext($row["title"],$user,$row["created_at"],$row["edited_at"],$row["pinned"],
-                $row["archived"],$row["weight"],$row["content"]);
+                $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
+                $row["archived"]===1?true : false,$row["weight"],$row["content"]);
             }
             return $results;
             

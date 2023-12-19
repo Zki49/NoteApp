@@ -26,6 +26,7 @@ echo"</div>";
 echo"<div class=col-6>";
 (new View("notecheck"))->show();
 echo"</div>";
+ var_dump($array_notes);
    // idee pour affiche toute les notes 
    if(!empty($array_notes)){
      

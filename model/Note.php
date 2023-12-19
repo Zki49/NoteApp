@@ -4,7 +4,7 @@ require_once "framework/Model.php";
 abstract class Note  extends Model{
 
      public function __construct(private String $title,private User $owner,private DateTime $createat,
-                                 private DateTime $editedat,private bool $pinned,private bool $archived, private int $weight) {
+                                 private DateTime | null $editedat,private bool $pinned,private bool $archived, private int $weight) {
             $this->pinned=false;
             $this->archived= false;                        
        
