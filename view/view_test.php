@@ -64,6 +64,17 @@ echo"</div>";
   <li class="nav-item">
     <a class="nav-link link-secondary" href="#">Settings</a>
   </li>
+
+  <?php 
+    if(!empty($tab_shared)){
+      foreach($tab_shared as $tab): ?>
+        <li class="nav-item">
+          <a class="nav-link link-secondary" href="#">$tab</a>
+        </li>
+  <?php endforeach;}?>
+ 
+  
+
   <li class="nav-item">
     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
   </li>

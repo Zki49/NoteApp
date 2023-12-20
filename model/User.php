@@ -3,12 +3,22 @@ require_once "framework/Model.php";
 
 class User extends Model{
 
-
+    
 
     
     public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role) {
-    
+        
     }
+    public function getMail():string{
+        return $this->mail;
+    }
+    public function getFullnam():string{
+        return $this->fullname;
+    }
+    public function getRole():string{
+        return $this->role;
+    }
+
 
     public function edit_profil(User $user ,string $mail ,string $password,string $confirm_password,string $fullname):void{
       //peut etre ajoute par le suite une upgrade de role ???? 
@@ -192,8 +202,7 @@ class User extends Model{
         }
         return $tab_user;
     }
-// test
-// kjgkjg
+
 }
 
 
