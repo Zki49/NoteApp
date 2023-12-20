@@ -5,30 +5,32 @@ class User extends Model{
 
 
 
+
     
     public function __construct(private string $mail, private string $hashed_password,private string $fullname,private string  $role) {
     
     }
 
-    public function edit_profil(User $user ,string $mail ,string $password,string $confirm_password,string $fullname):void{
+    public function edit_profil(string $mail ,string $password,string $confirm_password,string $fullname):void{
       //peut etre ajoute par le suite une upgrade de role ???? 
 
-        if($user->fullname!==$fullname){
+        if($this->fullname!==$fullname){
          $errors= User ::check_fullname($fullname);
          if(empty($errors)){
             $this->fullname=$fullname;
          }
        }
-       if($user->mail!==$mail){
+       if($this->mail!==$mail){
          $this->set_mail($mail);
          
        }
-       if($user->hashed_password!==Tools::my_hash($password)){
+       if($this->hashed_password!==Tools::my_hash($password)){
          $errors= User ::validate_passwords($password,$confirm_password);
          if(empty($errors)){
             $this->set_password($password);
          }
        }
+
 
 
     }
@@ -38,6 +40,7 @@ class User extends Model{
     public function get_fullnam() : string{
         return $this->fullname;
     }
+
    private function set_mail(string $mail):void{
     $errors = User::validate_unicity_mail($mail);
     if(empty($errors)){
@@ -52,7 +55,6 @@ class User extends Model{
     }
 
     public function persist() : User {
-
         if(self::get_user_by_mail($this->mail))
             self::execute("UPDATE users SET password=:password ,mail=:mail ,full_name =:fullname ,role =:role WHERE mail=:mail ", 
                           [ "mail"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
@@ -70,28 +72,29 @@ class User extends Model{
             return false;
         } else {
 
+
             return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"]);
         }
     }
    // besoin pour les notes 
     public static function get_user_by_id(int $id) : User|false {
         $query = self::execute("SELECT * FROM users where id = :id", ["id"=>$id]);
-
-        $data = $query->fetch(); // un seul résultat au maximum
-        if ($query->rowCount() == 0) {
-            return false;
-        } else {
+        $data= $query->fetchAll();
 
             return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"]);
-
         }
-    }
+    
+  
+
+   
 
     public static function get_users() : array {
+
         $query = self::execute("SELECT * FROM users", []);
         $data = $query->fetchAll();
         $results = [];
         foreach ($data as $row) {
+
             $results[] = new User($row["pseudo"], $row["password"],$row["full_name"],$row["role"]);
         }
         return $results;
@@ -124,6 +127,7 @@ class User extends Model{
         return $errors;
     }
 
+
     public static function validate_unicity_mail(string $mail) : array {
         $errors = [];
         $member = self::get_user_by_mail($mail);
@@ -151,6 +155,7 @@ class User extends Model{
         $errors = [];
         if (!strlen($this->fullname) > 0) {
 
+
             $errors[] = "Name is required.";
             //juste plus que 3 pour le nom 
         } if (!(strlen($this->fullname) >= 3 )) {
@@ -160,6 +165,7 @@ class User extends Model{
             //$errors[] = "Name must start by a letter and must contain only letters and numbers.";
 
         //}
+
         return $errors;
     }
     
@@ -175,6 +181,7 @@ class User extends Model{
         }
         return $errors;
     }
+
     public static function array_shared_user_by_mail(string $mail) : array | false {
         $tab_user = [];
         $query = self::execute("SELECT n.owner 
@@ -195,6 +202,7 @@ class User extends Model{
 // test
 // kjgkjg
 }
+
 
 
 ?>

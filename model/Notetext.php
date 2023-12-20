@@ -3,12 +3,14 @@
 class Notetext extends Note{
 
     //demande pk redef les atribut deja def dans la classe parent 
+
     public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string $description) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight);
     }
     public function get_description():string{
         return $this->description;
     }
+
 
     public static function get_note_by_id(int $id): Notetext |false{
         $query = self::execute("SELECT * FROM text_notes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
@@ -43,6 +45,7 @@ class Notetext extends Note{
     public function are_you_check(): bool{
         return false ;
  }
+
     
 }
 ?>
