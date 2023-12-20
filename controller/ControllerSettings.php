@@ -11,11 +11,19 @@ class ControllerSettings extends Controller {
     }
 
     public function editProfile() : void {
-        
+        $user = User::get_user_by_mail("boverhaegen@epfc.eu"); /* $this->get_user_or_redirect(); */
+        (new view("editProfile"))->show(["user"=>$user]);
+
+        if(isset ($_POST)){
+            $mail=Tools::sanitize($_POST["mail"]);
+            $fullname=Tools::sanitize($_POST["fullname"]);  
+        }
+          
+        $user->edit_profil($mail, $fullname);
     }
 
     public function logout() : void {
-        session_destroy();
+        $_SESSION=session_destroy();
         (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
     }
 

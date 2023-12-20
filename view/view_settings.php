@@ -19,8 +19,8 @@
         <h2> Hey 
             <?php
             echo $user->get_fullnam() 
-            ?>
-        ! </h2>
+            ?> ! 
+        </h2>
         
         <ul class="settings-list">
             <li><a href="settings/editProfile" id="editProfileLink">Edit profile</a></li>

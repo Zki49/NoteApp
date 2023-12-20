@@ -11,7 +11,7 @@ class User extends Model{
     
     }
 
-    public function edit_profil(string $mail ,string $password,string $confirm_password,string $fullname):void{
+    public function edit_profil(string $mail,string $fullname):void{
       //peut etre ajoute par le suite une upgrade de role ???? 
 
         if($this->fullname!==$fullname){
@@ -24,15 +24,6 @@ class User extends Model{
          $this->set_mail($mail);
          
        }
-       if($this->hashed_password!==Tools::my_hash($password)){
-         $errors= User ::validate_passwords($password,$confirm_password);
-         if(empty($errors)){
-            $this->set_password($password);
-         }
-       }
-
-
-
     }
     public function get_mail() : string{
         return $this->mail;

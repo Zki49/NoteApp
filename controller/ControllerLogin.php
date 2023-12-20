@@ -18,6 +18,7 @@ public function index(): void{
         if (empty($errors)) {
             $this->log_user(User::get_user_by_mail($pseudo));
             $this->redirect("Notes"); 
+            $_SESSION=session_start();
 
         }
     }
