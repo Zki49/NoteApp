@@ -202,7 +202,6 @@ class User extends Model{
         }
         return $tab_user;
     }
-
 }
 
 
