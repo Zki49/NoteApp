@@ -19,7 +19,7 @@
   <div class="row">
 <?php
 /*le deux view qui suiv sont destine a disparaitre par la suite 
-*/ 
+*/ //
  //$notes= new Notetext("cc",User::get_user_by_mail("boverhaegen@epfc.eu"),new DateTime(17-12-20223),new DateTime(17-12-2023),false,false,1,"cccccc");
 echo"<div class=col-6>";
 (new View("note"))->show();
