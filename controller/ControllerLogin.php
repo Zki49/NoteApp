@@ -10,14 +10,13 @@ public function index(): void{
     $password = '';
     $errors = [];
     if (isset($_POST['pseudo']) && isset($_POST['password'])) { //note : pourraient contenir des chaînes vides
-        $pseudo = $_POST['pseudo'];
-        $password = $_POST['password'];
+        $pseudo = Tools::sanitize($_POST['pseudo']);
+        $password = Tools ::sanitize($_POST['password']);
 
         $errors = User::validate_login($pseudo, $password);
         if (empty($errors)) {
-            echo" $pseudo";
             $this->log_user(User::get_user_by_mail($pseudo));
-            (new View("test"))->show(["pseudo"=>(User::get_user_by_mail($pseudo))->get_mail()]); 
+            $this->redirect("Notes"); 
         }
     }
     (new View("login"))->show(["pseudo" => $pseudo, "password" => $password, "errors" => $errors]);

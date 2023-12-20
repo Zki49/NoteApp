@@ -3,31 +3,46 @@
 class Notetext extends Note{
 
     //demande pk redef les atribut deja def dans la classe parent 
-    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private string $description) {
+    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string $description) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight);
     }
+    public function get_description():string{
+        return $this->description;
+    }
+
     public static function get_note_by_id(int $id): Notetext |false{
         $query = self::execute("SELECT * FROM text_notes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
         $data = $query->fetch(); // un seul résultat au maximum
         if ($query->rowCount() == 0) { 
             return false;
         } else {
-            return new Notetext($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
-                                $data["archived"],$data["weight"],$data["content"]);
+            return new Notetext($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"]===1?true:false,
+                                $data["archived"]===1?true:false,$data["weight"],$data["content"]);
         }
         
     }
-    //a modififfier vers =>  un array de notes
+    //a modififfier encore un peut la requete 
     public static function get_notes_by_user(User $user): array |false {
-        $query = self::execute("SELECT * FROM text_notes nt ,notes n where n.owner= :idowner and nt.id = n.id", ["idowner"=>$user->get_id()] );
-        $data = $query->fetch(); // un seul résultat au maximum
-        if ($query->rowCount() == 0) { 
-            return false;
-        } else {
-            return new Notetext($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
-                                $data["archived"],$data["weight"],$data["content"]);
-        }
+        $query = self::execute("select * 
+                               FROM text_notes nt 
+                               join notes n  on nt.id=n.id 
+                               join users u on u.id=n.owner
+                               WHERE u.mail =:mail ", ["mail"=>$user->get_mail()] );
+                                
+        $data = $query->fetch(); 
+        
+            $results = [];
+            foreach ($data as $row) {
+                $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
+                $row["archived"]===1?true : false,$row["weight"],$row["content"]);
+            }
+            return $results;
+            
+        
     }
+    public function are_you_check(): bool{
+        return false ;
+ }
     
 }
 ?>
