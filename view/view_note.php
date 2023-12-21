@@ -46,9 +46,9 @@
                 ?>-->titre</h5>
                 <p class="card-text truncate-text">
                 <!--remetre des balise php// $notes->get_description();?>-->
-                melkenlknkrngbkmrg,;nbmkjrg;,nbkj;g,nbkjt;g,nbkjgnbkjg;,bn kjg;,bnkjgf;b,n kjgf;,bn kjf;g,bn kjfg;bn gkjfb;n 
+                free palestine  melkenlknkrngbkmrg,;nbmkjrg;,nbkj;g,nbkjt;g,nbkjgnbkjg;,bn kjg;,bnkjgf;b,n kjgf;,bn kjf;g,bn kjfg;bn gkjfb;n 
                 ;b;ngdkbj;nfgbj;ngjk;bnklg;bnlgfbnlgbnhkfgn;bkjlgbnkjg;bnkjg;nbkgj;,bnktjg;nbktjg;,bnkjg;nbkjgbn kjg;,bn kjt;g,nb
-                kfsbjokrhjitybhjigjhbighbjgbhjgrjbhjrbvhjb
+                kfsbjokrhjitybhjigjhbighbjgbhjgrjbhjrbvhjb 
                 </p>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">

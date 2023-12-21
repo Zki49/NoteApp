@@ -16,6 +16,47 @@
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
 <div class ="mt-5">
   <div class="row">
+    
+  <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
+  <div class="card-header bg-secondary">title</div>
+  <div class="card-body">
+    <p class="card-text-bg-dark">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <div class="card-footer bg-secondary">
+  <p>
+    <a class="link-offset-2 link-underline link-underline-opacity-0" href="#">>></a></p>
+  </div>
+  </div>
+
+  <div class="card border-dark text-bg-dark mb-3" style="max-width: 18rem;">
+  <div class="card-header bg-secondary">title</div>
+  <div class="card-body">
+  <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Option 1
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+  <label class="form-check-label" for="flexCheckChecked">
+    Option 2
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+  <label class="form-check-label" for="flexCheckChecked">
+    Option 3
+  </label>
+</div>
+
+  </div>
+  <div class="card-footer bg-secondary">
+  <p>
+    <a class="link-offset-2 link-underline link-underline-opacity-0" href="#">>></a></p>
+  </div>
+  </div>
+
 <?php
 /*le deux view qui suiv sont destine a disparaitre par la suite 
 */ 
@@ -61,20 +102,18 @@ echo"</div>";
   <li class="nav-item">
     <a class="nav-link link-secondary" href="#">My archives</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link link-secondary" href="#">Settings</a>
-  </li>
 
   <?php 
     if(!empty($tab_shared)){
       foreach($tab_shared as $tab): ?>
         <li class="nav-item">
-          <a class="nav-link link-secondary" href="#">$tab</a>
+          <a class="nav-link link-secondary" href="#">Shared by <? $tab ?></a>
         </li>
   <?php endforeach;}?>
- 
-  
 
+  <li class="nav-item">
+    <a class="nav-link link-secondary" href="#">Settings</a>
+  </li>
   <li class="nav-item">
     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
   </li>
