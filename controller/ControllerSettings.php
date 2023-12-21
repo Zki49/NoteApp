@@ -6,7 +6,7 @@ class ControllerSettings extends Controller {
 
     public function index(): void{
         
-        $user = $this->get_user_or_redirect();
+        $user = User::get_user_by_mail("boverhaegen@epfc.eu"); /*$this->get_user_or_redirect();*/
         (new View("settings"))->show(["user"=>$user]);
     }
 
@@ -28,7 +28,13 @@ class ControllerSettings extends Controller {
     }
 
     public function changePassword() : void {
-        
+        $user=User::get_user_by_mail("boverhaegen@epfc.eu");
+        (new view("logout"))->show(["user"=>$user]);
+
+        if(isset($_POST)){
+            $password=Tools::sanitize($_POST["password"]);
+            
+        }
     }
 }
 ?>
