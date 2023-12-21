@@ -24,14 +24,14 @@ class Notecheck extends Note{
                                 join users u on u.id=n.owner
                                 join checklist_note_items cni on cni.checklist_note=cn.id
                                 WHERE u.mail =:mail", ["mail"=>$user->get_mail()] );
-        $data = $query->fetch();
+        $data = $query->fetchAll();
         if ($query->rowCount() == 0) { 
             return false;
         } else {
             $results = [];
             foreach ($data as $row) {
-                $results[] = new Notecheck($row["title"],$user,$row["created_at"],$row["edited_at"],$row["pinned"],
-                $row["archived"],$row["weight"],$row["content"]);
+                $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
+                $row["archived"]===1?true : false,$row["weight"],$row["content"]);
             }
             return $results;
         }

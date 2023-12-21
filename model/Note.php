@@ -25,6 +25,9 @@ abstract class Note  extends Model{
         $this->pinned= !$this->pinned;
         return true;
     }
+    public function archived(){
+        return $this->archived;
+    }
     public function set_archived():bool{
         $this->archived=!$this->archived;
         return true;

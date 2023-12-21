@@ -6,7 +6,7 @@ class Notetext extends Note{
     public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string|null $description) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight);
     }
-    public function get_description():string{
+    public function get_description():string |null{
         return $this->description;
     }
 

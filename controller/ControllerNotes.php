@@ -4,7 +4,7 @@ require_once "framework/Controller.php";
 require_once "model/User.php";
 require_once "model/Note.php";
 require_once "model/Notetext.php";
-require_once "model/Notetext.php";
+require_once "model/Notecheck.php";
 
 
 class ControllerNotes extends Controller{ 
