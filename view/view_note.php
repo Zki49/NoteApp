@@ -47,7 +47,8 @@
                 <h5 class="card-title"><?=$notes->get_title();
                 ?></h5>
                 <p class="card-text truncate-text">
-                <?=$notes->get_description()===null?" ":$notes->get_description();?>
+                <?=$notes->get_description()===null?" ":$notes->get_description();
+                    ?>
                 </p>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">

@@ -44,7 +44,7 @@
   <div class="offcanvas-body bg-dark">
   <ul class="nav flex-column">
   <li class="nav-item">
-  <a class="nav-link link-secondary" href="#">My Notes</a>
+  <a class="nav-link link-secondary" href="Notes">My Notes</a>
       <!--<a href="#" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Light link</a>-->
 
   </li>
