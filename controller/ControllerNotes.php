@@ -15,8 +15,8 @@ class ControllerNotes extends Controller{
         $array_note = array_merge($array_notes,$array_notesCheck);/*donne un seul tableau avec toute les notes 
                                                                    et on peut les identifier gracce a la methode 
                                                                    are you check qui dit si cest une check notes ou pas*/
-                                                              
-      ( new view("test"))->show(["array_notes"=>$array_notes]);
+        $tab_shared = User::array_shared_user_by_mail($user);                                                     
+      ( new view("test"))->show(["array_notes"=>$array_notes,"tab_shared"=>$tab_shared]);
     }
     public function notes(){
         //PAS OUBLIER DE REFERMLER AVEC UN REDIRECT 

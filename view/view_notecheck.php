@@ -24,7 +24,7 @@
         }
 
         .hidden-checkboxes {
-            max-height: 5em; /* Hauteur maximale de trois lignes (2.4em par ligne + espacement) */
+            height: 5em; /* Hauteur maximale de trois lignes (2.4em par ligne + espacement) */
             overflow: hidden;
         }
     </style>

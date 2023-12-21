@@ -16,6 +16,7 @@
             color: white; /* Texte en blanc */
             border: 1px solid white; /* Bordure blanche autour de la carte */
             border-radius: 10px; /* Coins arrondis */
+            
         }
 
         .card-title {
@@ -33,6 +34,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 3; /* Affiche uniquement 3 lignes */
             -webkit-box-orient: vertical;
+            height: 4.5em;
         }
     </style>
 </head>
