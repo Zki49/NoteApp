@@ -2,8 +2,8 @@
 
 class Notetext extends Note{
 
-    //demande pk redef les atribut deja def dans la classe parent 
-    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string $description) {
+     
+    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string|null $description) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight);
     }
     public function get_description():string{
@@ -29,11 +29,11 @@ class Notetext extends Note{
                                join users u on u.id=n.owner
                                WHERE u.mail =:mail ", ["mail"=>$user->get_mail()] );
                                 
-        $data = $query->fetch(); 
+        $data = $query->fetchAll(); 
         
             $results = [];
             foreach ($data as $row) {
-                $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
+                $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
                 $row["archived"]===1?true : false,$row["weight"],$row["content"]);
             }
             return $results;
