@@ -16,6 +16,9 @@ class Notecheck extends Note{
         }
         
     }
+    public function get_items(){
+        return $this->content;
+    }
     //encore un peut de mofi et on y est 
     public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("select * 
