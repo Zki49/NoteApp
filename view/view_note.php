@@ -16,6 +16,7 @@
             color: white; /* Texte en blanc */
             border: 1px solid white; /* Bordure blanche autour de la carte */
             border-radius: 10px; /* Coins arrondis */
+            
         }
 
         .card-title {
@@ -33,6 +34,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 3; /* Affiche uniquement 3 lignes */
             -webkit-box-orient: vertical;
+            height: 4.5em;
         }
     </style>
 </head>
@@ -42,13 +44,11 @@
     <div class="container">
         <div class="card half-width">
             <div class="card-body">
-                <h5 class="card-title"><!---remetre une balise php //$notes->get_title();
-                ?>-->titre</h5>
+                <h5 class="card-title"><?=$notes->get_title();
+                ?></h5>
                 <p class="card-text truncate-text">
-                <!--remetre des balise php// $notes->get_description();?>-->
-                free palestine  melkenlknkrngbkmrg,;nbmkjrg;,nbkj;g,nbkjt;g,nbkjgnbkjg;,bn kjg;,bnkjgf;b,n kjgf;,bn kjf;g,bn kjfg;bn gkjfb;n 
-                ;b;ngdkbj;nfgbj;ngjk;bnklg;bnlgfbnlgbnhkfgn;bkjlgbnkjg;bnkjg;nbkgj;,bnktjg;nbktjg;,bnkjg;nbkjgbn kjg;,bn kjt;g,nb
-                kfsbjokrhjitybhjigjhbighbjgbhjgrjbhjrbvhjb 
+                <?=$notes->get_description()===null?" ":$notes->get_description();
+                    ?>
                 </p>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">

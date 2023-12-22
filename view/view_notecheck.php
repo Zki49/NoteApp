@@ -24,7 +24,7 @@
         }
 
         .hidden-checkboxes {
-            max-height: 5em; /* Hauteur maximale de trois lignes (2.4em par ligne + espacement) */
+            height: 5em; /* Hauteur maximale de trois lignes (2.4em par ligne + espacement) */
             overflow: hidden;
         }
     </style>
@@ -35,8 +35,8 @@
     <div class="container">
         <div class="card half-width">
             <div class="card-body">
-                <h5 class="card-title"><!---remetre iun php  $notes->get_title();
-                ?>-->titre</h5>
+                <h5 class="card-title"><?= $notes->get_title();
+                ?></h5>
                 <div class="hidden-checkboxes">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="checkbox1">

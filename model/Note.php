@@ -5,8 +5,7 @@ abstract class Note  extends Model{
 
      public function __construct(private String $title,private User $owner,private DateTime $createat,
                                  private DateTime | null $editedat,private bool $pinned,private bool $archived, private int $weight) {
-            $this->pinned=false;
-            $this->archived= false;                        
+                                  
        
     }
 
@@ -23,11 +22,14 @@ abstract class Note  extends Model{
 
     public function set_pinned () :bool {
         $this->pinned= !$this->pinned;
-        return true;
+        return  $this->pinned;
+    }
+    public function archived():bool{
+        return $this->archived;
     }
     public function set_archived():bool{
         $this->archived=!$this->archived;
-        return true;
+        return $this->archived;
     }
     public function get_weight():int {
         return $this->weight;

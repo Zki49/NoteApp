@@ -185,19 +185,20 @@ class User extends Model{
         }
         return $errors;
     }
-    public static function array_shared_user_by_mail(string $mail) : array | false {
+    public static function array_shared_user_by_mail(User $user) : array | false {
         $tab_user = [];
         $query = self::execute("SELECT n.owner 
                                 FROM users u , notes n, note_shares ns
                                 WHERE u.id = ns.user and n.id = ns.note
                                 and u.mail = :mail
-                                GROUP by n.owner", ["mail"=>$mail] );
-        $data = $query->fetch();
+                                GROUP by n.owner", ["mail"=>$user->mail] );
+        $data = $query->fetchAll();
         if($query->rowCount() == 0){
             return false;
         }else {
             foreach ($data as $row) {
-                $tab_user[] = self::get_user_by_id($row);
+                
+                $tab_user[] = self::get_user_by_id($row["owner"]);
             }
         }
         return $tab_user;
