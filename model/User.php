@@ -38,11 +38,12 @@ class User extends Model{
         $this->mail=$mail;
     }
    }
-    public function set_password(String $password): void{
+    public function set_password(String $password): array{
         $errors = User::validate_password($password);
          if(empty($errors)){
            $this->hashed_password = Tools::my_hash($password);
          }
+         return $errors;
     }
 
     public function persist() : User {

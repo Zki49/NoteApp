@@ -14,26 +14,29 @@ class ControllerSettings extends Controller {
         $user = User::get_user_by_mail("boverhaegen@epfc.eu"); /* $this->get_user_or_redirect(); */
         (new view("editProfile"))->show(["user"=>$user]);
 
-        if(isset ($_POST)){
+        if(isset($_POST["mail"]) && isset($_POST["fullname"])){
             $mail=Tools::sanitize($_POST["mail"]);
             $fullname=Tools::sanitize($_POST["fullname"]);  
+
+            $user->edit_profil($mail, $fullname);
         }
-          
-        $user->edit_profil($mail, $fullname);
     }
 
     public function logout() : void {
         $_SESSION=session_destroy();
-        (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
+        $this->redirect("login");
     }
 
     public function changePassword() : void {
-        $user=User::get_user_by_mail("boverhaegen@epfc.eu");
-        (new view("logout"))->show(["user"=>$user]);
+        $user=User::get_user_by_mail("boverhaegen@epfc.eu"); /* $this->get_user_or_redirect(); */
+        (new view("changePassword"))->show(["user"=>$user]);
 
-        if(isset($_POST)){
+        if(isset($_POST["password"])){
             $password=Tools::sanitize($_POST["password"]);
-            
+            $errors=$user->set_password($password);
+            if(!empty($errors)){
+                (new view("changePassword"))->show(["user"=>$user, "error"=>$errors]);
+            }
         }
     }
 }
