@@ -106,8 +106,9 @@ echo"</div>";
   <?php 
     if(!empty($tab_shared)){
       foreach($tab_shared as $tab): ?>
+      
         <li class="nav-item">
-          <a class="nav-link link-secondary" href="#">Shared by <? $tab ?></a>
+          <a class="nav-link link-secondary" href="#">Shared by <?= $tab->get_fullnam() ?></a>
         </li>
   <?php endforeach;}?>
 
