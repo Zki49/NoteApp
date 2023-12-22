@@ -9,6 +9,7 @@ require_once "model/Notecheck.php";
 
 class ControllerNotes extends Controller{ 
     public function index() : void { 
+      $mode=" ";
         $user = User::get_user_by_mail("boverhaegen@epfc.eu") ;//$this->get_user_or_redirect();
         $array_notes = Notetext::get_notes_by_user($user);
         $array_notesCheck = Notecheck::get_notes_by_user($user);
@@ -16,9 +17,10 @@ class ControllerNotes extends Controller{
                                                                    et on peut les identifier gracce a la methode 
                                                                    are you check qui dit si cest une check notes ou pas*/
         $tab_shared = User::array_shared_user_by_mail($user);                                                     
-      ( new view("test"))->show(["array_notes"=>$array_notes,"tab_shared"=>$tab_shared]);
+      ( new view("test"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
-    public function notes(){
+    public function notes():void{
+      $mode=" ";
         //PAS OUBLIER DE REFERMLER AVEC UN REDIRECT 
         $user = User::get_user_by_mail("boverhaegen@epfc.eu") ;//$this->get_user_or_redirect();
         $array_notes = Notetext::get_notes_by_user($user);
@@ -27,8 +29,16 @@ class ControllerNotes extends Controller{
                                                                    et on peut les identifier gracce a la methode 
                                                                    are you check qui dit si cest une check notes ou pas*/
                                                               
-      ( new view("test"))->show(["array_notes"=>$array_notes]);
+      ( new view("test"))->show(["array_notes"=>$array_notes,"mode"=>$mode]);
 
+    }
+    public function archive():void{
+      $mode="archive";
+      $user = User::get_user_by_mail("boverhaegen@epfc.eu") ;//$this->get_user_or_redirect();
+        $array_notes = Notetext::get_notes_by_user($user);
+        $array_notesCheck = Notecheck::get_notes_by_user($user);
+        $array_note = array_merge($array_notes,$array_notesCheck);
+        ( new view("test"))->show(["array_notes"=>$array_notes,"mode"=>$mode]);
     }
 
 }

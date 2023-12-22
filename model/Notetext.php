@@ -27,7 +27,8 @@ class Notetext extends Note{
                                FROM text_notes nt 
                                join notes n  on nt.id=n.id 
                                join users u on u.id=n.owner
-                               WHERE u.mail =:mail ", ["mail"=>$user->get_mail()] );
+                               WHERE u.mail =:mail
+                               order by n.weight desc", ["mail"=>$user->get_mail()] );
                                 
         $data = $query->fetchAll(); 
         
