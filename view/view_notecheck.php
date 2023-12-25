@@ -27,6 +27,10 @@
             height: 5em; /* Hauteur maximale de trois lignes (2.4em par ligne + espacement) */
             overflow: hidden;
         }
+        a {
+            text-decoration: none; /* Enlever le soulignage */
+            color: #ffffff; /* Définir la couleur du texte en blanc */
+        }
     </style>
 </head>
 
@@ -35,6 +39,7 @@
     <div class="container">
         <div class="card half-width">
             <div class="card-body">
+                <a href="open">
                 <h5 class="card-title"><?= $notes->get_title();
                 ?></h5>
                 <div class="hidden-checkboxes">
@@ -57,6 +62,7 @@
                             Option 3
                         </label>
                     </div>
+                  </a>
                 </div>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">Suivant</button>

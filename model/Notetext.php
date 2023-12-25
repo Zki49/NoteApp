@@ -43,7 +43,6 @@ class Notetext extends Note{
     }
     public function are_you_check(): bool{
         return false ;
- }
-    
+ }  
 }
 ?>

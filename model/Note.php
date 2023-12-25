@@ -34,6 +34,14 @@ abstract class Note  extends Model{
     public function get_weight():int {
         return $this->weight;
     }
+    private  function validate_title($description):array{
+        $errors= [];
+        if(strlen($description)<3||strlen($description)){
+          $errors []="The title must have between 3 and 25 characters";
+        }
+        return $errors;
+    }
+   
 }
 
 ?>

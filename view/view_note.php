@@ -36,14 +36,19 @@
             -webkit-box-orient: vertical;
             height: 4.5em;
         }
+        a {
+            text-decoration: none; /* Enlever le soulignage */
+            color: #ffffff; /* Définir la couleur du texte en blanc */
+        }
     </style>
 </head>
 
 <body>
 
     <div class="container">
-        <div class="card half-width">
-            <div class="card-body">
+        <div class="card half-width">  
+        <div class="card-body">
+        <a href="notes/open"> 
                 <h5 class="card-title"><?=$notes->get_title();
                 ?></h5>
                 <p class="card-text truncate-text">
@@ -55,40 +60,11 @@
                         >>
                     </button>
                 </div>
+                </a>
             </div>
         </div>
     </div>
-
-    <!-- Modal pour la suite du texte -->
-    <div class="modal fade" id="nextModal" tabindex="-1" role="dialog" aria-labelledby="nextModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="nextModalLabel">Suite du texte</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Texte continué... Vous pouvez ajouter ici toutes les informations supplémentaires que vous
-                        souhaitez. Si le texte dépasse trois lignes, il sera tronqué et un bouton "Précédent" sera
-                        affiché.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><<</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS et Popper.js (facultatif) pour les fonctionnalités avancées, mais pas nécessaires pour cet exemple -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-c9L0VnFCttxiC8lHbeqofB8UEv5RGrb7I8WtiV+U5P8LME1W9G2mjsU9MVADAN7S" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
-        integrity="sha384-c3X+KkBoI3A5mBbCYWABgAuiopwgl/u8S/6+T2Wl13uDAFNSgCfrhDVoF+9DQDje" crossorigin="anonymous"></script> -->
+   
 
 </body>
 
