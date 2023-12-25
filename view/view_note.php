@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -10,21 +10,21 @@
     <style>
         /* Ajoutez ici votre style personnalisé si nécessaire */
         .half-width {
-        /* width: 40%;*/ /* La carte occupe la moitié de la largeur de son contenant */
-            margin: 10px; 
-            background-color: black; /* Fond de la carte en noir */
-            color: white; /* Texte en blanc */
-            border: 1px solid white; /* Bordure blanche autour de la carte */
-            border-radius: 10px; /* Coins arrondis */
-            
+            margin: 10px;
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            border-radius: 10px;
+            padding: 10px;
         }
 
         .card-title {
-            border-bottom: 1px solid white; /* Bordure blanche en bas du titre */
-            padding-bottom: 10px; /* Espace sous le titre */
+            border-bottom: 1px solid white;
+            margin-bottom: 10px;
         }
-        .d-flex{
-            border-top: 1px solid white; /* Bordure blanche en bas du titre */
+
+        .d-flex {
+            border-top: 1px solid white;
             padding-top: 10px;
         }
 
@@ -32,13 +32,17 @@
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* Affiche uniquement 3 lignes */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             height: 4.5em;
         }
-        a {
-            text-decoration: none; /* Enlever le soulignage */
-            color: #ffffff; /* Définir la couleur du texte en blanc */
+
+        .styled-link-button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -46,25 +50,30 @@
 <body>
 
     <div class="container">
-        <div class="card half-width">  
-        <div class="card-body">
-        <a href="notes/open"> 
-                <h5 class="card-title"><?=$notes->get_title();
-                ?></h5>
-                <p class="card-text truncate-text">
-                <?=$notes->get_description()===null?" ":$notes->get_description();
-                    ?>
-                </p>
+        <div class="card half-width">
+            <div class="card-body">
+                <!-- Formulaire caché -->
+                <form action="notes/open" method="post">
+                <input type="hidden" name="notes" value="<?php $notes ?>">
+               
+
+                <!-- Lien stylisé comme un bouton de soumission de formulaire -->
+                <button type="submit" class="styled-link-button">
+                    <h5 class="card-title"><?=$notes->get_title(); ?></h5>
+                    <p class="card-text truncate-text">
+                        <?=$notes->get_description()===null?" ":$notes->get_description(); ?>
+                    </p>
+                </button>
+                </form>
+
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
                         >>
                     </button>
                 </div>
-                </a>
             </div>
         </div>
     </div>
-   
 
 </body>
 

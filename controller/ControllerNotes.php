@@ -60,7 +60,11 @@ class ControllerNotes extends Controller{
         ( new view("test"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
     public function open():void{
-      (new View("opennote"))->show();
+      
+      if(isset($_POST["notes"])){
+         $notes= $_POST["notes"];
+        (new View("opennote"))->show(["notes"=>$notes]);
+      }
     }
 
 }
