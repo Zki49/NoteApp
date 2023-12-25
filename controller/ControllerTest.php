@@ -1,8 +1,9 @@
 <?php
 require_once "framework/Controller.php";
 require_once "model/User.php";
+require_once "model/Note.php";
 
-class ControllerTest extends Controller {
+class ControllerTest extends Controller{
     public function index() : void {
         if ($this->user_logged()) {
             $user=$this->get_user_or_redirect();
@@ -14,6 +15,12 @@ class ControllerTest extends Controller {
             (new View("login"))->show(["pseudo"=>"","password"=>"","errors"=>""]);
         }        
        
+    }
+
+    public function get_shared_notes (User $shared_user) : array {
+        $user=$this->get_user_or_redirect();
+        $array_shared_notes = Notetext::get_shared_notes($user, $shared_user);
+        return $array_shared_notes;
     }
     
     

@@ -197,7 +197,6 @@ class User extends Model{
             return false;
         }else {
             foreach ($data as $row) {
-                
                 $tab_user[] = self::get_user_by_id($row["owner"]);
             }
         }
