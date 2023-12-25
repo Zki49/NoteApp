@@ -2,8 +2,8 @@
 class Notecheck extends Note{
 
     // a complete demain 
-    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private string $content  ) {
-        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight);
+    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private string $content ,$id ) {
+        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
     }
     public static function get_note_by_id(int $id): Notecheck |false{
         $query = self::execute("SELECT * FROM check_listnotes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
@@ -12,7 +12,7 @@ class Notecheck extends Note{
             return false;
         } else {
             return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
-                                $data["archived"],$data["weight"],$data["content"]);
+                                $data["archived"],$data["weight"],$data["content"],$data["id"]);
         }
         
     }
@@ -35,7 +35,7 @@ class Notecheck extends Note{
             $results = [];
             foreach ($data as $row) {
                 $results[] = new Notecheck($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],$row["content"]);
+                $row["archived"]===1?true : false,$row["weight"],$row["content"],$row["id"]);
             }
             return $results;
         }

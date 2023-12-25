@@ -61,8 +61,13 @@ class ControllerNotes extends Controller{
     }
     public function open():void{
       
-      if(isset($_POST["notes"])){
-         $notes= $_POST["notes"];
+      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+        /*var_dump($_POST["idnotes"]);*/
+        if($_POST["check"]===true){
+          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+        }else{
+        $notes= Notetext::get_note_by_id(23);
+        }
         (new View("opennote"))->show(["notes"=>$notes]);
       }
     }

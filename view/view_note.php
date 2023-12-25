@@ -54,11 +54,12 @@
             <div class="card-body">
                 <!-- Formulaire caché -->
                 <form action="notes/open" method="post">
-                <input type="hidden" name="notes" value="<?php $notes ?>">
-               
-
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
+                 
                 <!-- Lien stylisé comme un bouton de soumission de formulaire -->
                 <button type="submit" class="styled-link-button">
+                    
                     <h5 class="card-title"><?=$notes->get_title(); ?></h5>
                     <p class="card-text truncate-text">
                         <?=$notes->get_description()===null?" ":$notes->get_description(); ?>
