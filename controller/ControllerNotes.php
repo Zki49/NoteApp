@@ -115,5 +115,19 @@ class ControllerNotes extends Controller{
 
      }
 
+     public function edit():void{
+     
+      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+        
+        if($_POST["check"]===true){
+          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+        }else{
+        $notes= Notetext::get_note_by_id(23);
+        }
+        (new View("editnote"))->show(["notes"=>$notes]);
+      }
+
+     }
+
  }
 ?>
