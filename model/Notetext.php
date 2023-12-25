@@ -21,6 +21,13 @@ class Notetext extends Note{
         }
         
     }
+    //mode develop a ne pas toucher !!!!!!
+    public function persist(){
+        if(/*self::get_note_by_id($this->get_id())*/ true){
+            self::execute("UPDATE note SET title =:title ,pinned=:pinned ,weight =:fullname ,archived =:archived WHERE id = :id ", 
+            [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),"id"=>23]);
+        }
+    }
     
     public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("select * 

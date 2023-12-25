@@ -51,7 +51,6 @@ class ControllerNotes extends Controller{
     }*/
     public function archive():void{
       $mode="archive";
-      //a optimiser yan !!!
       $user = User::get_user_by_mail("boverhaegen@epfc.eu") ;//$this->get_user_or_redirect();
         $array_notes = Notetext::get_notes_by_user($user);
         $array_notesCheck = Notecheck::get_notes_by_user($user);
@@ -62,13 +61,42 @@ class ControllerNotes extends Controller{
     public function open():void{
       
       if(isset($_POST["idnotes"])&& isset($_POST["check"])){
-        /*var_dump($_POST["idnotes"]);*/
+        
         if($_POST["check"]===true){
           $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
         }else{
         $notes= Notetext::get_note_by_id(23);
         }
         (new View("opennote"))->show(["notes"=>$notes]);
+      }
+    }
+    public function pinned():void{
+      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+        
+        if($_POST["check"]===true){
+          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+        }else{
+        $notes= Notetext::get_note_by_id(23);
+        }
+        $notes->set_pinned ();
+        //$notes->persist();
+        
+      (new View("opennote"))->show(["notes"=>$notes]);
+      }
+    }
+
+    public function unpinned():void{
+      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+        
+        if($_POST["check"]===true){
+          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+        }else{
+        $notes= Notetext::get_note_by_id(23);
+        }
+        $notes->set_pinned ();
+        //$notes->persist();
+        
+      (new View("opennote"))->show(["notes"=>$notes]);
       }
     }
 
