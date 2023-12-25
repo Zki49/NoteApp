@@ -21,7 +21,7 @@ class Notetext extends Note{
         }
         
     }
-    //a modififfier encore un peut la requete 
+    
     public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("select * 
                                FROM text_notes nt 
