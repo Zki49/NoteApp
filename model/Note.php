@@ -70,7 +70,6 @@ abstract class Note  extends Model{
             return $results;
         }
     }
-   
 }
 
 ?>

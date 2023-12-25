@@ -21,6 +21,7 @@ class ControllerTest extends Controller{
         $user=$this->get_user_or_redirect();
         $array_shared_notes = Notetext::get_shared_notes($user, $shared_user);
         return $array_shared_notes;
+        new View("");
     }
     
     
