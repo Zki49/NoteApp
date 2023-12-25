@@ -4,7 +4,7 @@ require_once "framework/Model.php";
 abstract class Note  extends Model{
 
      public function __construct(private String $title,private User $owner,private DateTime $createat,
-                                 private DateTime | null $editedat,private bool $pinned,private bool $archived, private int $weight) {
+                                 private DateTime | null $editedat,private bool $pinned,private bool $archived, private int $weight, private int $id) {
                                   
        
     }
@@ -13,11 +13,15 @@ abstract class Note  extends Model{
     abstract public static function get_notes_by_user(User $user):array |false ;
     abstract public function are_you_check(): bool;
     
+    
     public function pinned(): bool{
         return $this->pinned;
     }
     public function get_title():string{
         return $this->title;
+    }
+    public function get_id():int {
+        return $this->id;
     }
 
     public function set_pinned () :bool {
@@ -34,6 +38,21 @@ abstract class Note  extends Model{
     public function get_weight():int {
         return $this->weight;
     }
+    private  function validate_title($title):array{
+        $errors= [];
+        if(strlen($title)<3||strlen($title)>25){
+          $errors []="The title must have between 3 and 25 characters";
+        }
+        return $errors;
+    }
+    public function set_title($title):array{
+        $errors = $this->validate_title($title);
+        if(empty($errors)){
+            $this->title= $title;
+        }
+        return $errors;
+    }
+   
 }
 
 ?>

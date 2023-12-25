@@ -3,8 +3,8 @@
 class Notetext extends Note{
 
      
-    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string|null $description) {
-        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight);
+    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string|null $description,$id) {
+        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
     }
     public function get_description():string |null{
         return $this->description;
@@ -17,11 +17,11 @@ class Notetext extends Note{
             return false;
         } else {
             return new Notetext($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"]===1?true:false,
-                                $data["archived"]===1?true:false,$data["weight"],$data["content"]);
+                                $data["archived"]===1?true:false,$data["weight"],$data["content"],$data["id"]);
         }
         
     }
-    //a modififfier encore un peut la requete 
+    
     public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("select * 
                                FROM text_notes nt 
@@ -35,7 +35,7 @@ class Notetext extends Note{
             $results = [];
             foreach ($data as $row) {
                 $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],$row["content"]);
+                $row["archived"]===1?true : false,$row["weight"],$row["content"],$row["id"]);
             }
             return $results;
             
@@ -43,7 +43,6 @@ class Notetext extends Note{
     }
     public function are_you_check(): bool{
         return false ;
- }
-    
+ }  
 }
 ?>

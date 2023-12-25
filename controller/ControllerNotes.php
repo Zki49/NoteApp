@@ -8,6 +8,17 @@ require_once "model/Notecheck.php";
 
 
 class ControllerNotes extends Controller{ 
+  private function comparenote(Note $n1,Note $n2) :int{
+    if($n1===$n2||$n1->get_weight()==$n2->get_weight()){
+        return 0;
+    }
+    if($n1->get_weight()>$n2->get_weight()){
+        return -1;
+    }
+    if($n1->get_weight()<$n2->get_weight()){
+        return 1;
+    }
+}
     
     public function index() : void { 
       $mode=" ";
@@ -17,9 +28,13 @@ class ControllerNotes extends Controller{
         $array_note = array_merge($array_notes,$array_notesCheck);/*donne un seul tableau avec toute les notes 
                                                                    et on peut les identifier gracce a la methode 
                                                                    are you check qui dit si cest une check notes ou pas*/
-        $tab_shared = User::array_shared_user_by_mail($user);                                                     
+        $tab_shared = User::array_shared_user_by_mail($user); 
+        
+        usort($array_note, array($this, "comparenote"));
       ( new view("test"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
+
+    
     /*
     public function notes():void{
       $mode=" ";
@@ -43,6 +58,18 @@ class ControllerNotes extends Controller{
         $array_note = array_merge($array_notes,$array_notesCheck);
         $tab_shared = User::array_shared_user_by_mail($user);  
         ( new view("test"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
+    }
+    public function open():void{
+      
+      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+        /*var_dump($_POST["idnotes"]);*/
+        if($_POST["check"]===true){
+          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+        }else{
+        $notes= Notetext::get_note_by_id(23);
+        }
+        (new View("opennote"))->show(["notes"=>$notes]);
+      }
     }
 
 }
