@@ -26,14 +26,14 @@
             <nav class="navbar">
                 <div class="container-fluid">
                     <div class = "col-6">
-                    <div class="col-2">
+                    
                         <!-- Icône Bootstrap pour le bouton de retour -->
                         <button type="button" class="btn btn-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
             </svg>
                         </button>
-                        <div class="col-2 text-end">
+                        
                         <!-- Ajoutez ici vos propres icônes -->
                         <button type="button" class="btn btn-return">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
@@ -65,18 +65,20 @@
 </svg>
                         </button>
                     </div>
-                    </div>
-                    </div>
                     
+                    
+                    <div class="row">
+                     <div class="col-12">
                       <?php
-                      if($notes->are_you_check()){
+                     if($notes->are_you_check()){
                         (new View("opencheck"))->show();
                       }else{
                         (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description()]);
                       }
                       
                       ?> 
-                
+                     </div>
+                    </div>
              
                 </div>
             </nav>
