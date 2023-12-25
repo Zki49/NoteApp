@@ -31,7 +31,13 @@ class ControllerSignup extends Controller{
                 $this->log_user($member,"Test" );
             }            
         }
+        //$this->redirect("signup" , "redirect_prg", $member->getMail() , $errors);
         (new View("signup"))->show(["email" => $email,"name" => $name, "password" => $password,"confirm_password" =>$confirm_password ,"errors" => $errors]);   
     }
+    private function redirect_prg() : void {
+
+    }
+
+
 }
 ?>
