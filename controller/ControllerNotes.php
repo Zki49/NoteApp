@@ -79,7 +79,7 @@ class ControllerNotes extends Controller{
         $notes= Notetext::get_note_by_id(23);
         }
         $notes->set_pinned ();
-        //$notes->persist();
+       // $notes->persist();
         
       (new View("opennote"))->show(["notes"=>$notes]);
       }
@@ -94,13 +94,26 @@ class ControllerNotes extends Controller{
         $notes= Notetext::get_note_by_id(23);
         }
         $notes->set_pinned ();
-        //$notes->persist();
+       // $notes->persist();
         
       (new View("opennote"))->show(["notes"=>$notes]);
       }
     }
+    public function archived():void{
+      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+        
+        if($_POST["check"]===true){
+          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+        }else{
+        $notes= Notetext::get_note_by_id(23);
+        }
+        $notes->set_archived ();
+       // $notes->persist();
+        
+      (new View("opennote"))->show(["notes"=>$notes]);
+      }
 
-}
+     }
 
-
+ }
 ?>
