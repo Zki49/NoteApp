@@ -78,7 +78,7 @@
                 <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
                  
                 <!-- Lien stylisé comme un bouton de soumission de formulaire -->
-                        <button type="submit" class="styled-link-button">
+                        <button type="submit1" class="styled-link-button">
                         <?php
                         if($notes->archived()){
                             echo'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
