@@ -113,6 +113,7 @@
                      if($notes->are_you_check()){
                         (new View("opencheck"))->show();
                       }else{
+
                         (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description()]);
                       }
                       

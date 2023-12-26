@@ -116,7 +116,7 @@ class ControllerNotes extends Controller{
      }
 
      public function edit():void{
-     
+       $mode="edit";
       if(isset($_POST["idnotes"])&& isset($_POST["check"])){
         
         if($_POST["check"]===true){
@@ -124,7 +124,7 @@ class ControllerNotes extends Controller{
         }else{
         $notes= Notetext::get_note_by_id(23);
         }
-        (new View("editnote"))->show(["notes"=>$notes]);
+        (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
       }
 
      }

@@ -38,9 +38,9 @@
          
           <div>
               <label for="title">Title</label><br>
-              <textarea id="title" name="userInput" rows="1" cols="100" disabled><?= $title?></textarea><br>
+              <textarea id="title" name="userInput" rows="1" cols="100" <?php if(!empty($mode)){echo" ";}else{echo "disabled";}?>><?= $title?></textarea><br>
               <label for="text">Text</label><br>
-              <textarea id="text" name="userInput" rows="50" cols="100" disabled><?= $description?></textarea>
+              <textarea id="text" name="userInput" rows="50" cols="100"  <?php if(!empty($mode)){echo" ";}else{echo "disabled";}?>><?= $description?></textarea>
           </div>
         
     

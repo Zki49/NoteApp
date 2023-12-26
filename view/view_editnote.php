@@ -60,7 +60,7 @@
                      if($notes->are_you_check()){
                         (new View("editcheck"))->show();
                       }else{
-                        (new View("edittext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description()]);
+                        (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description(),"mode"=>$mode]);
                       }
                       
                       ?> 
