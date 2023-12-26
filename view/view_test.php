@@ -73,10 +73,10 @@
 
   <?php 
     if(!empty($tab_shared)){
-      foreach($tab_shared as $tab): ?>
+      foreach($tab_shared as $user): ?>
       
         <li class="nav-item">
-          <a class="nav-link link-secondary" href="#">Shared by <?php echo $tab->get_fullnam() ?></a>
+          <a class="nav-link link-secondary" href="test/get_shared_notes<?php $user ?>">Shared by <?php echo $user->get_fullnam() ?></a>
         </li>
   <?php endforeach;}?>
 

@@ -18,11 +18,16 @@ class ControllerTest extends Controller{
     }
 
     public function get_shared_notes (User $shared_user) : array {
-        $user=$this->get_user_or_redirect();
-        $array_shared_notes = Notetext::get_shared_notes($user, $shared_user);
-        return $array_shared_notes;
-        new View("");
-    }
+        if ($this->user_logged()) {
+            $user=$this->get_user_or_redirect();
+            $array_shared_notes = Notetext::get_shared_notes($user, $shared_user);
+            return $array_shared_notes;
+
+            (new View("shared_notes"))->show(["array_shared_notes"=>$array_shared_notes]);
+        }else{
+            (new View("login"))->show(["pseudo"=>"","password"=>"","errors"=>""]);
+        }
+}
     
     
     
