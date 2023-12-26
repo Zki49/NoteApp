@@ -203,6 +203,32 @@ class User extends Model{
         }
         return $tab_user;
     }
+    
+    public function editor(int $id) : bool{
+    
+
+        $query =self::execute("SELECT u.mail
+        from users u 
+        WHERE u.id in (SELECT user 
+                       from note_shares
+                       WHERE editor = 1 AND note =:id
+                      )
+                 or u.id in (SELECT owner 
+                              FROM notes
+                                WHERE id= :id) ",["id"=>$id]);
+       $data= $query->fetchAll() ;
+       if($query->rowCount() == 0){
+           return false;                      
+        }else{
+            foreach($data as $row){
+                if($this->get_mail()===$row["mail"]){
+                    return true;
+                }
+            }
+        }
+        return false;   
+        
+    }
 }
 
 
