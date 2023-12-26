@@ -116,12 +116,12 @@ class ControllerNotes extends Controller{
      }
 
      public function edit():void{
-      $user=$this->get_user_or_redirect();
+      $user= /*$this->get_user_or_redirect()*/User::get_user_by_mail("boverhaegen@epfc.eu");
       
 
        $mode="edit";
        if(isset($_POST["idnotes"])&& isset($_POST["check"])){
-        if($user->editor()){
+        if($user->editor($_POST["idnotes"])){
            if($_POST["check"]===true){
              $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
             }else{
