@@ -21,10 +21,10 @@ class Notetext extends Note{
         }
         
     }
-    //mode develop a ne pas toucher !!!!!!
+    
     public function persist(){
         if(/*self::get_note_by_id($this->get_id())*/ true){
-            self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:fullname ,archived =:archived WHERE id = :id ", 
+            self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ", 
             [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),
                "id"=>$this->get_id()]);
         }
