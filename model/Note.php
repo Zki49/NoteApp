@@ -83,7 +83,7 @@ abstract class Note  extends Model{
         $data = $query->fetchAll();
         if (!empty($data)){
             foreach($data as $row){
-                if ($row['pinned'] == false){
+                if ($row['pinned'] === 0){
                     $note_tmp = new Notetext($row['title'],$user,$row['create_at'],$row['edited_at'],$row['pinned'],$row['archived'],$row['weight'],"",$row['id']);
                     $tmp = $note_tmp->get_weight();
                     $note_tmp->set_weight($this->get_weight());
