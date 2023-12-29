@@ -10,7 +10,14 @@
     <style>
         body {
             margin: 0;
+            background-color: black;
+            color: white;
         }
+
+        .navbar {
+            background-color: black;
+        }
+        
 
         .custom-container {
             width: 100vw;

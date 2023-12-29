@@ -129,7 +129,7 @@ class ControllerNotes extends Controller{
             }
              (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
         }else{
-          (new View("error"))->show();
+          (new View("error"))->show(["error"=>"bien essayer"]);
         }
       }
 
