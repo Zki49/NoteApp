@@ -69,8 +69,12 @@
                 </form>
 
                 <div class="d-flex justify-content-between">
+                    
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
+                        
+
                         >>
+                        
                     </button>
                 </div>
             </div>

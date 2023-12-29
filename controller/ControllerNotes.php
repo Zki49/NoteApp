@@ -135,6 +135,12 @@ class ControllerNotes extends Controller{
 
       
     }
+    public function move_note():void {
+      $user = $this->get_user_or_redirect();
+      $note = $_GET['param1'];
+      $notes = Notetext::get_note_by_id($note);
+      $notes->get_weight_notes_by_user($user);
+    }
 
  }
 ?>
