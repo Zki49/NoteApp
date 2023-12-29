@@ -12,7 +12,7 @@ class Notecheck extends Note{
             return false;
         } else {
             return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
-                                $data["archived"],$data["weight"],$data["content"],$data["id"]);
+                                $data["archived"],$data["weight"],$data["content"],$id);
         }
         
     }

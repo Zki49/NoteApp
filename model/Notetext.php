@@ -17,9 +17,17 @@ class Notetext extends Note{
             return false;
         } else {
             return new Notetext($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"]===1?true:false,
-                                $data["archived"]===1?true:false,$data["weight"],$data["content"],$data["id"]);
+                                $data["archived"]===1?true:false,$data["weight"],$data["content"],$id);
         }
         
+    }
+    
+    public function persist(){
+        if(/*self::get_note_by_id($this->get_id())*/ true){
+            self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ", 
+            [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),
+               "id"=>$this->get_id()]);
+        }
     }
     
     public static function get_notes_by_user(User $user): array |false {

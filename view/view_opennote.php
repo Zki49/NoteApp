@@ -3,12 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <base href="<?= $web_root ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-MQwA9UQGx909+8zz3bV5P1/zPr27R2aFWsUZt5Xz5a9Tq2XUn/6Zl3DSd0ZUEwC" crossorigin="anonymous">
     <title></title>
     <style>
         body {
+            margin: 0px;
             background-color: black;
             color: white;
         }
@@ -16,6 +18,14 @@
         .navbar {
             background-color: black;
         }
+        .styled-link-button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            text-decoration: none;
+        }
+       
     </style>
 </head>
 
@@ -25,22 +35,29 @@
         <div class="row">
             <nav class="navbar">
                 <div class="container-fluid">
-                    <div class = "col-6">
+                    <div class = "col-12">
                     
                         <!-- Icône Bootstrap pour le bouton de retour -->
-                        <button type="button" class="btn btn-secondary">
+                        <!--attentiion route doit etre modifier si archive ou partage route de test-->
+                        
+                        <a href="<?php if($notes->archived()){echo "notes/archive";}else{echo "notes";}?>">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
             </svg>
-                        </button>
+                         </a>
                         
                         <!-- Ajoutez ici vos propres icônes -->
-                        <button type="button" class="btn btn-return">
+                        <a >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
   <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5m-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/>
 </svg>
-                        </button>
-                        <button type="button" class="btn btn-pinned">
+                        </a>
+                        <form action="<?php if($notes->pinned()){ echo "notes/unpinned";}else{echo " notes/pinned";}?>" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
+                 
+                <!-- Lien stylisé comme un bouton de soumission de formulaire -->
+                <button type="submit" class="styled-link-button">
                           <?php 
                           /*var_dump($notes);*/
                            if($notes->pinned()){
@@ -55,15 +72,39 @@
                            }
                           ?>    
                         
+                </button>
+                </form>
+                <form action="notes/archived" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
+                 
+                <!-- Lien stylisé comme un bouton de soumission de formulaire -->
+                        <button type="submit1" class="styled-link-button">
+                        <?php
+                        if(!$notes->archived()){
+                            echo'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+                            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5zm13-3H1v2h14zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+                          </svg>';
+                        }else{
+                            echo'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
+                            <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
+                          </svg>';
+                        }
+                        
+                        ?>
+                            
                         </button>
-                        <button type="button" class="btn btn-archive">
-                            <i class="bi bi-x"></i>
-                        </button>
-                        <button type="button" class="btn btn-edit">
+                         </form> 
+                         <form action="notes/edit" method="post">
+                            <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                              <input type="hidden" name="check" value="<?= $notes->are_you_check()?>"> 
+                             
+                        <button type="submit2" class="styled-link-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
   <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
 </svg>
                         </button>
+                         </form>
                     </div>
                     
                     
@@ -73,6 +114,7 @@
                      if($notes->are_you_check()){
                         (new View("opencheck"))->show();
                       }else{
+
                         (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description()]);
                       }
                       
