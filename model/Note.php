@@ -38,6 +38,9 @@ abstract class Note  extends Model{
     public function get_weight():int {
         return $this->weight;
     }
+    public function set_weight(int $new_weight): void {
+        $this->weight = $new_weight;
+    }
     private  function validate_title($title):array{
         $errors= [];
         if(strlen($title)<3||strlen($title)>25){
@@ -70,7 +73,7 @@ abstract class Note  extends Model{
             return $results;
         }
     }
-    public function get_weight_notes_by_user(User $user) : array {
+    public function get_weight_notes_by_user(User $user) : void {
         $query = self::execute("SELECT * 
                                 FROM notes n ,users u  
                                 WHERE n.owner = u.id
@@ -80,10 +83,25 @@ abstract class Note  extends Model{
         $data = $query->fetchAll();
         if (!empty($data)){
             foreach($data as $row){
-                
+                if ($row['pinned'] == false){
+                    $note_tmp = new Notetext($row['title'],$user,$row['create_at'],$row['edited_at'],$row['pinned'],$row['archived'],$row['weight'],"",$row['id']);
+                    $tmp = $note_tmp->get_weight();
+                    $note_tmp->set_weight($this->get_weight());
+                    $this->set_weight($tmp);
+                    $this->persist();
+                    $note_tmp->persist();
+                    return;
+                }
             }
         }
-        return $data;
+    }
+
+    public function persist(){
+        if(/*self::get_note_by_id($this->get_id())*/ true){
+            self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ", 
+            [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),
+               "id"=>$this->get_id()]);
+        }
     }
 }
 
