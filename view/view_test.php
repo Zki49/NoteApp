@@ -74,9 +74,8 @@
   <?php 
     if(!empty($tab_shared)){
       foreach($tab_shared as $user): ?>
-      
         <li class="nav-item">
-          <a class="nav-link link-secondary" href='test/get_shared_notes/<?= $user->get_mail() ?>'>Shared by <?php echo $user->get_fullnam() ?></a>
+          <a class="nav-link link-secondary" href='test/get_shared_notes?param1=<?= $user->get_mail()?>'>Shared by <?php echo $user->get_fullnam() ?></a>
         </li>
   <?php endforeach;}?>
 

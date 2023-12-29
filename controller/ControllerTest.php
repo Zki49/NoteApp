@@ -17,7 +17,7 @@ class ControllerTest extends Controller{
        
     }
 
-    public function get_shared_notes () : void {
+    /*public function get_shared_notes () : void {
         if ($this->user_logged() && isset($_GET["param1"]) && $_GET["param1"] !== "") {
             $user=$this->get_user_or_redirect();
             $userShared = User::get_user_by_mail($_GET["param1"]);
@@ -27,8 +27,21 @@ class ControllerTest extends Controller{
         }else{
             (new View("login"))->show(["pseudo"=>"","password"=>"","errors"=>""]);
         }
+    */
+    // Controller
+public function get_shared_notes() : void {
+    if ($this->user_logged() ) {
+        $user = $this->get_user_or_redirect();
+        $userShared = User::get_user_by_mail($_GET["param1"]);
+        $array_shared_notes = Notetext::get_shared_notes($user, $userShared);
+
+        (new View("shared_notes"))->show(["array_shared_notes" => $array_shared_notes]);
+    } else {
+        (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
+    }
+}
+
 }
     
     
-  
-}
+  ?>

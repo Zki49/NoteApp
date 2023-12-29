@@ -70,6 +70,21 @@ abstract class Note  extends Model{
             return $results;
         }
     }
+    public function get_weight_notes_by_user(User $user) : array {
+        $query = self::execute("SELECT * 
+                                FROM notes n ,users u  
+                                WHERE n.owner = u.id
+                                and u.mail = :mail
+                                HAVING n.weight > :weight  
+                                ORDER BY `n`.`weight` ASC" , ["mail" => $user->get_mail(), "weight" => $this->get_weight()]);
+        $data = $query->fetchAll();
+        if (!empty($data)){
+            foreach($data as $row){
+                
+            }
+        }
+        return $data;
+    }
 }
 
 ?>
