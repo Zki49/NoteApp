@@ -52,7 +52,39 @@ abstract class Note  extends Model{
         }
         return $errors;
     }
-   
+    public function get_shared_notes($owner, $shared_user) : array|false {
+        $query = self::execute("SELECT * 
+                                FROM notes n , note_shares ns
+                                WHERE ns.note = n.id
+                                and ns.user =:owner
+                                and n.owner =:shared_user
+                                ORDER BY `ns`.`editor` DESC", ["owner"=>$owner , "shared_user"=>$shared_user]);
+        $data = $query->fetchAll();
+        if ($query->rowCount() == 0) { 
+            return false;
+        } else {
+            $results = [];
+            foreach ($data as $row) {
+                $results[] = self::__construct($row["title"],$row["owner"],$row["created_at"],$row["edited_at"],$row["pinned"],$row["archived"],$row["weight"],$row["id"]);
+            }
+            return $results;
+        }
+    }
+    public function get_weight_notes_by_user(User $user) : array {
+        $query = self::execute("SELECT * 
+                                FROM notes n ,users u  
+                                WHERE n.owner = u.id
+                                and u.mail = :mail
+                                HAVING n.weight > :weight  
+                                ORDER BY `n`.`weight` ASC" , ["mail" => $user->get_mail(), "weight" => $this->get_weight()]);
+        $data = $query->fetchAll();
+        if (!empty($data)){
+            foreach($data as $row){
+                
+            }
+        }
+        return $data;
+    }
 }
 
 ?>
