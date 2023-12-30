@@ -46,7 +46,9 @@ class Notecheck extends Note{
      }
     
      public function delete():void{
-        
+        self::execute("DELETE FROM checklist_note_items WHERE checklist_note= :id;
+        DELETE from checklist_notes WHERE id =:id;
+        DELETE from notes WHERE id = :id;",["id"=>$this->get_id()]);
      }
     
 
