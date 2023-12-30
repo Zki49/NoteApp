@@ -141,6 +141,24 @@ class ControllerNotes extends Controller{
       $notes = Notetext::get_note_by_id($note);
       $notes->get_weight_notes_by_user($user);
     }
+    public function delete():void{
+      if(isset($_GET['param1'])){
+        $id = Tools::sanitize($_GET['param1']);
+        if(Note::iamcheck($id)){
+          $note = Notecheck::get_note_by_id($id);
+        }else{
+          $note = Notetext::get_note_by_id($id);
+        }
+        if($note===false){
+          (new View("error"))->show(["errors"=>"cette note n'existe pas"]);
+        }
+        //verifier si editeur cest ok pour sup ou il faut absolument etre proprio 
+        if(($this->get_user_or_redirect())->editor($id)){
+            $note->delete();
+        }
+        $this->redirect("notes");
+      }
+    }
 
  }
 ?>

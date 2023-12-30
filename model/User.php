@@ -207,14 +207,14 @@ class User extends Model{
     
 
         $query =self::execute("SELECT u.mail
-        from users u 
-        WHERE u.id in (SELECT user 
-                       from note_shares
-                       WHERE editor = 1 AND note =:id
-                      )
-                 or u.id in (SELECT owner 
-                              FROM notes
-                                WHERE id= :id) ",["id"=>$id]);
+                               from users u 
+                               WHERE u.id in (SELECT user 
+                                               from note_shares
+                                                WHERE editor = 1 AND note =:id
+                                              )
+                                      or u.id in (SELECT owner 
+                                                  FROM notes
+                                                  WHERE id= :id) ",["id"=>$id]);
        $data= $query->fetchAll() ;
        if($query->rowCount() == 0){
            return false;                      

@@ -104,6 +104,18 @@ abstract class Note  extends Model{
                "id"=>$this->get_id()]);
         }
     }
+    public static function iamcheck(int $id):bool{
+        $query =self::execute("SELECT * 
+                                FROM notes n
+                                JOIN checklist_notes cn on cn.id=n.id
+                                where n.id = $id
+                                ",[]);
+      $data = $query->fetchAll();
+      if($query->rowCount()==0){
+        return false;
+      }
+      return true;
+    }
 }
 
 ?>
