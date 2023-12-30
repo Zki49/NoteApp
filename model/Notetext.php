@@ -24,9 +24,9 @@ class Notetext extends Note{
     
     public function persist(){
         if(/*self::get_note_by_id($this->get_id())*/ true){
-            self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ", 
+            self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived,content = :description WHERE id = :id ", 
             [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),
-               "id"=>$this->get_id()]);
+               "description"=>$this->get_description(),  "id"=>$this->get_id()]);
         }
     }
     
@@ -51,6 +51,12 @@ class Notetext extends Note{
     }
     public function are_you_check(): bool{
         return false ;
- }  
+ }
+ public function delete():void{
+     self::execute("DELETE from text_notes WHERE id=:id;
+    DELETE from notes WHERE id = :id",["id"=>$this->get_id()]);
+
+ }
+ 
 }
 ?>

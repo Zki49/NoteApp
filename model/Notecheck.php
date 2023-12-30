@@ -44,7 +44,11 @@ class Notecheck extends Note{
      public function are_you_check(): bool{
             return true;
      }
-     
+    
+     public function delete():void{
+        
+     }
+    
 
 }
 
