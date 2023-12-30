@@ -160,5 +160,12 @@ class ControllerNotes extends Controller{
       }
     }
 
+    public function addtext():void{
+      $mode="edit";
+      $user=$this->get_user_or_redirect();
+      $notes= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
+      (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
+    }
+
  }
 ?>
