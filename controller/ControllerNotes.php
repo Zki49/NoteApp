@@ -166,6 +166,19 @@ class ControllerNotes extends Controller{
       $notes= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
       (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
     }
+    public function save():void{
+      if(isset($_GET['param1'])){
+        $id = $_GET['param1'];
+        if( Note::iamcheck($id)){
+
+        }else{
+          $note=Notetext::get_note_by_id($id);
+          if($note==false){
+            //$note=; 
+          }
+        }
+      }
+    }
 
  }
 ?>
