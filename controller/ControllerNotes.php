@@ -167,7 +167,7 @@ class ControllerNotes extends Controller{
       $notes= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
       (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
     }
-    //essayer d envoyer un objet complet en post 
+    //essayer d envoyer un objet complet en post ou get
     public function save():void{
       if(isset($_GET['param1'])){
         $id = $_GET['param1'];
@@ -180,9 +180,10 @@ class ControllerNotes extends Controller{
           }else{
             $note->persist();
           }
+          $this->redirect("notes");
         }
       }
-
+      $this->redirect("notes");
     }
     // refaire comme addtext adapter
     public function addcheck() : void{
