@@ -52,7 +52,7 @@
   }
     echo"</div>";
 }}
-  
+  $array_notes = null;
 ?>
   </div>
   <a href="notes/addtext">
@@ -82,7 +82,9 @@
         <li class="nav-item">
           <a class="nav-link link-secondary" href='test/get_shared_notes?param1=<?= $user->get_mail()?>'>Shared by <?php echo $user->get_fullnam() ?></a>
         </li>
-  <?php endforeach;}?>
+  <?php endforeach;}
+    $tab_shared = null; 
+  ?>
 
   <li class="nav-item">
     <a class="nav-link link-secondary" href="#">Settings</a>
