@@ -155,6 +155,7 @@ class ControllerNotes extends Controller{
         //verifier si editeur cest ok pour sup ou il faut absolument etre proprio 
         if(($this->get_user_or_redirect())->editor($id)){
             $note->delete();
+            $note=null;
         }
         $this->redirect("notes");
       }
@@ -174,7 +175,9 @@ class ControllerNotes extends Controller{
         }else{
           $note=Notetext::get_note_by_id($id);
           if($note==false){
-            //$note=; 
+            (new View("error"))->show(["errors"=>"cette note n'existe pas"]);
+          }else{
+            $note->persist();
           }
         }
       }
