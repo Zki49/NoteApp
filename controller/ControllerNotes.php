@@ -214,7 +214,7 @@ class ControllerNotes extends Controller{
         if (isset($_POST['item5'])){
           $content[] = Tools::sanitize($_POST['item5']);
         }
-
+        $error = $notes->unique_content($content);
       }
       (new View("addcheck"))->show();
     }

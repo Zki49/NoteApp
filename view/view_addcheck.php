@@ -9,42 +9,53 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
 
     <style>
-        body {
-            /* Style pour le fond de la page */
-            background-color: #343a40; /* Couleur foncée de Bootstrap */
-            color: white; /* Texte blanc */
-            padding: 20px; /* Espacement pour le contenu */
-        }
+    /* Style pour le fond de la page */
+    body {
+        background-color: #343a40; /* Couleur foncée de Bootstrap */
+        color: white; /* Texte blanc */
+        padding: 20px; /* Espacement pour le contenu */
+    }
 
-        .custom-input {
-            /* Style pour les inputs */
-            background-color: transparent; /* Couleur foncée de Bootstrap */
-            color: white; /* Texte blanc */
-            border: 1px solid #ced4da; /* Bordure avec la couleur de Bootstrap */
-            margin-bottom: 10px; /* Ajoute un espace de 10px en bas de chaque input */
-        }
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+    /* Style pour les inputs */
+    .custom-input {
+        background-color: transparent; /* Couleur foncée de Bootstrap */
+        color: white; /* Texte blanc */
+        border: 1px solid #ced4da; /* Bordure avec la couleur de Bootstrap */
+        margin-bottom: 10px; /* Ajoute un espace de 10px en bas de chaque input */
+        transition: background-color 0.3s; /* Ajout de la transition pour une animation fluide */
+    }
 
-        .page-header button {
-            background-color: transparent;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .styled-link-button {
-            background: none;
-            border: none;
-            color: #ffffff;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        
-    </style>
+    /* Style pour les inputs en focus */
+    .custom-input:focus {
+        background-color: #343a40; /* La même couleur foncée que le fond de la page */
+        color: white; /* Texte blanc en focus */
+        outline: none; /* Supprimer la bordure bleue par défaut sur le focus */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .page-header button {
+        background-color: transparent;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .styled-link-button {
+        background: none;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        text-decoration: none;
+    }
+</style>
+
+
     <title>Titre de la page</title>
 </head>
 
@@ -69,7 +80,7 @@
             <input type="text" class="form-control custom-input" id="formGroupExampleInput" >
         </div>
         <div class="mb-3">
-            <label for="formGroupExampleInput2" class="form-label">Items</label>
+            <label for="formGroupExampleInput2" class="form-labelrow g-3 needs-validation" novalidate>Items</label>
             <ul>
                 <li><input type="text" class="form-control custom-input" id="formGroupExampleInput1"></li>
                 <li><input type="text" class="form-control custom-input" id="formGroupExampleInput2"></li>
@@ -79,6 +90,7 @@
             </ul>
         </div>
     </form>
+    
 
 
 </body>
