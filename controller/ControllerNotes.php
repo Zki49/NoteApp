@@ -179,7 +179,7 @@ class ControllerNotes extends Controller{
           if($note==false){
            $user= $this->get_user_or_redirect();
            //demande quel poid metre pour les new notes
-            $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,1,null,0);
+            $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,30,null,0);
             $error=$note->set_title($title);
             $note->set_description($text);
             if(empty($error)){

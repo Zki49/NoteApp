@@ -18,7 +18,11 @@ class User extends Model{
     public function getRole():string{
         return $this->role;
     }
-
+   public function get_id():int{
+    $query = self::execute("SELECT * FROM users where mail = :mail", ["mail"=>$this->get_mail()]);
+    $data = $query->fetch(); 
+    return $data['id'] ;
+   }
 
     public function edit_profil(User $user ,string $mail ,string $password,string $confirm_password,string $fullname):void{
       //peut etre ajoute par le suite une upgrade de role ???? 

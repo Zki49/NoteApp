@@ -42,6 +42,9 @@ abstract class Note  extends Model{
     public function set_weight(int $new_weight): void {
         $this->weight = $new_weight;
     }
+    public function get_idowner():int{
+       return $this->owner->get_id();
+    }
     private  function validate_title($title):array{
         $errors= [];
         if(strlen($title)<3||strlen($title)>25){
