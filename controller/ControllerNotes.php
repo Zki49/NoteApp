@@ -31,7 +31,7 @@ class ControllerNotes extends Controller{
         $tab_shared = User::array_shared_user_by_mail($user); 
         
         usort($array_note, array($this, "comparenote"));
-      ( new view("test"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
+      ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
 
     

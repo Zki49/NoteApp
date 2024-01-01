@@ -40,7 +40,7 @@
     <div class="container">
         <div class="card half-width">
             <div class="card-body">
-                <a href="open">
+                <a href="notes/open">
                 <h5 class="card-title"><?= $notes->get_title();
                 ?></h5>
                 <div class="hidden-checkboxes">
