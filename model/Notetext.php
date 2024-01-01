@@ -9,6 +9,9 @@ class Notetext extends Note{
     public function get_description():string |null{
         return $this->description;
     }
+    public function set_description(string $description):void{
+         $this->description=$description;
+    }
 
     public static function get_note_by_id(int $id): Notetext |false{
         $query = self::execute("SELECT * FROM text_notes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
@@ -23,10 +26,15 @@ class Notetext extends Note{
     }
     
     public function persist(){
-        if(/*self::get_note_by_id($this->get_id())*/ true){
+        //bug a regle mais je ne comprend pas 
+        if(/*self::get_note_by_id($this->get_id())*/ false){
             self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived,content = :description WHERE id = :id ", 
             [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),
                "description"=>$this->get_description(),  "id"=>$this->get_id()]);
+        }else{
+            self::execute("insert into notes(title,pinned,weight,archived)  values(:title ,:pinned ,:weight ,:archived) ", 
+            [ "title"=>$this->get_title(), "pinned"=>0,"weight"=>$this->get_weight(),"archived"=>0,
+               "description"=>$this->get_description()]);
         }
     }
     

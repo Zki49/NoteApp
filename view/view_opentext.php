@@ -2,10 +2,7 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <base href="<?= $web_root ?>"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -45,9 +42,11 @@
          
           <div class="container-fluid mt-4">
               <label for="title">Title</label><br>
-              <textarea id="title" name="userInput" rows="1" class="w-100" <?php if(!empty($mode)){echo" ";}else{echo "disabled";}?>><?= $title?></textarea><br>
+              <textarea id="title" name="title" rows="1" class="w-100" <?php if(!empty($mode)){echo" ";}else{echo "disabled";}?>><?= $title?></textarea><br>
               <label for="text">Text</label><br>
-              <textarea id="text" name="userInput" rows="50" class="w-100"  <?php if(!empty($mode)){echo" ";}else{echo "disabled";}?>><?= $description?></textarea>
+              <textarea id="text" name="text" rows="50" class="w-100"  <?php if(!empty($mode)){echo" ";}else{echo "disabled";}?>><?= $description?></textarea>
+              <input type="hidden" id ="id"name="id" value="<?= $id?>">
+    </form>
           </div>
         
     

@@ -167,18 +167,32 @@ class ControllerNotes extends Controller{
       $notes= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
       (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
     }
-    //essayer d envoyer un objet complet en post ou get
     public function save():void{
-      if(isset($_GET['param1'])){
-        $id = $_GET['param1'];
+      if(isset($_POST['title']) && isset( $_POST['text'])){
+        $id = Tools::sanitize($_POST['id']);
+        $title= Tools::sanitize($_POST['title']);
+        $text= Tools::sanitize($_POST['text']);
         if( Note::iamcheck($id)){
 
         }else{
           $note = Notetext::get_note_by_id($id);
           if($note==false){
-            (new View("error"))->show(["error"=>"cette note n'existe pas"]);
+           $user= $this->get_user_or_redirect();
+           //demande quel poid metre pour les new notes
+            $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,1,null,0);
+            $error=$note->set_title($title);
+            $note->set_description($text);
+            if(empty($error)){
+              $note->persist();
+            }
           }else{
-            $note->persist();
+            //remetre les ereur dans les vue si il y en a 
+            $error=$note->set_title($title);
+            $note->set_description($text);
+            if(empty($error)){
+              $note->persist();
+            }
+            
           }
           $this->redirect("notes");
         }

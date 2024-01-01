@@ -25,6 +25,24 @@
             cursor: pointer;
             text-decoration: none;
         }
+        
+        .custom-container {
+            width: 100vw;
+            padding: 20px;
+        }
+
+        .black-textarea {
+            width: 100%;
+            box-sizing: border-box;
+            color: white; 
+        }
+        label{
+            color: white;
+        }
+        textarea{
+            background-color: black;
+            color: white;
+        }
        
     </style>
 </head>
@@ -119,7 +137,7 @@
                         (new View("opencheck"))->show();
                       }else{
 
-                        (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description()]);
+                        (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description(),"id"=>$notes->get_id()]);
                       }
                       
                       ?> 
