@@ -187,7 +187,7 @@ class ControllerNotes extends Controller{
     }
     // refaire comme addtext adapter
     public function addcheck() : void{
-
+      (new View("addcheck"))->show();
     }
 
  }
