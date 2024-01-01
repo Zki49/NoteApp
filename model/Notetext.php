@@ -32,12 +32,12 @@ class Notetext extends Note{
             [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),
                "description"=>$this->get_description(),  "id"=>$this->get_id()]);
         }else{
-            var_dump($this->get_title());
-            var_dump($this->get_weight());
-            var_dump($this->get_idowner());
+         
             self::execute("insert into notes (title,pinned,weight,archived,owner)  values(:title ,:pinned ,:weight ,:archived,:owner); ", 
             [ "title"=>$this->get_title(), "pinned"=>0,"weight"=>$this->get_weight(),"archived"=>0,
                "owner"=>$this->get_idowner()]);
+            $id= $this->lastInsertId();
+            self::execute("insert into text_notes(id,content) values($id,:description)",["description"=>$this->description]);
         }
     }
     

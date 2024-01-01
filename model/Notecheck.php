@@ -2,7 +2,7 @@
 class Notecheck extends Note{
 
     // a complete demain 
-    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private array $content ,$id ) {
+    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private string $content ,$id ) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
     }
     public static function get_note_by_id(int $id): Notecheck |false{
