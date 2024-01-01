@@ -2,7 +2,7 @@
 class Notecheck extends Note{
 
     // a complete demain 
-    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private string $content ,$id ) {
+    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private array $content ,$id ) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
     }
     public static function get_note_by_id(int $id): Notecheck |false{
@@ -49,6 +49,21 @@ class Notecheck extends Note{
         self::execute("DELETE FROM checklist_note_items WHERE checklist_note= :id;
         DELETE from checklist_notes WHERE id =:id;
         DELETE from notes WHERE id = :id;",["id"=>$this->get_id()]);
+     }
+     public function unique_content(array $array_content): array{
+          for ($i = 0 ; $i < count($array_content);  $i++){
+            $elementI = $array_content[$i];
+            for($j = 0 ; $j < count($array_content) ; $j++){
+                if ($i != $j ){
+                    $elementJ = $array_content[$j];
+                    if($elementI === $elementJ){
+                        $array_error[$i] = ["Items must be unique"];
+                        $array_error[$j] = ["Items must be unique"];
+                    }
+                }
+            }
+          }
+          return $array_error;
      }
     
 
