@@ -106,7 +106,11 @@
                         </button>
                          </form>
                     </div>
-                    
+                    </div>
+            </nav>
+        </div>
+    </div>
+
                     
                     <div class="row">
                      <div class="col-12">
@@ -115,18 +119,14 @@
                         (new View("opencheck"))->show();
                       }else{
 
-                        (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description()]);
+                        (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description(),"mode"=>" "]);
                       }
                       
                       ?> 
                      </div>
                     </div>
              
-                </div>
-            </nav>
-        </div>
-    </div>
-
+      
 </body>
 
 </html>
