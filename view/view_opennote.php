@@ -119,7 +119,7 @@
                         (new View("opencheck"))->show();
                       }else{
 
-                        (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description(),"mode"=>" "]);
+                        (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description()]);
                       }
                       
                       ?> 
