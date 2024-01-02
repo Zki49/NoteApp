@@ -190,18 +190,14 @@ class ControllerNotes extends Controller{
     }
     // refaire comme addtext adapter
     public function addcheck() : void{
+      $userOwner = $this->get_user_or_redirect();
       $title = "";
-      $item1 = "";
-      $item2 = "";
-      $item3 = "";
-      $item4 = "";
-      $item5 = "";
       $error = [];
       $content = [];
       if(isset($_POST['title'])){
         $title = Tools::sanitize($_POST['title']);
-        $notes = new Notecheck("","",new DateTime("now"),null,false,false,0,[],0);
-        $error = $notes->set_title($title);
+        $notes = new Notecheck("",$userOwner,new DateTime("now"),null,false,false,0,[],0);
+        $error[] = $notes->set_title($title);
         if (isset($_POST['item1'])){
           $content[] = Tools::sanitize($_POST['item1']);
         }
@@ -219,7 +215,8 @@ class ControllerNotes extends Controller{
         }
         $error = $notes->unique_content($content);
       }
-      (new View("addcheck"))->show();
+      (new View("addcheck"))->show(["errors" => $error]);
+
     }
 
  }

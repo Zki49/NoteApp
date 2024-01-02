@@ -1,3 +1,6 @@
+<?php
+$errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme un tableau
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -89,6 +92,11 @@
                 <li><input type="text" class="form-control custom-input" id="formGroupExampleInput5"></li>
             </ul>
         </div>
+        <?php
+            if(!empty($errors)){ 
+                foreach ($errors as $error): ?>
+                    <li><?= $error ?></li>
+        <?php endforeach;}?>
     </form>
     
 
