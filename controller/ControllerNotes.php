@@ -61,54 +61,40 @@ class ControllerNotes extends Controller{
     public function open():void{
       
       if(isset($_POST["idnotes"])&& isset($_POST["check"])){
-        
+        $id=Tools::sanitize($_POST["idnotes"]);
         if($_POST["check"]===true){
-          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+          $notes= Notecheck::get_note_by_id($id);
         }else{
-        $notes= Notetext::get_note_by_id(23);
+        $notes= Notetext::get_note_by_id($id);
         }
         (new View("opennote"))->show(["notes"=>$notes]);
       }
     }
     public function pinned():void{
       if(isset($_POST["idnotes"])&& isset($_POST["check"])){
-        
+        $id=Tools::sanitize($_POST["idnotes"]);
         if($_POST["check"]===true){
-          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+          $notes= Notecheck::get_note_by_id($id);
         }else{
-        $notes= Notetext::get_note_by_id(23);
+        $notes= Notetext::get_note_by_id($id);
         }
         $notes->set_pinned ();
-       // $notes->persist();
+        $notes->persist();
         
       (new View("opennote"))->show(["notes"=>$notes]);
       }
     }
 
-    public function unpinned():void{
-      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
-        
-        if($_POST["check"]===true){
-          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
-        }else{
-        $notes= Notetext::get_note_by_id(23);
-        }
-        $notes->set_pinned ();
-       // $notes->persist();
-        
-      (new View("opennote"))->show(["notes"=>$notes]);
-      }
-    }
     public function archived():void{
       if(isset($_POST["idnotes"])&& isset($_POST["check"])){
-        
+        $id=Tools::sanitize($_POST["idnotes"]);
         if($_POST["check"]===true){
-          $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+          $notes= Notecheck::get_note_by_id($id);
         }else{
-        $notes= Notetext::get_note_by_id(23);
+        $notes= Notetext::get_note_by_id($id);
         }
-        $notes->set_archived ();
-       // $notes->persist();
+        $notes->set_archived();
+        $notes->persist();
         
       (new View("opennote"))->show(["notes"=>$notes]);
       }
@@ -121,11 +107,12 @@ class ControllerNotes extends Controller{
 
        $mode="edit";
        if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+        $id=Tools::sanitize($_POST["idnotes"]);
         if($user->editor($_POST["idnotes"])){
            if($_POST["check"]===true){
-             $notes= Notecheck::get_note_by_id($_POST["idnotes"]);
+             $notes= Notecheck::get_note_by_id($id);
             }else{
-              $notes= Notetext::get_note_by_id(23);
+              $notes= Notetext::get_note_by_id($id);
             }
              (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
         }else{

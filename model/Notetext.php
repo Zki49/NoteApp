@@ -27,9 +27,10 @@ class Notetext extends Note{
     
     public function persist(){
         //bug a regle mais je ne comprend pas 
-        if(/*self::get_note_by_id($this->get_id())*/ false){
-            self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived,content = :description WHERE id = :id ", 
-            [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),
+        if(self::get_note_by_id($this->get_id($this->get_id())) ){
+            self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ;
+                           UPDATE text_notes set content = :description where id=:id", 
+            [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->archived(),
                "description"=>$this->get_description(),  "id"=>$this->get_id()]);
         }else{
          
@@ -42,7 +43,7 @@ class Notetext extends Note{
     }
     
     public static function get_notes_by_user(User $user): array |false {
-        $query = self::execute("select * 
+        $query = self::execute("select * ,n.id idnote
                                FROM text_notes nt 
                                join notes n  on nt.id=n.id 
                                join users u on u.id=n.owner
@@ -54,7 +55,7 @@ class Notetext extends Note{
             $results = [];
             foreach ($data as $row) {
                 $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],$row["content"],$row["id"]);
+                $row["archived"]===1?true : false,$row["weight"],$row["content"],$row["idnote"]);
             }
             return $results;
             
