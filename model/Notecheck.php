@@ -55,10 +55,15 @@ class Notecheck extends Note{
      public function add():void{
         self::execute("INSERT INTO notes (title,pinned,weight,archived,owner) VALUES (:title,:pinned,:weight,:archived,:owner)",
         ["title"=>$this->get_title(),"pinned"=>$this->pinned(), "weight"=>$this->get_weight(), "archived"=>$this->archived(),"owner"=>$this->get_idowner()]);
+
         $idLastInsert = $this->lastInsertId();
         self::execute("insert into checklist_notes (id) values (:id)",["id"=>$idLastInsert]);
-        self::execute("insert into checklist_notes_items(checklist_notes,content,checked) VALUES (:checklist_notes,:content,:checked)",
-        ["checklist_notes"=>$idLastInsert,"content"=>$this->get_items() , "checked"=>0]);
+
+        $tab_items = $this->get_items();
+        for ($i = 0 ; $i < sizeof($tab_items) ; ++$i){
+            self::execute("insert into checklist_notes_items(checklist_notes,content,checked) VALUES (:checklist_notes,:content,:checked)",
+            ["checklist_notes"=>$idLastInsert,"content"=>$tab_items[$i] , "checked"=>0]);
+        }
      }
 
      public function unique_content(array $array_content): array{
