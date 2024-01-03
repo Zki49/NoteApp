@@ -43,7 +43,7 @@ class Notecheck extends Note{
             $results = [];
             foreach ($data as $row) {
                 $results[] = new Notecheck($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],$row["content"],$row["id"]);
+                $row["archived"]===1?true : false,$row["weight"],self::get_items($row["id"]),$row["id"]);
             }
             return $results;
         }
