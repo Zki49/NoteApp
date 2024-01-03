@@ -56,7 +56,7 @@ class ControllerNotes extends Controller{
         $array_notesCheck = Notecheck::get_notes_by_user($user);
         $array_note = array_merge($array_notes,$array_notesCheck);
         $tab_shared = User::array_shared_user_by_mail($user);  
-        ( new view("test"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
+        ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
     public function open():void{
       
