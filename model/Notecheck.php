@@ -12,12 +12,20 @@ class Notecheck extends Note{
             return false;
         } else {
             return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
-                                $data["archived"],$data["weight"],$data["content"],$id);
+                                $data["archived"],$data["weight"],self::get_items($id),$id);
         }
         
     }
-    public function get_items() : array {
-        return $this->content;
+    public function get_items(int $id) : array |false {
+        $query = self::execute("SELECT * 
+                                FROM checklist_note_items cl 
+                                WHERE cl.checklist_note = :id", ["id"=>$id]);
+        $data[] = $query->fetchAll();
+        if($query->rowCount() == 0){
+            return false;
+        }else{
+            return $data;
+        }
     }
     //encore un peut de mofi et on y est 
     public static function get_notes_by_user(User $user): array |false {
@@ -59,7 +67,7 @@ class Notecheck extends Note{
         $idLastInsert = $this->lastInsertId();
         self::execute("insert into checklist_notes (id) values (:id)",["id"=>$idLastInsert]);
 
-        $tab_items = $this->get_items();
+        $tab_items = $this->get_items($idLastInsert);
         for ($i = 0 ; $i < sizeof($tab_items) ; ++$i){
             self::execute("insert into checklist_notes_items(checklist_notes,content,checked) VALUES (:checklist_notes,:content,:checked)",
             ["checklist_notes"=>$idLastInsert,"content"=>$tab_items[$i] , "checked"=>0]);
