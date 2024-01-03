@@ -16,7 +16,7 @@ class Notecheck extends Note{
         }
         
     }
-    public function get_items(){
+    public function get_items() : array {
         return $this->content;
     }
     //encore un peut de mofi et on y est 
@@ -50,6 +50,22 @@ class Notecheck extends Note{
         DELETE from checklist_notes WHERE id =:id;
         DELETE from notes WHERE id = :id;",["id"=>$this->get_id()]);
      }
+
+    //encore un peu de modif et c'est fini
+     public function add():void{
+        self::execute("INSERT INTO notes (title,pinned,weight,archived,owner) VALUES (:title,:pinned,:weight,:archived,:owner)",
+        ["title"=>$this->get_title(),"pinned"=>$this->pinned(), "weight"=>$this->get_weight(), "archived"=>$this->archived(),"owner"=>$this->get_idowner()]);
+
+        $idLastInsert = $this->lastInsertId();
+        self::execute("insert into checklist_notes (id) values (:id)",["id"=>$idLastInsert]);
+
+        $tab_items = $this->get_items();
+        for ($i = 0 ; $i < sizeof($tab_items) ; ++$i){
+            self::execute("insert into checklist_notes_items(checklist_notes,content,checked) VALUES (:checklist_notes,:content,:checked)",
+            ["checklist_notes"=>$idLastInsert,"content"=>$tab_items[$i] , "checked"=>0]);
+        }
+     }
+
      public function unique_content(array $array_content): array{
           for ($i = 0 ; $i < count($array_content);  $i++){
             $elementI = $array_content[$i];
