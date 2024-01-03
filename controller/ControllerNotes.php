@@ -196,7 +196,7 @@ class ControllerNotes extends Controller{
       $content = [];
       if(isset($_POST['title'])){
         $title = Tools::sanitize($_POST['title']);
-        $notes = new Notecheck("",$userOwner,new DateTime("now"),null,false,false,0,[],0);
+        $notes = new Notecheck("",$userOwner->get_id(),new DateTime("now"),null,false,false,0,[],0);
         $error[] = $notes->set_title($title);
         if (isset($_POST['item1'])){
           $content[] = Tools::sanitize($_POST['item1']);

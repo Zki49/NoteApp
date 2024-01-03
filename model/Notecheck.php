@@ -16,16 +16,14 @@ class Notecheck extends Note{
         }
         
     }
-    public function get_items(int $id) : array |false {
-        $query = self::execute("SELECT * 
+    public static function get_items(int $id) : array  {
+        $query = self::execute("SELECT cl.content 
                                 FROM checklist_note_items cl 
                                 WHERE cl.checklist_note = :id", ["id"=>$id]);
         $data[] = $query->fetchAll();
-        if($query->rowCount() == 0){
-            return false;
-        }else{
-            return $data;
-        }
+        
+        return $data;
+        
     }
     //encore un peut de mofi et on y est 
     public static function get_notes_by_user(User $user): array |false {
@@ -42,8 +40,9 @@ class Notecheck extends Note{
         } else {
             $results = [];
             foreach ($data as $row) {
+                $id =self::get_items($row["id"]) ;
                 $results[] = new Notecheck($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],self::get_items($row["id"]),$row["id"]);
+                $row["archived"]===1?true : false,$row["weight"],$id,$row["id"]);
             }
             return $results;
         }
