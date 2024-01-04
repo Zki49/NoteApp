@@ -72,7 +72,11 @@
             </div>
         
     </div>
-
+<?php
+$id=null;
+$items=null;
+$notes=null;
+?>
 </body>
 
 </html>
