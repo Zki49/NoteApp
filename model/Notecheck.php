@@ -17,21 +17,23 @@ class Notecheck extends Note{
         
     }
     public static function get_items(int $id) : array  {
-        $query = self::execute("SELECT cl.content 
+        $query = self::execute("SELECT * 
                                 FROM checklist_note_items cl 
                                 WHERE cl.checklist_note = :id", ["id"=>$id]);
-        $data[] = $query->fetchAll();
-        
-        return $data;
+        $data= $query->fetchAll();
+        $result=[];
+        foreach($data as $row){
+           $result[]= $row["content"];
+        }
+        return $result;
         
     }
     //encore un peut de mofi et on y est 
     public static function get_notes_by_user(User $user): array |false {
-        $query = self::execute("select * 
+        $query = self::execute("select * ,n.id idnote
                                 FROM checklist_notes cn 
                                 join notes n  on cn.id=n.id 
                                 join users u on u.id=n.owner
-                                join checklist_note_items cni on cni.checklist_note=cn.id
                                 WHERE u.mail =:mail
                                 order by n.weight desc", ["mail"=>$user->get_mail()] );
         $data = $query->fetchAll();
@@ -40,9 +42,9 @@ class Notecheck extends Note{
         } else {
             $results = [];
             foreach ($data as $row) {
-                $id =self::get_items($row["id"]) ;
+                $id =self::get_items($row["idnote"]) ;
                 $results[] = new Notecheck($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],$id,$row["id"]);
+                $row["archived"]===1?true : false,$row["weight"],$id,$row["idnote"]);
             }
             return $results;
         }
