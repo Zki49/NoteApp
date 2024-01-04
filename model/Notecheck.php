@@ -5,6 +5,11 @@ class Notecheck extends Note{
     public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private array $content ,$id ) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
     }
+
+    public function set_content(array $items):void{
+        $this->content = $items;
+    }
+
     public static function get_note_by_id(int $id): Notecheck |false{
         $query = self::execute("SELECT * FROM check_listnotes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
         $data = $query->fetch(); // un seul résultat au maximum

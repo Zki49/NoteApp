@@ -80,7 +80,7 @@ $errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme u
 
         <div class="mb-3  bg-dark text-white">
             <label for="formGroupExampleInput" class="form-label">Title</label>
-            <input type="text" class="form-control custom-input" id="formGroupExampleInput" >
+            <input type="text" class="form-control custom-input" id="formGroupExampleInput" value = "<?= $title?>" >
         </div>
         <div class="mb-3">
             <label for="formGroupExampleInput2" class="form-labelrow g-3 needs-validation" novalidate>Items</label>

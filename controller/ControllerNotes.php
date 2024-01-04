@@ -213,10 +213,14 @@ class ControllerNotes extends Controller{
         if (isset($_POST['item5'])){
           $content[] = Tools::sanitize($_POST['item5']);
         }
+        $notes->set_content($content);
         $error = $notes->unique_content($content);
+        if(count($error) == 0){
+          $notes->add();
+          $this->redirect("notes");
+        }
       }
-      (new View("addcheck"))->show(["errors" => $error]);
-
+      (new View("addcheck"))->show(["errors" => $error , "title"=>$title]);
     }
 
  }
