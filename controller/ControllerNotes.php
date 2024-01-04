@@ -223,7 +223,7 @@ class ControllerNotes extends Controller{
         $error1 = $notes->unique_content($content);
         if(empty($error)&& empty($error1)){
           $notes->add();
-       // $this->redirect("notes");
+        $this->redirect("notes");
         }
         $errors = array_merge($error,$error1);
       }
