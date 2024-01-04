@@ -221,8 +221,6 @@ class ControllerNotes extends Controller{
         }
         $notes->set_content($content);
         $error1 = $notes->unique_content($content);
-        var_dump($error);
-        var_dump($error1);
         if(empty($error)&& empty($error1)){
           $notes->add();
         $this->redirect("notes");
