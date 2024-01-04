@@ -48,7 +48,18 @@
                         <input class="form-check-input" type="checkbox" value="" id="checkbox1" disabled>
                         <label class="form-check-label" for="checkbox1">
                             <!--ici je pense quon fera un tableaux pour les check dans check note a voir   et boucles sur tout les items -->
-                            <?php  echo $notes->get_items();?>
+                            <?php 
+                                $id = $notes->get_id(); 
+                                if(!empty( $notes->get_items($id))){
+                                    $array_items[] = $notes->get_items($id);
+                                    for ($i = 0 ; $i < sizeof($array_items) ; $i++): ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="checkbox2">
+                                            <label class="form-check-label" for="checkbox2">
+                                                <?php echo $array_items[$i] ?>
+                                            </label>
+                                        </div>
+                            <?php endfor;}?>
                         </label>
                     </div>
                     <div class="form-check">
