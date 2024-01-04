@@ -46,16 +46,20 @@ abstract class Note  extends Model{
        return $this->owner->get_id();
     }
     private  function validate_title($title):array{
-        $errors= [];
+        $errors=[];
+        
         if(strlen($title)<3||strlen($title)>25){
           $errors []="The title must have between 3 and 25 characters";
         }
         return $errors;
     }
     public function set_title($title):array{
+        
         $errors = $this->validate_title($title);
         if(empty($errors)){
             $this->title= $title;
+        }else{
+            $this->title= "il y a un souci ";
         }
         return $errors;
     }

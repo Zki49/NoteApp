@@ -192,12 +192,18 @@ class ControllerNotes extends Controller{
     public function addcheck() : void{
       $userOwner = $this->get_user_or_redirect();
       $title = "";
-      $error = [];
+      $error = null;
       $content = [];
+      $error1=[];
+      $errors = [];
+     
       if(isset($_POST['title'])){
         $title = Tools::sanitize($_POST['title']);
-        $notes = new Notecheck("",$userOwner->get_id(),new DateTime("now"),null,false,false,0,[],0);
-        $error[] = $notes->set_title($title);
+        $notes = new Notecheck($title,$userOwner,new DateTime("now"),null,false,false,0,[],0);
+        
+        $error = $notes->set_title($title);
+      
+        
         if (isset($_POST['item1'])){
           $content[] = Tools::sanitize($_POST['item1']);
         }
@@ -214,13 +220,15 @@ class ControllerNotes extends Controller{
           $content[] = Tools::sanitize($_POST['item5']);
         }
         $notes->set_content($content);
-        $error = $notes->unique_content($content);
-        if(count($error) == 0){
+        $error1 = $notes->unique_content($content);
+        if(empty($error)&& empty($error1)){
           $notes->add();
-          $this->redirect("notes");
+        $this->redirect("notes");
         }
+        $errors = array_merge($error,$error1);
       }
-      (new View("addcheck"))->show(["errors" => $error , "title"=>$title]);
+      
+      (new View("addcheck"))->show(["errors" => $errors , "title"=>$title]);
     }
 
  }
