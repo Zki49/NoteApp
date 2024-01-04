@@ -22,7 +22,7 @@ class ControllerNotes extends Controller{
     
     public function index() : void { 
       $mode=" ";
-        $user = User::get_user_by_mail("boverhaegen@epfc.eu") ;//$this->get_user_or_redirect();
+        $user =$this->get_user_or_redirect();
         $array_notes = Notetext::get_notes_by_user($user);
         $array_notesCheck = Notecheck::get_notes_by_user($user);
         $array_note = array_merge($array_notes,$array_notesCheck);/*donne un seul tableau avec toute les notes 
@@ -51,7 +51,7 @@ class ControllerNotes extends Controller{
     }*/
     public function archive():void{
       $mode="archive";
-      $user = User::get_user_by_mail("boverhaegen@epfc.eu") ;//$this->get_user_or_redirect();
+      $user = $this->get_user_or_redirect();
         $array_notes = Notetext::get_notes_by_user($user);
         $array_notesCheck = Notecheck::get_notes_by_user($user);
         $array_note = array_merge($array_notes,$array_notesCheck);
@@ -102,7 +102,7 @@ class ControllerNotes extends Controller{
      }
 
      public function edit():void{
-      $user= /*$this->get_user_or_redirect()*/User::get_user_by_mail("boverhaegen@epfc.eu");
+      $user= $this->get_user_or_redirect();
       
 
        $mode="edit";
@@ -204,25 +204,24 @@ class ControllerNotes extends Controller{
         $error = $notes->set_title($title);
       
         
-        if (isset($_POST['item1'] && empty($_POST['item1']) && !ctype_space($_POST['item1']))){
+
+        if (isset($_POST['item1']) && !empty($_POST['item1']) && !ctype_space($_POST['item1'])){
           $content[] = Tools::sanitize($_POST['item1']);
         }
-        if (isset($_POST['item2'])){
+        if (isset($_POST['item2'])&& !empty($_POST['item2']) && !ctype_space($_POST['item2'])){
           $content[] = Tools::sanitize($_POST['item2']);
         }
-        if (isset($_POST['item3'])){
+        if (isset($_POST['item3'])&& !empty($_POST['item3']) && !ctype_space($_POST['item3'])){
           $content[] = Tools::sanitize($_POST['item3']);
         }
-        if (isset($_POST['item4'])){
+        if (isset($_POST['item4'])&& !empty($_POST['item4']) && !ctype_space($_POST['item4'])){
           $content[] = Tools::sanitize($_POST['item4']);
         }
-        if (isset($_POST['item5'])){
+        if (isset($_POST['item5'])&& !empty($_POST['item5']) && !ctype_space($_POST['item5'])){
           $content[] = Tools::sanitize($_POST['item5']);
         }
         $notes->set_content($content);
         $error1 = $notes->unique_content($content);
-        var_dump($error);
-        var_dump($error1);
         if(empty($error)&& empty($error1)){
           $notes->add();
         $this->redirect("notes");
