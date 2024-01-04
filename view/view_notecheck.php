@@ -47,7 +47,7 @@
                             <!--ici je pense quon fera un tableaux pour les check dans check note a voir   et boucles sur tout les items -->
                             <?php 
                                 $id = $notes->get_id();
-                                 $items= $notes->get_items($id);
+                                 $items= $notes->get_items();
                                 if(!empty($items)){
                                     for ($i = 0 ; $i < sizeof($items) ; $i++){ 
                                        echo" 
