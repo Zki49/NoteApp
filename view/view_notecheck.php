@@ -43,27 +43,27 @@
                 <a href="notes/open">
                 <h5 class="card-title"><?= $notes->get_title();
                 ?></h5>
-               
+                   <div class="hidden-checkboxes">
                             <!--ici je pense quon fera un tableaux pour les check dans check note a voir   et boucles sur tout les items -->
                             <?php 
                                 $id = $notes->get_id();
                                  $items= $notes->get_items($id);
                                 if(!empty($items)){
                                     for ($i = 0 ; $i < sizeof($items) ; $i++){ 
-                                       echo" <div >
+                                       echo" 
                                        <div class='form-check'>
                                            <input class='form-check-input' type='checkbox'  id='checkbox1' disabled>
                                            <label class='form-check-label' for='checkbox1'>";
                                                  echo $items[$i] ;
                                          echo"    </label>
-                                                 </div>
+                                                 
                                                  </div>";        
                                             }
                                 }
                                             ?>
                         
                     </div>
-                   
+                    </div>
                   </a>
                 
                 <div class="d-flex justify-content-between">
