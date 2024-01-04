@@ -78,7 +78,7 @@ class Notecheck extends Note{
 
         $tab_items = $this->get_items();
         for ($i = 0 ; $i < sizeof($tab_items) ; ++$i){
-            self::execute("insert into checklist_notes_items(checklist_notes,content,checked) VALUES (:checklist_notes,:content,:checked)",
+            self::execute("insert into checklist_note_items(checklist_note,content,checked) VALUES (:checklist_notes,:content,:checked)",
             ["checklist_notes"=>$idLastInsert,"content"=>$tab_items[$i] , "checked"=>0]);
         }
      }
