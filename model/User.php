@@ -72,7 +72,7 @@ class User extends Model{
                           [ "mail"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
         else
             self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:mail,:password,:fullname,:role)", 
-                          ["pseudo"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
+                          ["mail"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
 
         return $this;
     }
