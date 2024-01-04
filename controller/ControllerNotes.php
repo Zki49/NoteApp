@@ -204,7 +204,7 @@ class ControllerNotes extends Controller{
         $error = $notes->set_title($title);
       
         
-        if (isset($_POST['item1'])){
+        if (isset($_POST['item1']) && $_POST['item1'] !== "" || $_POST['item1'] !== " "){
           $content[] = Tools::sanitize($_POST['item1']);
         }
         if (isset($_POST['item2'])){
