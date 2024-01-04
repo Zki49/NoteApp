@@ -25,7 +25,7 @@
         }
 
         .hidden-checkboxes {
-            height: 5em; /* Hauteur maximale de trois lignes (2.4em par ligne + espacement) */
+           height: 5em; /* Hauteur maximale de trois lignes (2.4em par ligne + espacement) */
             overflow: hidden;
         }
         a {
@@ -43,38 +43,26 @@
                 <a href="notes/open">
                 <h5 class="card-title"><?= $notes->get_title();
                 ?></h5>
-                <div class="hidden-checkboxes">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkbox1" disabled>
-                        <label class="form-check-label" for="checkbox1">
+               
                             <!--ici je pense quon fera un tableaux pour les check dans check note a voir   et boucles sur tout les items -->
                             <?php 
                                 $id = $notes->get_id();
                                  $items= $notes->get_items($id);
                                 if(!empty($items)){
-                                    $array_items[] = $notes->get_items($id);
-                                    for ($i = 0 ; $i < sizeof($array_items) ; $i++){ 
-                                       
-                                                 echo $array_items[$i] ;
+                                    for ($i = 0 ; $i < sizeof($items) ; $i++){ 
+                                       echo" <div class='hidden-checkboxes'>
+                                       <div class='form-check'>
+                                           <input class='form-check-input' type='checkbox'  id='checkbox1' disabled>
+                                           <label class='form-check-label' for='checkbox1'>";
+                                                 echo $items[$i] ;
+                                         echo"    </label>
+                                                 </div>";        
                                             }
                                 }
                                             ?>
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                        <label class="form-check-label" for="checkbox2">
-                            Option 2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                        <label class="form-check-label" for="checkbox3">
-                            Option 3
-                        </label>
-                    </div>
+                    
+                    
                   </a>
-                </div>
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">Suivant</button>
                 </div>
