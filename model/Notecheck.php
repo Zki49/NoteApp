@@ -80,11 +80,12 @@ class Notecheck extends Note{
         }
      }
 
-     public function unique_content(array $array_content): array{
+     public function unique_content(array $array_content): array {
+        $array_error=[];
           for ($i = 0 ; $i < count($array_content);  $i++){
             $elementI = $array_content[$i];
             for($j = 0 ; $j < count($array_content) ; $j++){
-                if ($i != $j ){
+                if ($i !== $j ){
                     $elementJ = $array_content[$j];
                     if($elementI === $elementJ){
                         $array_error[$i] = ["Items must be unique"];

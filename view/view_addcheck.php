@@ -79,17 +79,17 @@ $errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme u
 </div>
 
         <div class="mb-3  bg-dark text-white">
-            <label for="formGroupExampleInput" class="form-label">Title</label>
-            <input type="text" class="form-control custom-input" id="formGroupExampleInput" value = "<?= $title?>" >
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control custom-input" id="title" name="title" value = "<?= $title?>" >
         </div>
         <div class="mb-3">
             <label for="formGroupExampleInput2" class="form-labelrow g-3 needs-validation" novalidate>Items</label>
             <ul>
-                <li><input type="text" class="form-control custom-input" id="formGroupExampleInput1"></li>
-                <li><input type="text" class="form-control custom-input" id="formGroupExampleInput2"></li>
-                <li><input type="text" class="form-control custom-input" id="formGroupExampleInput3"></li>
-                <li><input type="text" class="form-control custom-input" id="formGroupExampleInput4"></li>
-                <li><input type="text" class="form-control custom-input" id="formGroupExampleInput5"></li>
+                <li><input type="text" class="form-control custom-input" id="item1" name="item1"></li>
+                <li><input type="text" class="form-control custom-input" id="item2" name="item2"></li>
+                <li><input type="text" class="form-control custom-input" id="item3" name="item3"></li>
+                <li><input type="text" class="form-control custom-input" id="item4"name="item4" ></li>
+                <li><input type="text" class="form-control custom-input" id="item5" name="item5"></li>
             </ul>
         </div>
         <?php
