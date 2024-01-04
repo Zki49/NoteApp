@@ -50,24 +50,27 @@
                                  $items= $notes->get_items($id);
                                 if(!empty($items)){
                                     for ($i = 0 ; $i < sizeof($items) ; $i++){ 
-                                       echo" <div class='hidden-checkboxes'>
+                                       echo" <div >
                                        <div class='form-check'>
                                            <input class='form-check-input' type='checkbox'  id='checkbox1' disabled>
                                            <label class='form-check-label' for='checkbox1'>";
                                                  echo $items[$i] ;
                                          echo"    </label>
+                                                 </div>
                                                  </div>";        
                                             }
                                 }
                                             ?>
-                    
-                    
+                        
+                    </div>
+                   
                   </a>
+                
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">Suivant</button>
                 </div>
             </div>
-        </div>
+        
     </div>
 
 </body>
