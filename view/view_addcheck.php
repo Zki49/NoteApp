@@ -93,7 +93,9 @@ $errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme u
             </ul>
         </div>
         <?php
+        var_dump($error);
             if(!empty($errors)){ 
+                
                 foreach ($errors as $error): ?>
                     <li><?= $error ?></li>
         <?php endforeach;}?>
