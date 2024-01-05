@@ -32,6 +32,13 @@
             text-decoration: none; /* Enlever le soulignage */
             color: #ffffff; /* Définir la couleur du texte en blanc */
         }
+        .styled-link-button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -40,7 +47,12 @@
     <div class="container">
         <div class="card half-width">
             <div class="card-body">
-                <a href="notes/open">
+
+            <form action = "notes/open" method="post"> 
+                <input type="hidden" name  = "idnotes" value="<?= $notes->get_id()?>">   
+                <input type="hidden" name  = "check" value="<?= $notes->are_you_check()?>">  
+
+                <button type = "submit" class="styled-link-button">
                 <h5 class="card-title"><?= $notes->get_title();
                 ?></h5>
                    <div class="hidden-checkboxes">
@@ -61,17 +73,22 @@
                                             }
                                 }
                                             ?>
+                                    </button>
                         
-                    </div>
-                    </div>
-                  </a>
+                    
+                    
+                    </form>
+
                 
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">Suivant</button>
                 </div>
             </div>
+                            </div>
+                    </div>
+            
         
-    </div>
+    
 <?php
 $id=null;
 $items=null;

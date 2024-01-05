@@ -78,7 +78,7 @@ class ControllerNotes extends Controller{
       
       if(isset($_POST["idnotes"])&& isset($_POST["check"])){
         $id=Tools::sanitize($_POST["idnotes"]);
-        if(Note::iamcheck($id)){
+        if($_POST["check"]===true){
           $notes= Notecheck::get_note_by_id($id);
         }else{
         $notes= Notetext::get_note_by_id($id);
