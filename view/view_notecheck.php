@@ -48,52 +48,44 @@
         <div class="card half-width">
             <div class="card-body">
 
-            <form action = "notes/open" method="post"> 
-                <input type="hidden" name  = "idnotes" value="<?= $notes->get_id()?>">   
-                <input type="hidden" name  = "check" value="<?= $notes->are_you_check()?>">  
+                <form action="notes/open" method="post">
+                    <input type="hidden" name="idnotes" value="<?= $notes->get_id() ?>">
+                    <input type="hidden" name="check" value="<?= $notes->are_you_check() ?>">
 
-                <button type = "submit" class="styled-link-button">
-                <h5 class="card-title"><?= $notes->get_title();
-                ?></h5>
-                   <div class="hidden-checkboxes">
-                            <!--ici je pense quon fera un tableaux pour les check dans check note a voir   et boucles sur tout les items -->
-                            <?php 
-                                $id = $notes->get_id();
-                                 $items= $notes->get_items();
-                                if(!empty($items)){
-                                    for ($i = 0 ; $i < sizeof($items) ; $i++){ 
-                                       echo" 
-                                       <div class='form-check'>
-                                           <input class='form-check-input' type='checkbox'  id='checkbox1' disabled>
-                                           <label class='form-check-label' for='checkbox1'>";
-                                                 echo $items[$i] ;
-                                         echo"    </label>
-                                                 
-                                                 </div>";        
-                                            }
+                    <button type="submit" class="styled-link-button">
+                        <h5 class="card-title"><?= $notes->get_title(); ?></h5>
+                        <div class="hidden-checkboxes">
+                            <!-- Loop through items -->
+                            <?php
+                            $id = $notes->get_id();
+                            $items = $notes->get_items();
+                            if (!empty($items)) {
+                                for ($i = 0; $i < sizeof($items); $i++) {
+                                    echo "
+                                    <div class='form-check'>
+                                        <input class='form-check-input' type='checkbox'  id='checkbox1' disabled>
+                                        <label class='form-check-label' for='checkbox1'>";
+                                    echo $items[$i];
+                                    echo "</label></div>";
                                 }
-                                            ?>
-                                    </button>
-                        
-                    
-                    
-                    </form>
+                            }
+                            ?>
+                        </div>
+                    </button>
+                </form>
 
-                
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">Suivant</button>
                 </div>
             </div>
-                            </div>
-                    </div>
-            
-        
-    
-<?php
-$id=null;
-$items=null;
-$notes=null;
-?>
+        </div>
+    </div>
+
+    <?php
+    $id = null;
+    $items = null;
+    $notes = null;
+    ?>
 </body>
 
 </html>
