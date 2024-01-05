@@ -17,6 +17,7 @@ public function index(): void{
     $password = '';
     $errors = [];
     if (isset($_POST['pseudo']) && isset($_POST['password'])) { //note : pourraient contenir des chaînes vides
+
         $pseudo = Tools::sanitize($_POST['pseudo']);
         $password = Tools ::sanitize($_POST['password']);
 
@@ -24,11 +25,13 @@ public function index(): void{
         if (empty($errors)) {
             $this->log_user(User::get_user_by_mail($pseudo));
             $this->redirect("Notes"); 
+            $_SESSION=session_start();
+
         }
     }
     (new View("login"))->show(["pseudo" => $pseudo, "password" => $password, "errors" => $errors]);
 
   }
-  
+
 }
 ?>
