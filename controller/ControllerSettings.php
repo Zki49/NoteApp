@@ -11,15 +11,19 @@ class ControllerSettings extends Controller {
     }
 
     public function editProfile() : void {
+    
         $user = User::get_user_by_mail("boverhaegen@epfc.eu"); /* $this->get_user_or_redirect(); */
-        (new view("editProfile"))->show(["user"=>$user]);
+        $errors=[];
 
         if(isset($_POST["mail"]) && isset($_POST["fullname"])){
             $mail=Tools::sanitize($_POST["mail"]);
+        
             $fullname=Tools::sanitize($_POST["fullname"]);  
-
-            $user->edit_profil($mail, $fullname);
+            
+            $errors=$user->edit_profil($mail, $fullname);
         }
+
+        (new view("editProfile"))->show(["user"=>$user,"errors"=>$errors]);
     }
 
     public function logout() : void {
@@ -29,15 +33,29 @@ class ControllerSettings extends Controller {
 
     public function changePassword() : void {
         $user=User::get_user_by_mail("boverhaegen@epfc.eu"); /* $this->get_user_or_redirect(); */
-        (new view("changePassword"))->show(["user"=>$user]);
+        
+        var_dump($_POST["password"]);
+        if(isset($_POST["password"]) && isset($_POST["confirmPassword"]) && isset($_POST["oldPassword"])){
 
-        if(isset($_POST["password"])){
-            $password=Tools::sanitize($_POST["password"]);
+            $oldPassword=Tools::sanitize($_POST["oldPassword"]);
+            if($user->validate_login($user->get_mail(), $oldPassword)){
+                $password=Tools::sanitize($_POST["password"]);
             $errors=$user->set_password($password);
+        
+        
+            $confirmPassword=Tools::sanitize($_POST["confirmPassword"]);
+
+            $errors=User::validate_passwords($password, $confirmPassword);
+            var_dump($errors);
+
             if(!empty($errors)){
+                $user->set_password($password);
+                $user->persist();
                 (new view("changePassword"))->show(["user"=>$user, "error"=>$errors]);
             }
+            }
         }
+        (new view("changePassword"))->show(["user"=>$user]);
     }
 }
 ?>
