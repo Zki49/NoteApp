@@ -10,6 +10,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <title>Signin Template for Bootstrap</title>
   <!-- Custom styles for this template -->
+  <style>
+    body{
+      background-color: black;
+      color: white;
+    }
+    
+  </style>
 </head>
 <body class="text-center">
   <div class="container mt-5">  
@@ -19,15 +26,11 @@
     <input type="email" name="pseudo" id="pseudo" class="form-control" placeholder="Email address" required autofocus value="<?= $pseudo ?>">
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" name="password" id="password" class="form-control" placeholder="Password" required value="<?= $password ?>">
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
+    
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     
 
-    <a href="signup/index" class="btn btn-primary btn-block">Sing up</a>
+    <a href="signup/index" >Sing up</a>
     
 
     <?php
