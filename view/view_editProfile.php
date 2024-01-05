@@ -66,13 +66,13 @@
                             <div class="form-group">
                                 <label for="username">Username:</label>
                                 <input type="text" class="form-control form-control-lg" id="username"
-                                    placeholder="Enter your username">
+                                    value="<?= $user->get_fullnam()?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email:</label>
                                 <input type="email" class="form-control form-control-lg" id="email"
-                                    placeholder="Enter your email">
+                                value="<?= $user->get_mail()?>">
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>

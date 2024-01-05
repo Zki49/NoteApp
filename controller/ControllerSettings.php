@@ -6,12 +6,12 @@ class ControllerSettings extends Controller {
 
     public function index(): void{
         
-        $user = User::get_user_by_mail("boverhaegen@epfc.eu"); /*$this->get_user_or_redirect();*/
+        $user = $this->get_user_or_redirect();
         (new View("settings"))->show(["user"=>$user]);
     }
 
     public function editProfile() : void {
-        $user = User::get_user_by_mail("boverhaegen@epfc.eu"); /* $this->get_user_or_redirect(); */
+        $user = $this->get_user_or_redirect(); 
         (new view("editProfile"))->show(["user"=>$user]);
 
         if(isset($_POST["mail"]) && isset($_POST["fullname"])){
@@ -28,7 +28,7 @@ class ControllerSettings extends Controller {
     }
 
     public function changePassword() : void {
-        $user=User::get_user_by_mail("boverhaegen@epfc.eu"); /* $this->get_user_or_redirect(); */
+        $user= $this->get_user_or_redirect(); 
         (new view("changePassword"))->show(["user"=>$user]);
 
         if(isset($_POST["password"])){
