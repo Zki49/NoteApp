@@ -21,7 +21,7 @@ class Notecheck extends Note{
         }
         
     }
-    public  function get_items(){
+    public  function get_items():array{
         return $this->content;
     }
     private static function get_item(int $id) : array  {
