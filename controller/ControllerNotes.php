@@ -29,7 +29,12 @@ class ControllerNotes extends Controller{
        if($array_notes && $array_notesCheck){
             $array_note = array_merge($array_notes,$array_notesCheck);
             usort($array_note, array($this, "comparenote"));
-        }                                                          /*donne un seul tableau avec toute les notes 
+        }elseif($array_notes){
+          $array_note = $array_notes;
+        }elseif($array_notesCheck){
+          $array_note = $array_notesCheck;
+        }
+                                                                  /*donne un seul tableau avec toute les notes 
                                                                    et on peut les identifier gracce a la methode 
                                                                    are you check qui dit si cest une check notes ou pas*/
       $tab_shared = User::array_shared_user_by_mail($user);   
@@ -54,9 +59,18 @@ class ControllerNotes extends Controller{
     public function archive():void{
       $mode="archive";
       $user = $this->get_user_or_redirect();
+      $array_note=[];
         $array_notes = Notetext::get_notes_by_user($user);
         $array_notesCheck = Notecheck::get_notes_by_user($user);
-        $array_note = array_merge($array_notes,$array_notesCheck);
+        if($array_notes && $array_notesCheck){
+          $array_note = array_merge($array_notes,$array_notesCheck);
+          usort($array_note, array($this, "comparenote"));
+      }elseif($array_notes){
+        $array_note = $array_notes;
+      }elseif($array_notesCheck){
+        $array_note = $array_notesCheck;
+      }
+               
         $tab_shared = User::array_shared_user_by_mail($user);  
         ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
