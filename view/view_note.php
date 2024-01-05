@@ -56,7 +56,6 @@
                 <!-- Formulaire caché -->
                 <form action="notes/open" method="post">
                 <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
-                <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
                  
                 <!-- Lien stylisé comme un bouton de soumission de formulaire -->
                 <button type="submit" class="styled-link-button">
