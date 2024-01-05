@@ -25,19 +25,25 @@ class User extends Model{
     return $data['id'] ;
    }
 
-    public function edit_profil(string $mail,string $fullname):void{
+    public function edit_profil(string $mail,string $fullname):array{
       //peut etre ajoute par le suite une upgrade de role ???? 
 
+        $errors=[];
         if($this->fullname!==$fullname){
          $errors= User ::check_fullname($fullname);
+
          if(empty($errors)){
             $this->fullname=$fullname;
          }
        }
-       if($this->mail!==$mail){
-         $this->set_mail($mail);
-         
+       if(empty($mail)){
+            $mail=$this->mail;
        }
+
+       self::execute("UPDATE users SET hashed_password = :password ,mail=:newMail ,full_name =:fullname ,role =:role WHERE mail =:mail ", 
+                          [ "mail"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role, "newMail"=>$mail]);
+
+       return $errors;
     }
     public function get_mail() : string{
         return $this->mail;
@@ -62,11 +68,12 @@ class User extends Model{
 
     public function persist() : User {
         if(self::get_user_by_mail($this->mail))
-            self::execute("UPDATE users SET password=:password ,mail=:mail ,full_name =:fullname ,role =:role WHERE mail=:mail ", 
+            self::execute("UPDATE users SET hashed_password=:password ,mail=:mail ,full_name =:fullname ,role =:role WHERE mail=:mail ", 
                           [ "mail"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
         else
             self::execute("INSERT INTO users(mail,hashed_password,full_name,role) VALUES(:mail,:password,:fullname,:role)", 
                           ["mail"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role]);
+
 
         return $this;
     }
