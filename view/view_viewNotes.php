@@ -16,6 +16,9 @@
         text-decoration: none;
         color:white;
       }
+      h4{
+        color:white;
+      }
     </style>    
 </head>
 <body class="bg-dark">
@@ -39,7 +42,9 @@
       }
     }
       echo"</div>";
-  }
+  }else{
+      echo"<h4>your note are empty</h4> ";
+    }
   }else{
     if(!empty($array_notes)){
      
@@ -98,7 +103,7 @@
   ?>
 
   <li class="nav-item">
-    <a class="nav-link link-secondary" href="#">Settings</a>
+    <a class="nav-link link-secondary" href="settings">Settings</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled" aria-disabled="true">Disabled</a>

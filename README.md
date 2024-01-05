@@ -8,7 +8,9 @@
   * bepenelle@epfc.eu, password "Password1,", utilisateur
   * xapigeolet@epfc.eu, password "Password1,", utilisateur
   * mamichel@epfc.eu, password "Password1,", utilisateur
-  * A compléter...
+  * 1509yadenis@student.epfc.eu , password "Password2,",utilisateur
+  * 2802mafaure@student.epfc.eu , password "Password2,",utilisateur
+  * 0901zaguendouizi@student.epfc.eu , password "Password2,",utilisateur
 
 ### Liste des bugs connus
 

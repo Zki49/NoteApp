@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="fr" >
 <head class="bg-dark">
@@ -16,7 +17,9 @@
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
 <div class="row">
 <?php
+
    if ($mode===" "){
+
    if(!empty($array_notes)){
      
       echo"<div class=row>";
@@ -101,6 +104,7 @@
 </div>
 </body>
 </html>
+
 
 
 

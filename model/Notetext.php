@@ -1,10 +1,10 @@
 <?php
 
 class Notetext extends Note{
-
      
     public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string|null $description,$id) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
+
     }
     public function get_description():string |null{
         return $this->description;
@@ -12,6 +12,7 @@ class Notetext extends Note{
     public function set_description(string $description):void{
          $this->description=$description;
     }
+
 
     public static function get_note_by_id(int $id): Notetext |false{
         $query = self::execute("SELECT * FROM text_notes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
@@ -64,11 +65,12 @@ class Notetext extends Note{
     public function are_you_check(): bool{
         return false ;
  }
+
  public function delete():void{
      self::execute("DELETE from text_notes WHERE id=:id;
     DELETE from notes WHERE id = :id",["id"=>$this->get_id()]);
 
  }
- 
+
 }
 ?>
