@@ -50,7 +50,6 @@
 
                 <form action="notes/open" method="post">
                     <input type="hidden" name="idnotes" value="<?= $notes->get_id() ?>">
-                    <input type="hidden" name="check" value="<?= $notes->are_you_check() ?>">
 
                     <button type="submit" class="styled-link-button">
                         <h5 class="card-title"><?= $notes->get_title(); ?></h5>

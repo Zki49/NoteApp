@@ -11,12 +11,12 @@ class Notecheck extends Note{
     }
 
     public static function get_note_by_id(int $id): Notecheck |false{
-        $query = self::execute("SELECT * FROM check_listnotes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
+        $query = self::execute("SELECT * FROM checklist_notes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
         $data = $query->fetch(); // un seul résultat au maximum
         if ($query->rowCount() == 0) { 
             return false;
         } else {
-            return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),$data["created_at"],$data["edited_at"],$data["pinned"],
+            return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"],
                                 $data["archived"],$data["weight"],self::get_item($id),$id);
         }
         
