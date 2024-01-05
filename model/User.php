@@ -85,10 +85,14 @@ class User extends Model{
    // besoin pour les notes 
     public static function get_user_by_id(int $id) : User|false {
         $query = self::execute("SELECT * FROM users where id = :id", ["id"=>$id]);
-        $data= $query->fetchAll();
+        $data = $query->fetch(); // un seul résultat au maximum
+        if ($query->rowCount() == 0) {
+            return false;
+        } else {
 
             return new User($data["mail"], $data["hashed_password"],$data["full_name"],$data["role"]);
         }
+    }
     
   
 
