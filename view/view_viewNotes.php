@@ -16,6 +16,9 @@
         text-decoration: none;
         color:white;
       }
+      h4{
+        color:white;
+      }
     </style>    
 </head>
 <body class="bg-dark">
@@ -39,7 +42,9 @@
       }
     }
       echo"</div>";
-  }
+  }else{
+      echo"<h4>your note are empty</h4> ";
+    }
   }else{
     if(!empty($array_notes)){
      
