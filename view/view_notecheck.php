@@ -59,12 +59,12 @@
                             $id = $notes->get_id();
                             $items = $notes->get_items();
                             if (!empty($items)) {
-                                for ($i = 0; $i < sizeof($items); $i++) {
+                                foreach ($items as $item) {
                                     echo "
                                     <div class='form-check'>
                                         <input class='form-check-input' type='checkbox'  id='checkbox1' disabled>
                                         <label class='form-check-label' for='checkbox1'>";
-                                    echo $items[$i];
+                                    echo $item;
                                     echo "</label></div>";
                                 }
                             }

@@ -250,7 +250,7 @@ class ControllerNotes extends Controller{
     }
 
     public function additem():void{
-       $mode="edit";
+       $mode="mode";
        if(isset($_POST["newitem"]) && isset($_POST["idnotes"])){
           $new = Tools::sanitize($_POST["newitem"]);
           $id = Tools::sanitize($_POST["idnotes"]);

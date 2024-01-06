@@ -48,13 +48,13 @@
       <?php
        $items=$notes->get_items();
        $id=$notes->get_id();
-        for($i=0 ; $i<sizeof($items) ;$i++){
+        foreach($items as $item){
             echo"<div class='input-group mb-3'>
             <div class='input-group-text'>
                 <input class='form-check-input mt-0' type='checkbox' value='' aria-label='Checkbox for following text input'>
             </div>
             <input type='text' class='form-control' aria-label='Text input with checkbox' value='";
-             echo "$items[$i] ' ";
+             echo "$item ' ";
              if(!empty($mode)){echo" ";}else{echo "readonly";}
              echo">
              </div>" ;
