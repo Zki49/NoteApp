@@ -31,7 +31,7 @@ class Notecheck extends Note{
         $data= $query->fetchAll();
         $result=[];
         foreach($data as $row){
-           $result[$row["id"]] = $row["content"];
+           $result[] = $row["content"];
         }
         return $result;
         
