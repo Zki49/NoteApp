@@ -30,10 +30,14 @@ class Notecheck extends Note{
                                 WHERE cl.checklist_note = :id", ["id"=>$id]);
         $data= $query->fetchAll();
         $result=[];
+        $result1=[];
         foreach($data as $row){
-           $result[] = $row["content"];
+           $result[$row["id"]] = $row["content"];
+           $result1[$row["content"]] = $row["checked"];
+
         }
-        return $result;
+
+        return $result1;
         
     }
     public function item_is_checked(int $id): bool {
