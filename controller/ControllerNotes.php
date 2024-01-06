@@ -157,6 +157,14 @@ class ControllerNotes extends Controller{
         }
       }
     }
+    public function moveup():void{
+      if(isset($_POST["idnotes"])){
+        $id=Tools::sanitize($_POST["idnotes"]);
+        $note= Notetext::get_note_by_id($id);
+        $note->get_weight_notes_by_user();
+      }
+      $this->redirect("notes");
+    }
 
     public function move_note():void {
       $user = $this->get_user_or_redirect();

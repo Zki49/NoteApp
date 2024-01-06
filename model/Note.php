@@ -84,18 +84,18 @@ abstract class Note  extends Model{
             return $results;
         }
     }
-    public function get_weight_notes_by_user(User $user) : void {
-        $query = self::execute("SELECT * 
+    public function get_weight_notes_by_user() : void {
+        $query = self::execute("SELECT * ,n.id idnote
                                 FROM notes n ,users u  
                                 WHERE n.owner = u.id
                                 and u.mail = :mail
-                                HAVING n.weight > :weight  
-                                ORDER BY `n`.`weight` ASC" , ["mail" => $user->get_mail(), "weight" => $this->get_weight()]);
+                                and n.weight > :weight  
+                                ORDER BY `n`.`weight` ASC" , ["mail" => $this->owner->get_mail(), "weight" => $this->get_weight()]);
         $data = $query->fetchAll();
         if (!empty($data)){
             foreach($data as $row){
                 if ($row['pinned'] === 0){
-                    $note_tmp = new Notetext($row['title'],$user,$row['create_at'],$row['edited_at'],$row['pinned'],$row['archived'],$row['weight'],"",$row['id']);
+                    $note_tmp = new Notetext($row['title'],$this->owner,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row["content"],$row['idnote']);
                     $tmp = $note_tmp->get_weight();
                     $note_tmp->set_weight($this->get_weight());
                     $this->set_weight($tmp);

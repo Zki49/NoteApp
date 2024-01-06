@@ -68,10 +68,12 @@
                 </form>
 
                 <div class="d-flex justify-content-between">
-                    <?php ?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
+                    <form action="notes/moveup" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                    <button type="submit" class="btn btn-primary" >
                         <<
                     </button>
+                   </form>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
                         >>
                     </button>
