@@ -249,5 +249,12 @@ class ControllerNotes extends Controller{
       (new View("addcheck"))->show(["errors" => $errors , "title"=>$title]);
     }
 
+    public function additem():void{
+       if(isset($_POST["newitem"])){
+          $new=Tools::sanitize($_POST["newitem"]);
+          var_dump($new);
+       }
+    }
+
  }
 ?>
