@@ -5,6 +5,7 @@ require_once "model/User.php";
 require_once "model/Note.php";
 require_once "model/Notetext.php";
 require_once "model/Notecheck.php";
+require_once "model/Notemixte.php";
 
 
 class ControllerNotes extends Controller{ 
@@ -160,7 +161,7 @@ class ControllerNotes extends Controller{
     public function moveup():void{
       if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
-        $note= Notetext::get_note_by_id($id);
+        $note= Notemixte::get_note_by_id($id);
         $note->get_weight_notes_by_user();
       }
       $this->redirect("notes");
@@ -169,7 +170,7 @@ class ControllerNotes extends Controller{
     public function move_note():void {
       $user = $this->get_user_or_redirect();
       $note = $_GET['param1'];
-      $notes = Notetext::get_note_by_id($note);
+      $notes = Notemixte::get_note_by_id($note);
       $notes->get_weight_notes_by_user($user);
     }
     public function delete():void{
