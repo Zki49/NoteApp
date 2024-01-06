@@ -68,11 +68,17 @@
                 </form>
 
                 <div class="d-flex justify-content-between">
+                    <?php
+                    if(!(($notes->max_weight() - $notes->get_weight())==0)){
+                    ?>
                     <form action="notes/moveup" method="post">
                 <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
                     <button type="submit" class="btn btn-primary" >
                         <<
                     </button>
+                    <?php
+                    }
+                    ?>
                    </form>
                    <form action="notes/movedown" method="post">
                 <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">

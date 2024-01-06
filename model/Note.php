@@ -106,11 +106,11 @@ abstract class Note  extends Model{
       }
       return true;
     }
-    public function max_weight(string $mail){ 
+    public function max_weight(){ 
         $query =self::execute("SELECT * from notes n
                                JOIN users u on n.owner=u.id 
                                WHERE mail = :mail
-                               ORDER by weight DESC ",["mail"=>$mail]);
+                               ORDER by weight DESC ",["mail"=>$this->owner->get_mail()]);
         $data = $query->fetch();//on pren que la premiere ligne 
         if($query->rowCount()==0){
             return 0;

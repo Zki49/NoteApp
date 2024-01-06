@@ -222,7 +222,7 @@ class ControllerNotes extends Controller{
           if($note==false){
            $user= $this->get_user_or_redirect();
             $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
-            $weight= $note->max_weight($user->get_mail());
+            $weight= $note->max_weight();
             $note->set_weight($weight+1);
             $error=$note->set_title($title);
             $note->set_description($text);
@@ -257,7 +257,7 @@ class ControllerNotes extends Controller{
         $notes = new Notecheck($title,$userOwner,new DateTime("now"),null,false,false,0,[],0);
         $user=$this->get_user_or_redirect();
         $error = $notes->set_title($title);
-        $weight= $notes->max_weight($user->get_mail());
+        $weight= $notes->max_weight();
         $notes->set_weight($weight+1);
         
 
