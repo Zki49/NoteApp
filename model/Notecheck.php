@@ -31,10 +31,21 @@ class Notecheck extends Note{
         $data= $query->fetchAll();
         $result=[];
         foreach($data as $row){
-           $result[]= $row["content"];
+           $result[$row["id"]] = $row["content"];
         }
         return $result;
         
+    }
+    public function item_is_checked(int $id): bool {
+        $query = self::execute("SELECT * 
+                                FROM checklist_note_items cl 
+                                WHERE cl.id = :id
+                                and cl.checked = 1", ["id"=>$id]);
+        $data= $query->fetchAll();
+        if (count($data) > 0){
+            return true;
+        }
+        return false;
     }
     //encore un peut de mofi et on y est 
     public static function get_notes_by_user(User $user): array |false {
