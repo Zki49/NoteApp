@@ -74,13 +74,18 @@
                 </form>
 
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
+                <form action="notes/moveup" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                    <button type="submit" class="btn btn-primary" >
                         <<
                     </button>
-                    
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
+                   </form>
+                   <form action="notes/movedown" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                    <button type="submit" class="btn btn-primary" >
                         >>
                     </button>
+                   </form>
                 </div>
             </div>
         </div>

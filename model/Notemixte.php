@@ -62,5 +62,26 @@ return $results;
             }
         }
     }
+    public function movedown() : void {
+        $query = self::execute("SELECT * ,n.id idnote
+                                FROM notes n  
+                                WHERE n.owner = :owner
+                                and n.weight < :weight  
+                                ORDER BY `n`.`weight` desc" , ["owner" => $this->get_idowner(), "weight" => $this->get_weight()]);
+        $data = $query->fetchAll();
+        if (!empty($data)){
+            foreach($data as $row){
+                if ($row['pinned'] === 0){
+                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
+                    $tmp = $note_tmp->get_weight();
+                    $note_tmp->set_weight($this->get_weight());
+                    $this->set_weight($tmp);
+                    $this->persist();
+                    $note_tmp->persist();
+                    return;
+                }
+            }
+        }
+    }
  }
  ?>
