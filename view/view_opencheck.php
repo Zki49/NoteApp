@@ -47,6 +47,7 @@
     
       <?php
        $items=$notes->get_items();
+       $id=$notes->get_id();
         for($i=0 ; $i<sizeof($items) ;$i++){
             echo"<div class='input-group mb-3'>
             <div class='input-group-text'>
@@ -73,11 +74,14 @@
  </button>
         </div>
             <input type='text' class='form-control' aria-label='Text input with checkbox'  name='newitem'>
-            <input type='hidden' name='idnotes' value='<?= $notes->get_id()?>'>
+            <input type='hidden' name='idnotes' value='<?=$id?>'>
         </div>
         </form>";
         
        }
+       $id=null;
+       $notes=null;
+       $items=null;
         ?>
     
   
