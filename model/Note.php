@@ -108,9 +108,9 @@ abstract class Note  extends Model{
     }
 
     public function persist(){
-        if(/*self::get_note_by_id($this->get_id())*/ true){
+        if($this->get_note_by_id($this->get_id())){
             self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ", 
-            [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->get_weight(),
+            [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->archived(),
                "id"=>$this->get_id()]);
         }
     }

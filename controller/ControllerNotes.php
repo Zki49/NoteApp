@@ -87,9 +87,9 @@ class ControllerNotes extends Controller{
       }
     }
     public function pinned():void{
-      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+      if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
-        if($_POST["check"]===true){
+        if(Note::iamcheck($id)){
           $notes= Notecheck::get_note_by_id($id);
         }else{
         $notes= Notetext::get_note_by_id($id);
@@ -102,10 +102,11 @@ class ControllerNotes extends Controller{
     }
 
     public function archived():void{
-      if(isset($_POST["idnotes"])&& isset($_POST["check"])){
+      if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
-        if($_POST["check"]===true){
+        if(Note::iamcheck($id)){
           $notes= Notecheck::get_note_by_id($id);
+          
         }else{
         $notes= Notetext::get_note_by_id($id);
         }
