@@ -62,9 +62,7 @@
                                 for ($i = 0; $i < sizeof($items); $i++) {
                                     echo "
                                     <div class='form-check'>
-                                        <input class='form-check-input' type='checkbox'  id='checkbox1' ";
-                                         if(!empty($mode)){echo" ";}else{echo "readonly";}
-                                        echo ">
+                                        <input class='form-check-input' type='checkbox'  id='checkbox1' disabled>
                                         <label class='form-check-label' for='checkbox1'>";
                                     echo $items[$i];
                                     echo "</label></div>";

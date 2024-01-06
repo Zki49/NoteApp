@@ -47,7 +47,9 @@
                 <input class='form-check-input mt-0' type='checkbox' value='' aria-label='Checkbox for following text input'>
             </div>
             <input type='text' class='form-control' aria-label='Text input with checkbox' value='";
-             echo "$items[$i] ' readonly>
+             echo "$items[$i] ' ";
+             if(!empty($mode)){echo" ";}else{echo "readonly";}
+             echo">
              </div>" ;
        }
       ?>
