@@ -73,6 +73,7 @@
  </button>
         </div>
             <input type='text' class='form-control' aria-label='Text input with checkbox'  name='newitem'>
+            <input type='hidden' name='idnotes' value='<?= $notes->get_id()?>'>
         </div>
         </form>";
         

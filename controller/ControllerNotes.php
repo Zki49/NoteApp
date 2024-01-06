@@ -250,9 +250,18 @@ class ControllerNotes extends Controller{
     }
 
     public function additem():void{
-       if(isset($_POST["newitem"])){
-          $new=Tools::sanitize($_POST["newitem"]);
-          var_dump($new);
+       $mode="edit";
+       if(isset($_POST["newitem"]) && isset($_POST["idnotes"])){
+          $new = Tools::sanitize($_POST["newitem"]);
+          $id = Tools::sanitize($_POST["idnotes"]);
+          if(Note::iamcheck($id)){
+              $note = Notecheck::get_note_by_id($id);
+              $note->additem($new);
+              $note = Notecheck::get_note_by_id($id);
+              (new View("editnote"))->show(["notes"=>$note,"mode"=>$mode]);
+            
+          }
+          
        }
     }
 

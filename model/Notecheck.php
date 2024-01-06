@@ -99,6 +99,10 @@ class Notecheck extends Note{
           }
           return $array_error;
      }
+
+     public function additem(string $new):void{
+         self::execute("insert into checklist_note_item (checklist_note ,content) VALUES( :id,$new) ",["id"=>$this->get_id()]);
+     }
     
 
 }
