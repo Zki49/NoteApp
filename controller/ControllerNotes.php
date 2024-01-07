@@ -313,9 +313,10 @@ class ControllerNotes extends Controller{
           $id = Tools::sanitize($_POST["idnotes"]);
           if(Note::iamcheck($id)){
               $note = Notecheck::get_note_by_id($id);
-              $note->additem($new);
+              $error=$note->additem($new);
               $note = Notecheck::get_note_by_id($id);
-              (new View("editnote"))->show(["notes"=>$note,"mode"=>$mode]);
+              var_dump($error);
+              (new View("editnote"))->show(["notes"=>$note,"mode"=>$mode,"errors"=>$error]);
             
           }
           

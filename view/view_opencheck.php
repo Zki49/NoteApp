@@ -83,6 +83,14 @@
         </div>
         </form>";
        }
+      
+       if(!empty($errors)){
+        foreach($errors as $error){
+            echo "<li>";
+            echo $error;
+            echo "</li>";
+        }
+    }
        $id=null;
        $notes=null;
        $items=null;
