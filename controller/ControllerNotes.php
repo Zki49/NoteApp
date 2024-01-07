@@ -111,12 +111,27 @@ class ControllerNotes extends Controller{
         }else{
         $notes= Notetext::get_note_by_id($id);
         }
+        //decomenter tout les comentaire pour prg 
+       // $notes = Notemixte::get_note_by_id($id);
         $notes->set_archived();
         $notes->persist();
-        
-      (new View("opennote"))->show(["notes"=>$notes]);
+        (new View("opennote"))->show(["notes"=>$notes]);
+       // $this->redirect("notes","reopen",$id);
       }
 
+     }
+     public function reopen():void{
+      if(isset($_GET["param1"])){
+        $id = Tools::sanitize($_GET["param1"]);
+        if(Note::iamcheck($id)){
+          $notes= Notecheck::get_note_by_id($id);
+          
+        }else{
+        $notes= Notetext::get_note_by_id($id);
+        }
+        (new View("opennote"))->show(["notes"=>$notes]);
+      }
+      $this->redirect("notes");
      }
 
      public function edit():void{
