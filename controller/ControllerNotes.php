@@ -112,7 +112,7 @@ class ControllerNotes extends Controller{
         $notes= Notetext::get_note_by_id($id);
         }
         //decomenter tout les comentaire pour prg 
-       // $notes = Notemixte::get_note_by_id($id);
+        //$notes = Notemixte::get_note_by_id($id);
         $notes->set_archived();
         $notes->persist();
         (new View("opennote"))->show(["notes"=>$notes]);
