@@ -28,16 +28,16 @@
 <?php
    if ($mode===" "){
    if(!empty($array_notes)){
-     
+     var_dump(count($array_notes));
       echo"<div class=row>";
        foreach($array_notes as $notes){
             if(!$notes-> archived()){
             if($notes->are_you_check()){
               echo '<div class="col-6 col-md-6 col-lg-3">';
-              (new View("notecheck"))->show(["notes"=>$notes]);
+              (new View("notecheck"))->show(["notes"=>$notes , "pos"=> ""]);
             }else{
               echo '<div class="col-6 col-md-6 col-lg-3">';
-              (new View("note"))->show(["notes"=>$notes]);
+              (new View("note"))->show(["notes"=>$notes,"pos"=> ""]);
             }
             echo"</div>";   
       }
@@ -61,6 +61,7 @@
           }
           echo"</div>";   
     }
+    
   }
     echo"</div>";
 }}

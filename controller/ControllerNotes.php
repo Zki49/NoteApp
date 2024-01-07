@@ -139,20 +139,28 @@ class ControllerNotes extends Controller{
 
       
     }
-    public function note_is_first_or_last() : string {
+    public function note_is_first_or_last(int $id) : void {
       $last = "last";
       $first = "first";
       $user = $this->get_user_or_redirect();
       $array_note = Note::get_notes_by_user($user);
-      if(isset($_GET["param1"])){
-        $id = Tools::sanitize($_GET["param1"]);
+      if(isset($_GET["idnotes"])){
+        $id = Tools::sanitize($_GET["idnotes"]);
         $note = Notecheck::get_note_by_id($id);
         foreach($array_note as $row){
-          if(key($array_note)== 0 && $row->get_id() == $note->get_id()){
-            return $first;
+          if(key($array_note) == 0 && $row->get_id() == $note->get_id()){
+            if($note->are_you_check()){
+              (new View("notecheck"))->show(["notes"=>$note , "pos"=>$first]);
+            }else{
+              (new View("note"))->show(["notes"=>$note, "pos"=>$first]);
+            }
           }
-          if(key($array_note)== end($array_note) && $row->get_id() == $note->get_id()){
-            return $last;
+          if(key($array_note) == end($array_note) && $row->get_id() == $note->get_id()){
+            if($note->are_you_check()){
+              (new View("notecheck"))->show(["notes"=>$note , "pos"=>$last]);
+            }else{
+              (new View("note"))->show(["notes"=>$note, "pos"=>$last]);
+            }
           }
         }
       }

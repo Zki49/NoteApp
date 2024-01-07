@@ -68,13 +68,29 @@
                 </form>
 
                 <div class="d-flex justify-content-between">
-                    <?php ?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
-                        <<
-                    </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
-                        >>
-                    </button>
+                <form action="notes/note_is_first_or_last" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                    <?php
+                    if ($pos == "first"){
+                        echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#nextModal'>
+                               >>
+                              </button>";
+                    }
+                    if ($pos == "last"){
+                        echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#nextModal'>
+                                <<
+                              </button>";
+                    }else{
+                        echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#nextModal'>
+                                    <<
+                                </button>
+                                    
+                                <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#nextModal'>
+                                    >>
+                                </button>";
+                    }
+                    ?>
+                    </form>
                 </div>
             </div>
         </div>
