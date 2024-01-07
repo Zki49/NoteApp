@@ -61,10 +61,11 @@
              echo">
              </div>" ;
        }
+       echo" </form>";
       
        if(!empty($mode)){ 
         echo"
-        <form action='notes/additem' metod='post'>  
+        <form action='notes/additem' method='post'>  
         <div class='input-group mb-3'>
         <div class='input-group-text'>
         <button type='submit' class='styled-link-button'>
@@ -75,16 +76,18 @@
  </button>
         </div>
             <input type='text' class='form-control' aria-label='Text input with checkbox'  name='newitem'>
-            <input type='hidden' name='idnotes' value='<?=$id?>'>
+            <input type='hidden' name='idnotes' value='" ;
+            echo $id ;
+            echo"'>
+            
         </div>
         </form>";
-        
        }
        $id=null;
        $notes=null;
        $items=null;
         ?>
-    
+   
   
 </body>
 

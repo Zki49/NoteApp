@@ -115,7 +115,7 @@ class Notecheck extends Note{
      }
 
      public function additem(string $new):void{
-         self::execute("insert into checklist_note_item (checklist_note ,content) VALUES( :id,$new) ",["id"=>$this->get_id()]);
+         self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
      }
      public function deleteitem(string $item){
        self::execute("delete from checklist_note_items where checklist_note = :id and content = :item ",
