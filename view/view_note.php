@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <base href="<?= $web_root ?>"/>
@@ -18,17 +17,14 @@
             border-radius: 10px;
             padding: 10px;
         }
-
         .card-title {
             border-bottom: 1px solid white;
             margin-bottom: 10px;
         }
-
         .d-flex {
             border-top: 1px solid white;
             padding-top: 10px;
         }
-
         .truncate-text {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -37,7 +33,6 @@
             -webkit-box-orient: vertical;
             height: 4.5em;
         }
-
         .styled-link-button {
             background: none;
             border: none;
@@ -47,9 +42,7 @@
         }
     </style>
 </head>
-
 <body>
-
     <div class="container">
         <div class="card half-width">
             <div class="card-body">
@@ -66,36 +59,29 @@
                     </p>
                 </button>
                 </form>
-
                 <div class="d-flex justify-content-between">
-                <form action="notes/note_is_first_or_last" method="post">
-                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
                     <?php
-                    if ($pos == "first"){
-                        echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#nextModal'>
-                               >>
-                              </button>";
-                    }
-                    if ($pos == "last"){
-                        echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#nextModal'>
-                                <<
-                              </button>";
-                    }else{
-                        echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#nextModal'>
-                                    <<
-                                </button>
-                                    
-                                <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#nextModal'>
-                                    >>
-                                </button>";
-                    }
+                    if(!(($notes->max_weight() - $notes->get_weight())==0)){
+                    if(($notes->max_weight() - $notes->get_weight())!=0){
                     ?>
-                    </form>
+                    <form action="notes/moveup" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                    <button type="submit" class="btn btn-primary" >
+                        <<
+                    </button>
+                    <?php
+                    }}
+                    ?>
+                   </form>
+                   <form action="notes/movedown" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                    <button type="submit" class="btn btn-primary" >
+                        >>
+                    </button>
+                   </form>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
-
 </html>

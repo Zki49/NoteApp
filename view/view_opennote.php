@@ -45,6 +45,10 @@
             background-color: black;
             color: white;
         }
+        .form-container {
+            display: inline-block;
+            margin-right: 10px; /* Espace entre les formulaires, ajustez selon vos besoins */
+        }
        
     </style>
 </head>
@@ -72,7 +76,7 @@
   <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5m-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/>
 </svg>
                         </a>
-                        <form action=" notes/pinned" method="post">
+                        <form class="form-container"   action=" notes/pinned" method="post">
                 <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
                 <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
                  
@@ -94,7 +98,7 @@
                         
                 </button>
                 </form>
-                <form action="notes/archived" method="post">
+                <form  class="form-container"  action="notes/archived" method="post">
                 <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
                 <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
                  
@@ -115,7 +119,7 @@
                             
                         </button>
                          </form> 
-                         <form action="notes/edit" method="post">
+                         <form  class="form-container"   action="notes/edit" method="post">
                             <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
                               <input type="hidden" name="check" value="<?= $notes->are_you_check()?>"> 
                              

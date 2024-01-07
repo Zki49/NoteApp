@@ -48,6 +48,7 @@ abstract class Note  extends Model{
     public function get_idowner():int{
        return $this->owner->get_id();
     }
+    
     private  function validate_title($title):array{
         $errors=[];
         
@@ -84,28 +85,7 @@ abstract class Note  extends Model{
             return $results;
         }
     }
-    public function get_weight_notes_by_user(User $user) : void {
-        $query = self::execute("SELECT * 
-                                FROM notes n ,users u  
-                                WHERE n.owner = u.id
-                                and u.mail = :mail
-                                HAVING n.weight > :weight  
-                                ORDER BY `n`.`weight` ASC" , ["mail" => $user->get_mail(), "weight" => $this->get_weight()]);
-        $data = $query->fetchAll();
-        if (!empty($data)){
-            foreach($data as $row){
-                if ($row['pinned'] === 0){
-                    $note_tmp = new Notetext($row['title'],$user,$row['create_at'],$row['edited_at'],$row['pinned'],$row['archived'],$row['weight'],"",$row['id']);
-                    $tmp = $note_tmp->get_weight();
-                    $note_tmp->set_weight($this->get_weight());
-                    $this->set_weight($tmp);
-                    $this->persist();
-                    $note_tmp->persist();
-                    return;
-                }
-            }
-        }
-    }
+  
 
     public function persist(){
         if($this->get_note_by_id($this->get_id())){
@@ -126,11 +106,11 @@ abstract class Note  extends Model{
       }
       return true;
     }
-    public function max_weight(string $mail){ 
+    public function max_weight(){ 
         $query =self::execute("SELECT * from notes n
                                JOIN users u on n.owner=u.id 
                                WHERE mail = :mail
-                               ORDER by weight DESC ",["mail"=>$mail]);
+                               ORDER by weight DESC ",["mail"=>$this->owner->get_mail()]);
         $data = $query->fetch();//on pren que la premiere ligne 
         if($query->rowCount()==0){
             return 0;

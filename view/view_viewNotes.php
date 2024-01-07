@@ -34,10 +34,10 @@
             if(!$notes-> archived()){
             if($notes->are_you_check()){
               echo '<div class="col-6 col-md-6 col-lg-3">';
-              (new View("notecheck"))->show(["notes"=>$notes , "pos"=> ""]);
+              (new View("notecheck"))->show(["notes"=>$notes]);
             }else{
               echo '<div class="col-6 col-md-6 col-lg-3">';
-              (new View("note"))->show(["notes"=>$notes,"pos"=> ""]);
+              (new View("note"))->show(["notes"=>$notes]);
             }
             echo"</div>";   
       }

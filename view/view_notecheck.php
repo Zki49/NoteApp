@@ -59,12 +59,14 @@
                             $id = $notes->get_id();
                             $items = $notes->get_items();
                             if (!empty($items)) {
-                                for ($i = 0; $i < sizeof($items); $i++) {
+                                foreach ($items as $item =>$checked) {
                                     echo "
                                     <div class='form-check'>
-                                        <input class='form-check-input' type='checkbox'  id='checkbox1' disabled>
+                                        <input class='form-check-input' type='checkbox'  id='checkbox1'";
+                                        if($checked===1){echo"checked";}
+                                        echo" disabled>
                                         <label class='form-check-label' for='checkbox1'>";
-                                    echo $items[$i];
+                                    echo $item;
                                     echo "</label></div>";
                                 }
                             }
@@ -74,13 +76,24 @@
                 </form>
 
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
+                    <?php
+                if(($notes->max_weight() - $notes->get_weight())!=0){
+                    ?>
+                    <form action="notes/moveup" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                    <button type="submit" class="btn btn-primary" >
                         <<
                     </button>
-                    
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nextModal">
+                    <?php
+                    }
+                    ?>
+                   </form>
+                   <form action="notes/movedown" method="post">
+                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                    <button type="submit" class="btn btn-primary" >
                         >>
                     </button>
+                   </form>
                 </div>
             </div>
         </div>

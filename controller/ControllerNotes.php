@@ -5,6 +5,7 @@ require_once "model/User.php";
 require_once "model/Note.php";
 require_once "model/Notetext.php";
 require_once "model/Notecheck.php";
+require_once "model/Notemixte.php";
 
 
 class ControllerNotes extends Controller{ 
@@ -110,12 +111,30 @@ class ControllerNotes extends Controller{
         }else{
         $notes= Notetext::get_note_by_id($id);
         }
+        //decomenter tout les comentaire pour prg 
+        //$notes = Notemixte::get_note_by_id($id);
         $notes->set_archived();
         $notes->persist();
-        
-      (new View("opennote"))->show(["notes"=>$notes]);
+        (new View("opennote"))->show(["notes"=>$notes]);
+       // $this->redirect("notes","reopen",$id);
       }
 
+     }
+     public function reopen():void{
+      if(isset($_GET["param1"])){
+        $id = Tools::sanitize($_GET["param1"]);
+        if(Note::iamcheck($id)){
+          $notes= Notecheck::get_note_by_id($id);
+          
+        }else{
+        $notes= Notetext::get_note_by_id($id);
+        }
+        if($notes==false){
+          (new View("error"))->show(["error"=>"cette note nexiste pas"]);
+        }
+        (new View("opennote"))->show(["notes"=>$notes]);
+      }
+      $this->redirect("notes");
      }
 
      public function edit():void{
@@ -165,11 +184,30 @@ class ControllerNotes extends Controller{
         }
       }
     }
-
+    public function moveup():void{
+      if(isset($_POST["idnotes"])){
+        $id=Tools::sanitize($_POST["idnotes"]);
+        $note= Notemixte::get_note_by_id($id);
+        if(!$note->pinned()){
+             $note->get_weight_notes_by_user();
+        }
+      }
+      $this->redirect("notes");
+    }
+    public function movedown():void{
+      if(isset($_POST["idnotes"])){
+        $id=Tools::sanitize($_POST["idnotes"]);
+        $note= Notemixte::get_note_by_id($id);
+        if(!$note->pinned()){
+           $note->movedown();
+        }
+      }
+      $this->redirect("notes");
+    }
     public function move_note():void {
       $user = $this->get_user_or_redirect();
       $note = $_GET['param1'];
-      $notes = Notetext::get_note_by_id($note);
+      $notes = Notemixte::get_note_by_id($note);
       $notes->get_weight_notes_by_user($user);
     }
     public function delete():void{
@@ -210,7 +248,7 @@ class ControllerNotes extends Controller{
           if($note==false){
            $user= $this->get_user_or_redirect();
             $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
-            $weight= $note->max_weight($user->get_mail());
+            $weight= $note->max_weight();
             $note->set_weight($weight+1);
             $error=$note->set_title($title);
             $note->set_description($text);
@@ -245,7 +283,7 @@ class ControllerNotes extends Controller{
         $notes = new Notecheck($title,$userOwner,new DateTime("now"),null,false,false,0,[],0);
         $user=$this->get_user_or_redirect();
         $error = $notes->set_title($title);
-        $weight= $notes->max_weight($user->get_mail());
+        $weight= $notes->max_weight();
         $notes->set_weight($weight+1);
         
 
@@ -283,9 +321,10 @@ class ControllerNotes extends Controller{
           $id = Tools::sanitize($_POST["idnotes"]);
           if(Note::iamcheck($id)){
               $note = Notecheck::get_note_by_id($id);
-              $note->additem($new);
+              $error=$note->additem($new);
               $note = Notecheck::get_note_by_id($id);
-              (new View("editnote"))->show(["notes"=>$note,"mode"=>$mode]);
+              var_dump($error);
+              (new View("editnote"))->show(["notes"=>$note,"mode"=>$mode,"errors"=>$error]);
             
           }
           

@@ -10,21 +10,22 @@
     <title></title>
     <style>
         body {
-            background-color: black;
+            background-color: #323232;
             color: white;
         }
 
         .navbar {
-            background-color: black;
+            background-color: #323232;
         }
         .styled-link-button {
-            background: none;
+            background: #323232;
             border: none;
-            color: #ffffff;
+            color: #323232;
             cursor: pointer;
             text-decoration: none;
         }
         .page-header {
+            background-color: #323232;
             display: flex;
             justify-content: space-between;
             align-items: center;
