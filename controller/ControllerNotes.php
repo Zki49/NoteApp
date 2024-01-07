@@ -129,6 +129,9 @@ class ControllerNotes extends Controller{
         }else{
         $notes= Notetext::get_note_by_id($id);
         }
+        if($notes==false){
+          (new View("error"))->show(["error"=>"cette note nexiste pas"]);
+        }
         (new View("opennote"))->show(["notes"=>$notes]);
       }
       $this->redirect("notes");
