@@ -76,18 +76,24 @@
         </a>
     </button>
     <h1 id="pageTitle">Change password</h1>
+    <form action="settings/changePassword" method="post">
+        <div class="form-group">
+            <label for="oldPassword">Old password</label>
+         <input type="password" id="oldPassword" name="oldPassword" required>
+        </div>
 
-    <div class="form-group">
-        <label for="oldPassword">Old password</label>
-        <input type="password" id="oldPassword" name="oldPassword" required>
-    </div>
+        <div class="form-group">
+            <label for="password">New password</label>
+        <input type="password" id="password" name="password" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="confirmPassword">New password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
 
-    <div class="form-group">
-        <label for="newPassword">New password</label>
-        <input type="password" id="newPassword" name="newPassword" required>
-    </div>
-
-    <button id="btnSave">Save</button>
+        <button id="btnSave">Save</button>
+    </form>
 </div>
 
 <?php

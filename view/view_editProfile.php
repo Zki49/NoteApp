@@ -64,17 +64,21 @@
                         </div>
 
                         <!-- Form for editing profile -->
-                        <form>
+                        <form action="settings/editProfile" method="post">
                             <div class="form-group">
                                 <label for="username">Username:</label>
-                                <input type="text" class="form-control form-control-lg" id="username"
-                                    value="<?= $user->get_fullnam()?>">
+
+                                <input type="text" class="form-control form-control-lg" id="username" name="fullname"
+                                    placeholder="Enter your username" value= "<?=$user->get_fullnam() ?>">
+
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email:</label>
+
                                 <input type="email" class="form-control form-control-lg" id="email"
                                 value="<?= $user->get_mail()?>">
+
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
@@ -91,6 +95,15 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyvbR5XsN2lI9zAKLkD/KrO5AiUT6vZnJ"
         crossorigin="anonymous">
 
+    <?php
+    if(!empty($errors)){
+        foreach($errors as $error){
+            echo "<li>";
+            echo $error;
+            echo "</li>";
+        }
+    }
+    ?>
 </body>
 
 </html>
