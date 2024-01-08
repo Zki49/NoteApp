@@ -323,7 +323,6 @@ class ControllerNotes extends Controller{
               $note = Notecheck::get_note_by_id($id);
               $error=$note->additem($new);
               $note = Notecheck::get_note_by_id($id);
-              var_dump($error);
               (new View("editnote"))->show(["notes"=>$note,"mode"=>$mode,"errors"=>$error]);
             
           }
