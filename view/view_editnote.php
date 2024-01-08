@@ -74,6 +74,8 @@
     </div>
     <?php
     if(!empty($errors)){
+        echo"<h6>
+        your item has not been added because:</h6>";
         foreach($errors as $error){
             echo "<li>";
             echo $error;
