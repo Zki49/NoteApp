@@ -40,8 +40,8 @@ class User extends Model{
             $mail=$this->mail;
        }
 
-       self::execute("UPDATE users SET hashed_password = :password ,mail=:newMail ,full_name =:fullname ,role =:role WHERE mail =:mail ", 
-                          [ "mail"=>$this->mail, "password"=>$this->hashed_password,"fullname"=>$this->fullname,"role"=>$this->role, "newMail"=>$mail]);
+       self::execute("UPDATE users SET mail=:newMail ,full_name =:fullname WHERE mail =:mail ", 
+                          [ "mail"=>$this->mail,"fullname"=>$this->fullname, "newMail"=>$mail]);
 
        return $errors;
     }
@@ -62,6 +62,7 @@ class User extends Model{
         $errors = User::validate_password($password);
          if(empty($errors)){
            $this->hashed_password = Tools::my_hash($password);
+           echo"ertyuio";
          }
          return $errors;
     }
