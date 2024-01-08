@@ -39,7 +39,7 @@ class ControllerSettings extends Controller {
             $oldPassword=Tools::sanitize($_POST["oldPassword"]);
 
             $errors = $user->validate_login($user->get_mail(), $oldPassword);
-            var_dump($errors);
+     
             if(empty($errors)){
                 $password=Tools::sanitize($_POST["password"]);
             
@@ -47,14 +47,13 @@ class ControllerSettings extends Controller {
 
             $errors=User::validate_passwords($password, $confirmPassword);
 
-            var_dump($errors);
             if(empty($errors)){
                 $user->set_password($password);
                 $user->persist();
             }
             }
         }
-        (new view("changePassword"))->show(["user"=>$user,"error"=>$errors]);
+        (new view("changePassword"))->show(["user"=>$user,"errors"=>$errors]);
     }
 }
 ?>

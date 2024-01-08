@@ -62,7 +62,6 @@ class User extends Model{
         $errors = User::validate_password($password);
          if(empty($errors)){
            $this->hashed_password = Tools::my_hash($password);
-           echo"ertyuio";
          }
          return $errors;
     }
