@@ -28,7 +28,6 @@
 <?php
    if ($mode===" "){
    if(!empty($array_notes)){
-     var_dump(count($array_notes));
       echo"<div class=row>";
        foreach($array_notes as $notes){
             if(!$notes-> archived()){

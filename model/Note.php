@@ -100,7 +100,7 @@ abstract class Note  extends Model{
                                 JOIN checklist_notes cn on cn.id=n.id
                                 where n.id = $id
                                 ",[]);
-      $data = $query->fetchAll();
+      $data = $query->fetch();
       if($query->rowCount()==0){
         return false;
       }

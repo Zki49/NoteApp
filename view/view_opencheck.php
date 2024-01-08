@@ -81,6 +81,7 @@
         <div class='input-group mb-3'>
         <input type='hidden' name='idnotes' value='" ;
         echo $id ;
+        var_dump($id);
         echo"'>
     <input type='text' class='form-control'  aria-describedby='button-addon2' style='background-color: #323232; color: white;'  name ='newitem'>
     <button class='btn btn-outline-secondary' type='submit' id='button-addon2' style='background-color: #0071FF; color: white;'>
