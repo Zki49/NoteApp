@@ -61,7 +61,6 @@
                 </form>
                 <div class="d-flex justify-content-between">
                     <?php
-                    if(!(($notes->max_weight() - $notes->get_weight())==0)){
                     if(($notes->max_weight() - $notes->get_weight())!=0){
                     ?>
                     <form action="notes/moveup" method="post">
@@ -70,7 +69,7 @@
                         <<
                     </button>
                     <?php
-                    }}
+                    }
                     ?>
                    </form>
                    <form action="notes/movedown" method="post">

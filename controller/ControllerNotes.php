@@ -237,8 +237,9 @@ class ControllerNotes extends Controller{
       (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
     }
     public function save():void{
-      if(isset($_POST['title']) && isset( $_POST['text'])){
-        $id = Tools::sanitize($_POST['id']);
+      if(isset($_POST['title']) && isset( $_POST['text'])&& $_POST['idnotes']){
+        $id = Tools::sanitize($_POST['idnotes']);
+        var_dump($id);
         $title= Tools::sanitize($_POST['title']);
         $text= Tools::sanitize($_POST['text']);
         if( Note::iamcheck($id)){
@@ -323,7 +324,6 @@ class ControllerNotes extends Controller{
               $note = Notecheck::get_note_by_id($id);
               $error=$note->additem($new);
               $note = Notecheck::get_note_by_id($id);
-              var_dump($error);
               (new View("editnote"))->show(["notes"=>$note,"mode"=>$mode,"errors"=>$error]);
             
           }

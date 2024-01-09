@@ -79,7 +79,11 @@
         echo"
         <form action='notes/additem' method='post'>  
         <div class='input-group mb-3'>
-    <input type='text' class='form-control'  aria-describedby='button-addon2' style='background-color: #323232; color: white;'>
+        <input type='hidden' name='idnotes' value='" ;
+        echo $id ;
+        var_dump($id);
+        echo"'>
+    <input type='text' class='form-control'  aria-describedby='button-addon2' style='background-color: #323232; color: white;'  name ='newitem'>
     <button class='btn btn-outline-secondary' type='submit' id='button-addon2' style='background-color: #0071FF; color: white;'>
         <svg xmlns='http://www.w3.org/2000/svg' width='18' height='16' fill='currentColor' class='bi bi-plu' viewBox='0 0 16 16'>
             <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4'/>
@@ -87,7 +91,7 @@
     </button>
 </div>
 
-<div class='input-group mb-3'>
+<!--<div class='input-group mb-3'>
         <div class='input-group-text'>
         <button type='submit' class='styled-link-button'>
         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-plus-square' viewBox='0 0 16 16'>
@@ -99,20 +103,14 @@
 
             <input type='text' class='form-control' aria-label='Text input with checkbox'  name='newitem'>
             <input type='hidden' name='idnotes' value='" ;
-            echo $id ;
+            //echo $id ;
             echo"'>
             
         </div>
-        </form>";
+        </form>-->";
        }
       
-       if(!empty($errors)){
-        foreach($errors as $error){
-            echo "<li>";
-            echo $error;
-            echo "</li>";
-        }
-    }
+    
        $id=null;
        $notes=null;
        $items=null;
