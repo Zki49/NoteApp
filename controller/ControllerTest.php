@@ -2,6 +2,7 @@
 require_once "framework/Controller.php";
 require_once "model/User.php";
 require_once "model/Note.php";
+require_once "model/Notetext.php";
 
 class ControllerTest extends Controller{
     public function index() : void {
@@ -32,8 +33,10 @@ class ControllerTest extends Controller{
 public function get_shared_notes() : void {
     if ($this->user_logged() ) {
         $user = $this->get_user_or_redirect();
-        $userShared = User::get_user_by_mail($_GET["param1"]);
+        $userShared = User::get_user_by_id($_GET["param1"]);
+        
         $array_shared_notes = Notetext::get_shared_notes($user, $userShared);
+        
 
         (new View("shared_notes"))->show(["array_shared_notes" => $array_shared_notes]);
     } else {

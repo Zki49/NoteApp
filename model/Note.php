@@ -67,20 +67,21 @@ abstract class Note  extends Model{
         }
         return $errors;
     }
-    public function get_shared_notes($owner, $shared_user) : array|false {
+    public static function get_shared_notes(User $owner,User $shared_user) : array|false {
         $query = self::execute("SELECT * 
                                 FROM notes n , note_shares ns
                                 WHERE ns.note = n.id
                                 and ns.user =:owner
                                 and n.owner =:shared_user
-                                ORDER BY `ns`.`editor` DESC", ["owner"=>$owner , "shared_user"=>$shared_user]);
+                                ORDER BY `ns`.`editor` DESC", ["owner"=>$owner->get_id() , "shared_user"=>$shared_user->get_id()]);
         $data = $query->fetchAll();
         if ($query->rowCount() == 0) { 
             return false;
         } else {
             $results = [];
             foreach ($data as $row) {
-                $results[] = self::__construct($row["title"],$row["owner"],$row["created_at"],$row["edited_at"],$row["pinned"],$row["archived"],$row["weight"],$row["id"]);
+                $results[] =new Notetext($row["title"],User::get_user_by_id($row["owner"]),new DateTime( $row["created_at"],null),$row["edited_at"]!==null?new DateTime($row["edited_at"],null):null,$row["pinned"]===1?true:false,
+                $row["archived"]===1?true:false,$row["weight"]," ",$row["id"]);
             }
             return $results;
         }

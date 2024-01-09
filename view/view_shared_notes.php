@@ -16,12 +16,12 @@
 <div class="row">
   <?php 
     if (!empty($array_shared_notes)){
-        foreach($tab_shared as $row):?>
+        foreach($array_shared_notes as $row):?>
         <li>
-            <a><?php echo $row["title"] ?></a>
+            <a><?php echo $row->get_title() ?></a>
         </li>
     <?php endforeach;}?>
-  ?>
+  
 
   </div>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
