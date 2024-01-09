@@ -333,12 +333,12 @@ class ControllerNotes extends Controller{
     }
     public function deleteitem():void {
       if(isset($_POST["item"])&& isset($_POST['id'])){
-        var_dump($_POST["id"]);
         $id= $_POST["id"];
         $item=$_POST["item"];
         if(Note::iamcheck($id)){
           $note= Notecheck::get_note_by_id($id);
           $note->deleteitem($item);
+          $note= Notecheck::get_note_by_id($id);
         (new View("editnote"))->show(["notes"=>$note,"mode"=>'edit']);
         }else{
          
