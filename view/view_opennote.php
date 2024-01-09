@@ -142,8 +142,7 @@
                      if($notes->are_you_check()){
                         (new View("opencheck"))->show(["notes"=>$notes]);
                       }else{
-
-                        (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description(),"id"=>$notes->get_id()]);
+                       (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description(),"id"=>$notes->get_id()]);
                       }
                       
                       ?> 
