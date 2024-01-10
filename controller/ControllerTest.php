@@ -35,8 +35,8 @@ public function get_shared_notes() : void {
         $user = $this->get_user_or_redirect();
         $userShared = User::get_user_by_id($_GET["param1"]);
         
-        $array_shared_notes = Notetext::get_shared_notes($user, $userShared);
-        
+        $array_shared_notes = Note::get_shared_notes($user, $userShared);
+
 
         (new View("shared_notes"))->show(["array_shared_notes" => $array_shared_notes]);
     } else {
