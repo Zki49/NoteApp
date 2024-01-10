@@ -60,6 +60,7 @@
         <input type='text' class='form-control'  aria-describedby='button-addon2' style='background-color: #323232; color: white;' value = '"; echo($notes->get_title());    echo"' disabled readonly >
     </div>
     ";
+    echo" </form>";
    echo" <label for='title' class='form-label'>Items</label>";
         foreach($items as $item=>$checked){
             echo"<form action='notes/deleteitem' method='post'>
@@ -86,7 +87,7 @@
             echo" </div>
              </form>" ;
        }
-       echo" </form>";
+      
       
        if(!empty($mode)){ 
         echo"
