@@ -16,14 +16,23 @@
 <body class="bg-dark">
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
 <div class="row">
+
   <?php 
     if (!empty($array_shared_notes)){
-        foreach($array_shared_notes as $row):?>
-        <li>
-            <a><?php echo $row->get_title() ?></a>
-        </li>
-    <?php endforeach;}?>
-  
+      echo"<div class=row>";
+        foreach($array_shared_notes as $note){
+          if($note->are_you_check()){
+            echo '<div class="col-6 col-md-6 col-lg-3">';
+            (new View("notecheck"))->show(["notes"=>$note]);
+          }else{
+            echo '<div class="col-6 col-md-6 col-lg-3">';
+            (new View("note"))->show(["notes"=>$note]);
+          }
+          echo"</div>";   
+        }
+    }
+  ?>
+        
 
   </div>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
