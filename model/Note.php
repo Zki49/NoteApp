@@ -119,6 +119,18 @@ abstract class Note  extends Model{
         $max=$data['weight'];
         return $max;
     }
+    public function is_editor(int $id) : bool {
+        $query = self::execute("SELECT * 
+                                FROM note_shares ns
+                                WHERE ns.note = :id
+                                and ns.editor = 1", ["id"=>$id]);
+        if($query->rowCount() == 0){
+            return false;
+        }else{
+            return true;
+        }
+
+    } 
 }
 
 ?>
