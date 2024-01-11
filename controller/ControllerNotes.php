@@ -84,7 +84,9 @@ class ControllerNotes extends Controller{
         }else{
         $notes= Notetext::get_note_by_id($id);
         }
-        (new View("opennote"))->show(["notes"=>$notes]);
+        $is_editor = $notes->is_editor($id);
+        var_dump($is_editor);
+        (new View("opennote"))->show(["notes"=>$notes, "is_editor"=>$is_editor]);
       }
     }
     public function pinned():void{
