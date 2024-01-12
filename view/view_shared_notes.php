@@ -14,8 +14,9 @@
 
 </head>
 <body class="bg-dark">
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
-<div class="row">
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+</svg></button>
 
   <?php 
     if (!empty($array_shared_notes)){
@@ -53,12 +54,13 @@
 
   <?php 
     if(!empty($tab_shared)){
-      foreach($tab_shared as $tab): ?>
-      
+      foreach($tab_shared as $user): ?>
         <li class="nav-item">
-          <a class="nav-link link-secondary" href="#">Shared by <?php echo $tab->get_fullnam() ?></a>
+          <a class="nav-link link-secondary" href='test/get_shared_notes/<?= $user->get_id()?>'>Shared by <?php echo $user->get_fullnam() ?></a>
         </li>
-  <?php endforeach;}?>
+  <?php endforeach;}
+    $tab_shared = null; 
+  ?>
 
   <li class="nav-item">
     <a class="nav-link link-secondary" href="#">Settings</a>
