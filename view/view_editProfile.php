@@ -28,6 +28,7 @@
 
         .card {
             margin-top: 50px;
+            background-color: black;
         }
 
         .form-group label {
@@ -39,12 +40,15 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            color: white;
         }
 
         /* Ajout de l'espace entre les champs */
         .form-group {
             margin-bottom: 20px;
+            color: #fff;
         }
+      
     </style>
 </head>
 
