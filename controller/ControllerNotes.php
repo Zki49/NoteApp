@@ -349,5 +349,13 @@ class ControllerNotes extends Controller{
       }
     }
 
+    public function shared():void{
+      $user=$this->get_user_or_redirect();
+      if(isset($_POST["idnotes"])){
+        
+      }
+      (new View("shared"));
+    }
+
  }
 ?>
