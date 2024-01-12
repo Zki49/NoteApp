@@ -138,6 +138,18 @@ abstract class Note  extends Model{
         }
 
     } 
+
+    public function add_shared(array $tabUsers): void{
+        foreach($tabUsers as $user=>$editor){
+            self::execute("Insert into note_shares(user, note, editor) values(:idUser, :idNote, :editor)", ["idUser"=>$user, "idNote"=>$this->get_id(), "editor"=>$editor]); /* user faut mettre id, editor bool ou int 0,1 */
+        }
+    }
+
+    public function delete_shared(array $tabUsers): void{
+        foreach($tabUsers as $user=>$editor){
+            self::execute("Delete From note_shares where note=:idNote and user=:idUser", ["idUser"=>$user, "idNote"=>$this->get_id()]);
+        }
+    }
 }
 
 ?>

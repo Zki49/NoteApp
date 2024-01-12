@@ -341,5 +341,34 @@ class ControllerNotes extends Controller{
       }
     }
 
+    public function shared():void{
+      $user=$this->get_user_or_redirect();
+      var_dump($_POST["idUser"]);
+      if(isset($_POST["idnotes"])){
+        $userShare="";
+        $id=$_POST["idnotes"];
+
+        if(isset($_POST["idUser"])){
+          var_dump($_POST["editor"]);
+          echo 'selut';
+
+          if(isset($_POST["editor"])){
+            var_dump($_POST["editor"]);
+            $tabAddShare[$_POST["idUser"]]=$_POST["editor"];
+
+
+            $note=Notemixte::get_note_by_id($id);
+            $note->add_shared($tabAddShare);
+          }
+        }
+
+        $tabUsers=User::not_into_shared($id);
+        (new View("shared"))->show(["tabUsers"=>$tabUsers, "idnotes"=>$id]);
+      }
+      else{
+        (new View("shared"))->show([]);
+      }
+    }
+
  }
 ?>
