@@ -1,5 +1,7 @@
 <?php
 require_once "framework/Model.php";
+require_once "model/Notecheck.php";
+require_once "model/Notetext.php";
 
 abstract class Note  extends Model{
 
@@ -68,7 +70,6 @@ abstract class Note  extends Model{
         return $errors;
     }
     public static function get_shared_notes(User $owner,User $shared_user) : array|false {
-        echo"yousra";
         $query = self::execute("SELECT * 
                                 FROM notes n , note_shares ns
                                 WHERE ns.note = n.id
@@ -81,13 +82,12 @@ abstract class Note  extends Model{
         } else {
             $results = [];
             foreach ($data as $row) {
-                //if(self::iamcheck($row["id"])){  
-                  //  $results[] = new Notecheck($row["title"],User::get_user_by_id($row["owner"]),new DateTime( $row["created_at"],null),$row["edited_at"]!==null?new DateTime($row["edited_at"],null):null,$row["pinned"]===1?true:false,
-                    //$row["archived"]===1?true:false,$row["weight"],[],$row["id"]);
-                //}else{
-                    $results[] =new Notetext($row["title"],User::get_user_by_id($row["owner"]),new DateTime( $row["created_at"],null),$row["edited_at"]!==null?new DateTime($row["edited_at"],null):null,$row["pinned"]===1?true:false,
-                    $row["archived"]===1?true:false,$row["weight"]," ",$row["id"]);                    
-                //}
+                if(self::iamcheck($row["id"])){  
+                    
+                    $results[] = Notecheck::get_note_by_id($row["id"]);
+                }else{
+                    $results[] = Notetext::get_note_by_id($row["id"]);                    
+                }
             }
             return $results;
             

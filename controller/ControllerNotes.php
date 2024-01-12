@@ -84,7 +84,8 @@ class ControllerNotes extends Controller{
         }else{
         $notes= Notetext::get_note_by_id($id);
         }
-        $is_editor = $notes->is_editor($id);
+        $user= $this->get_user_or_redirect();
+        $is_editor = $user->editor($notes->get_id());
         var_dump($is_editor);
         (new View("opennote"))->show(["notes"=>$notes, "is_editor"=>$is_editor]);
       }
