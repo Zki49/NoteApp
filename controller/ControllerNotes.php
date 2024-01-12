@@ -86,7 +86,6 @@ class ControllerNotes extends Controller{
         }
         $user= $this->get_user_or_redirect();
         $is_editor = $user->editor($notes->get_id());
-        var_dump($is_editor);
         (new View("opennote"))->show(["notes"=>$notes, "is_editor"=>$is_editor]);
       }
     }
@@ -108,18 +107,18 @@ class ControllerNotes extends Controller{
     public function archived():void{
       if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
-        if(Note::iamcheck($id)){
+       /* if(Note::iamcheck($id)){
           $notes= Notecheck::get_note_by_id($id);
           
         }else{
         $notes= Notetext::get_note_by_id($id);
-        }
+        }*/
         //decomenter tout les comentaire pour prg 
-        //$notes = Notemixte::get_note_by_id($id);
+        $notes = Notemixte::get_note_by_id($id);
         $notes->set_archived();
         $notes->persist();
-        (new View("opennote"))->show(["notes"=>$notes]);
-       // $this->redirect("notes","reopen",$id);
+       //(new View("opennote"))->show(["notes"=>$notes]);
+        $this->redirect("notes","reopen", $id);
       }
 
      }
@@ -136,8 +135,9 @@ class ControllerNotes extends Controller{
           (new View("error"))->show(["error"=>"cette note nexiste pas"]);
         }
         (new View("opennote"))->show(["notes"=>$notes]);
+      }else {
+        $this->redirect("notes");
       }
-      $this->redirect("notes");
      }
 
      public function edit():void{
