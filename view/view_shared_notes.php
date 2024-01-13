@@ -25,10 +25,10 @@
             <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
         </svg>
     </button>
-
+<br></br>
   <?php 
     if (!empty($array_shared_notes_editor)){
-      echo"<label for='title' class='form-label' style='background-color: #323232'>editor</label>";
+      echo"<label for='title' class='form-label text-light' >Editor</label>";
       echo"<div class=row>";
         foreach($array_shared_notes_editor as $note){
           if($note->are_you_check()){
@@ -42,7 +42,7 @@
         }
     }
     if (!empty($array_shared_notes_not_editor)){
-      echo"<label for='title' class='form-label' style='background-color: #323232'>reader</label>";
+      echo"<label for='title' class='form-label text-light' style=''>Reader</label>";
       echo"<div class=row>";
         foreach($array_shared_notes_not_editor as $note){
           if($note->are_you_check()){
