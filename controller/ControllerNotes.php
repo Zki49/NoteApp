@@ -79,46 +79,36 @@ class ControllerNotes extends Controller{
       
       if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
-        if(Note::iamcheck($id)){
+        $this->redirect("notes","reopen", $id);
+       /* if(Note::iamcheck($id)){
           $notes= Notecheck::get_note_by_id($id);
         }else{
         $notes= Notetext::get_note_by_id($id);
         }
         $user= $this->get_user_or_redirect();
         $is_editor = $user->editor($notes->get_id());
-        (new View("opennote"))->show(["notes"=>$notes, "is_editor"=>$is_editor]);
+        (new View("opennote"))->show(["notes"=>$notes, "is_editor"=>$is_editor]);*/
       }
     }
     public function pinned():void{
       if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
-        if(Note::iamcheck($id)){
-          $notes= Notecheck::get_note_by_id($id);
-        }else{
-        $notes= Notetext::get_note_by_id($id);
-        }
+        $id=Tools::sanitize($_POST["idnotes"]);
+        $notes = Notemixte::get_note_by_id($id);
         $notes->set_pinned ();
         $notes->persist();
         
-      (new View("opennote"))->show(["notes"=>$notes]);
+        $this->redirect("notes","reopen", $id);
       }
     }
 
     public function archived():void{
       if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
-        if(Note::iamcheck($id)){
-          $notes= Notecheck::get_note_by_id($id);
-          
-        }else{
-        $notes= Notetext::get_note_by_id($id);
-        }
-        //decomenter tout les comentaire pour prg 
-        //$notes = Notemixte::get_note_by_id($id);
+        $notes = Notemixte::get_note_by_id($id);
         $notes->set_archived();
         $notes->persist();
-        (new View("opennote"))->show(["notes"=>$notes]);
-       // $this->redirect("notes","reopen",$id);
+        $this->redirect("notes","reopen", $id);
       }
 
      }
@@ -134,9 +124,12 @@ class ControllerNotes extends Controller{
         if($notes==false){
           (new View("error"))->show(["error"=>"cette note nexiste pas"]);
         }
-        (new View("opennote"))->show(["notes"=>$notes]);
+        $user= $this->get_user_or_redirect();
+        $is_editor = $user->editor($notes->get_id());
+        (new View("opennote"))->show(["notes"=>$notes,"is_editor"=>$is_editor]);
+      }else {
+        $this->redirect("notes");
       }
-      $this->redirect("notes");
      }
 
      public function edit():void{
@@ -345,6 +338,35 @@ class ControllerNotes extends Controller{
         }else{
          
         }
+      }
+    }
+
+    public function shared():void{
+      $user=$this->get_user_or_redirect();
+      var_dump($_POST["idUser"]);
+      if(isset($_POST["idnotes"])){
+        $userShare="";
+        $id=$_POST["idnotes"];
+
+        if(isset($_POST["idUser"])){
+          var_dump($_POST["editor"]);
+          echo 'selut';
+
+          if(isset($_POST["editor"])){
+            var_dump($_POST["editor"]);
+            $tabAddShare[$_POST["idUser"]]=$_POST["editor"];
+
+
+            $note=Notemixte::get_note_by_id($id);
+            $note->add_shared($tabAddShare);
+          }
+        }
+
+        $tabUsers=User::not_into_shared($id);
+        (new View("shared"))->show(["tabUsers"=>$tabUsers, "idnotes"=>$id]);
+      }
+      else{
+        (new View("shared"))->show([]);
       }
     }
 

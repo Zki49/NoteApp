@@ -243,6 +243,25 @@ class User extends Model{
         return false;   
         
     }
+
+    public static function not_into_shared(int $idNote): array{
+        $query =self::execute("SELECT u.mail
+                               from users u 
+                               WHERE u.id not in (SELECT user 
+                                               from note_shares
+                                                WHERE  note =:id
+                                              )
+                                      and u.id not in (SELECT owner 
+                                                  FROM notes
+                                                  WHERE id= :id) ",["id"=>$idNote]); 
+                                                  
+        $data=$query->fetchAll();
+        $tabRes=[];
+        foreach($data as $row){
+            $tabRes[]=self::get_user_by_mail($row["mail"]);
+        }
+        return $tabRes;
+    }
 }
 
 
