@@ -36,10 +36,14 @@ public function get_shared_notes() : void {
         $userShared = User::get_user_by_id($_GET["param1"]);
         
         $array_shared_notes = Note::get_shared_notes($user, $userShared);
+        $array_shared_notes_editor = Note::get_shared_notes_editor($user, $userShared);
+        $array_shared_notes_not_editor = Note::get_shared_notes_not_editor($user, $userShared);
         $tab_shared = User::array_shared_user_by_mail($user);
 
 
-        (new View("shared_notes"))->show(["array_shared_notes" => $array_shared_notes, "tab_shared"=>$tab_shared]);
+        (new View("shared_notes"))->show(["array_shared_notes_editor" => $array_shared_notes_editor,
+                                          "array_shared_notes_not_editor"=>$array_shared_notes_not_editor, 
+                                          "tab_shared"=>$tab_shared]);
     } else {
         (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
     }
