@@ -43,7 +43,8 @@ public function get_shared_notes() : void {
 
         (new View("shared_notes"))->show(["array_shared_notes_editor" => $array_shared_notes_editor,
                                           "array_shared_notes_not_editor"=>$array_shared_notes_not_editor, 
-                                          "tab_shared"=>$tab_shared]);
+                                          "tab_shared"=>$tab_shared,
+                                          "userShared"=>$userShared]);
     } else {
         (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
     }
