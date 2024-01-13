@@ -39,6 +39,21 @@ class Notecheck extends Note{
         return $result;
         
     }
+
+    public function check_item(int $id, string $content) : void {
+        if(self::item_is_checked($id)){
+            self::execute("UPDATE checklist_note_items ci
+                           SET ci.checked = 0
+                           WHERE ci.id = :id
+                           AND ci.content = :content", ["id"=>$id , "content"=>$content]);
+        }else{
+            self::execute("UPDATE checklist_note_items ci
+                           SET ci.checked = 1
+                           WHERE ci.id = :id
+                           AND ci.content = :content", ["id"=>$id , "content"=>$content]);
+        }
+    }
+
     public function item_is_checked(int $id): bool {
         $query = self::execute("SELECT * 
                                 FROM checklist_note_items cl 
