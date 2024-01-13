@@ -2,6 +2,7 @@
 require_once "framework/Model.php";
 require_once "model/Notecheck.php";
 require_once "model/Notetext.php";
+require_once "model/User.php";
 
 abstract class Note  extends Model{
 
@@ -120,6 +121,7 @@ abstract class Note  extends Model{
         }
     }
 
+
     public static function get_shared_notes_not_editor(User $owner,User $shared_user) : array|false {
         $query = self::execute("SELECT * 
                                 FROM notes n , note_shares ns
@@ -190,6 +192,29 @@ abstract class Note  extends Model{
         }
 
     } 
+    public function change_permission(int $id) : void{
+        if(self::get_permission($id)){
+            self::execute("UPDATE notes_shares ns
+                            SET ns.editor = 0
+                            WHERE id = :id ", ["id"=>$id]);
+        }else{
+            self::execute("UPDATE notes_shares ns
+                            SET ns.editor = 1
+                            WHERE id = :id ", ["id"=>$id]);
+        }
+    }
+    public function get_permission(int $id) : bool{
+        $query = self::execute("SELECT *
+                                FROM note_shares ns 
+                                WHERE ns.note = :id
+                                AND ns.editor = 1", ["id"=>$id]);
+
+        if($query->rowCount() == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     public function add_shared(array $tabUsers): void{
         foreach($tabUsers as $user=>$editor){
