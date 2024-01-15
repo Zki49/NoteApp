@@ -23,6 +23,10 @@ class Item  extends Model{
     public function item_checked():bool{
         return $this->check;
     }
+    public function unchecked_checked():void{
+        $this->check=!$this->check;
+    }
+
     public function delete_all_by_note(int $idnote):void{
         self::execute("DELETE FROM checklist_note_items WHERE checklist_note= :id;",["id"=>$idnote]);
     }
