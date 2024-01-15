@@ -1,4 +1,5 @@
 <?php
+require_once "model/Item.php";
 class Notecheck extends Note{
 
     // a complete demain 
@@ -17,14 +18,14 @@ class Notecheck extends Note{
             return false;
         } else {
             return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"],
-                                $data["archived"],$data["weight"],self::get_item($id),$id);
+                                $data["archived"],$data["weight"],Item::get_item($id),$id);
         }
         
     }
     public  function get_items():array{
         return $this->content;
     }
-    private static function get_item(int $id) : array  {
+    /*private static function get_item(int $id) : array  {
         $query = self::execute("SELECT * 
                                 FROM checklist_note_items cl 
                                 WHERE cl.checklist_note = :id", ["id"=>$id]);
@@ -38,9 +39,9 @@ class Notecheck extends Note{
 
         return $result;
         
-    }
+    }*/
 
-    public function check_item(int $id, string $content) : void {
+   /* public function check_item(int $id, string $content) : void {
         if(self::item_is_checked($id)){
             self::execute("UPDATE checklist_note_items ci
                            SET ci.checked = 0
@@ -52,7 +53,7 @@ class Notecheck extends Note{
                            WHERE ci.id = :id
                            AND ci.content = :content", ["id"=>$id , "content"=>$content]);
         }
-    }
+    }*/
 
     public function item_is_checked(int $id): bool {
         $query = self::execute("SELECT * 
@@ -79,9 +80,8 @@ class Notecheck extends Note{
         } else {
             $results = [];
             foreach ($data as $row) {
-                $id =self::get_item($row["idnote"]) ;
                 $results[] = new Notecheck($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],$id,$row["idnote"]);
+                $row["archived"]===1?true : false,$row["weight"],Item::get_item($row["idnote"]),$row["idnote"]);
             }
             return $results;
         }
@@ -92,8 +92,9 @@ class Notecheck extends Note{
      }
     
      public function delete():void{
-        self::execute("DELETE FROM checklist_note_items WHERE checklist_note= :id;
-        DELETE from checklist_notes WHERE id =:id;
+       $item= $this->content[0];
+       $item->delete_all_by_note($this->get_id());
+        self::execute("DELETE from checklist_notes WHERE id =:id;
         DELETE from notes WHERE id = :id;",["id"=>$this->get_id()]);
      }
 

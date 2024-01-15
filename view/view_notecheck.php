@@ -59,14 +59,14 @@
                             $id = $notes->get_id();
                             $items = $notes->get_items();
                             if (!empty($items)) {
-                                foreach ($items as $item =>$checked) {
+                                foreach ($items as $item) {
                                     echo "
                                     <div class='form-check'>
                                         <input class='form-check-input' type='checkbox'  id='checkbox1'";
-                                        if($checked===1){echo"checked";}
+                                        if($item->item_checked()){echo"checked";}
                                         echo" disabled>
                                         <label class='form-check-label' for='checkbox1'>";
-                                    echo $item;
+                                    echo $item->get_content();
                                     echo "</label></div>";
                                 }
                             }
