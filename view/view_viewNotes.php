@@ -36,6 +36,7 @@
     right: 0;
     display: flex;
     flex-direction: row;
+    margin:10px;
    }
 
     </style>    
