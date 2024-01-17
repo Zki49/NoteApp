@@ -154,8 +154,8 @@ class Notecheck extends Note{
          return $result;
      }
      private function itemexist(string $new):bool{
-        foreach($this->get_items() as $item => $cheked){
-            if($item==$new){
+        foreach($this->get_items() as $item ){
+            if($item->get_content()==$new){
                 return true;
             }
         }
