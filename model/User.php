@@ -262,6 +262,18 @@ class User extends Model{
         }
         return $tabRes;
     }
+
+    public static function tab_user_in_share(int $idNote): array{
+        $tab=[];
+        $query=self::execute("SELECT user
+                        from note_shares
+                        where note = :id", ["id"=>$idNote]);
+        $data=$query->fetchAll();
+        foreach($data as $row){
+            $tab[]=self::get_user_by_id($row["user"]);
+        }
+        return $tab;
+    }
 }
 
 

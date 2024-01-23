@@ -28,6 +28,32 @@
 
 <div class="container">
   <h2 class="mt-4">Shares</h2>
+  <?php
+    
+    if(empty($tabUSerAlready)){
+      echo '<h3 class="mt-4"> This note is not shared yet.</h3> ';
+    }
+    else{
+      foreach($tabUSerAlready as $user){
+        echo '<div>';
+        echo '<textarea id="user" name="user" disabled>';
+        echo $user->getFullnam();
+        if($user->editor($idnotes)){
+          echo '(editor) ';
+        }
+        else{
+          echo '(reader)';
+        }
+        echo '</textarea>
+          <button type="submit" class="btn btn-primary mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+              <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+            </svg>
+            </button>
+          </div>';
+      }
+    }    
+  ?>
   
   <form action="notes/shared" method="Post">
   <input type="hidden" name="idnotes" value="<?= $idnotes?>">
