@@ -222,10 +222,8 @@ abstract class Note  extends Model{
         }
     }
 
-    public function delete_shared(array $tabUsers): void{
-        foreach($tabUsers as $user=>$editor){
-            self::execute("Delete From note_shares where note=:idNote and user=:idUser", ["idUser"=>$user, "idNote"=>$this->get_id()]);
-        }
+    public function delete_shared(int $idUser): void{
+        self::execute("Delete From note_shares where note=:idNote and user=:idUser", ["idUser"=>$idUser, "idNote"=>$this->get_id()]);
     }
 }
 
