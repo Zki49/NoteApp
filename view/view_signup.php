@@ -105,9 +105,9 @@
                                 </div>
                                 <p></p>
                                 <div class="text-center d-grid gap-2 col-14 mx-auto">
-                                    <button type="button" href="login/index" class="btn btn-outline-danger custom-button-size">Cancel</button>
+                                    <button type="button" href="#" class="btn btn-outline-danger custom-button-size">Cancel</button>
                                 </div>
-                            
+                                <a href="login/index" > login</a>
 
                             <?php
                             if (!empty($errors)) {
