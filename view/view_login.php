@@ -32,7 +32,7 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     
 
-    <a href="signup/index" >Sing up</a>
+    <a href="signup/index" > triple monstre</a>
     
 
     <?php
