@@ -51,6 +51,9 @@ class User extends Model{
     public function get_fullnam() : string{
         return $this->fullname;
     }
+    public function get_password() : string {
+        return $this->hashed_password;
+    }
 
    private function set_mail(string $mail):void{
     $errors = User::validate_unicity_mail($mail);

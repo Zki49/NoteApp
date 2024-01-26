@@ -29,13 +29,25 @@ class ControllerSignup extends Controller{
             if (count($errors) == 0) { 
                 $member->persist(); //sauve l'utilisateur
                 $this->log_user($member,"Test" );
-            }            
-        }
-        //$this->redirect("signup" , "redirect_prg", $member->getMail() , $errors);
-        (new View("signup"))->show(["email" => $email,"name" => $name, "password" => $password,"confirm_password" =>$confirm_password ,"errors" => $errors]);   
+            }
+            $idUser = $member->get_id();
+            $this->redirect("signup" , "redirect_prg", $idUser , $confirm_password);            
+        }else
+            (new View("signup"))->show(["email" => $email,"name" => $name, "password" => $password,"confirm_password" =>$confirm_password ,"errors" => $errors]);   
     }
     private function redirect_prg() : void {
-
+        $idUser = $_GET['idUser'];
+        $member = User::get_user_by_id($idUser);
+        $email = $member->get_mail();
+        $name = $member->get_fullnam();
+        $password = $member->get_password();
+        $confirm_password = $_GET['confirm_password'];
+        $errors = []; 
+        $errors = User::validate_unicity_mail($email);
+        $errors = User::validate_unicity($name);
+        $errors = array_merge($errors, $member->validate());
+        $errors = array_merge($errors, User::validate_passwords($password, $confirm_password));
+        (new View("signup"))->show(["email" => $email,"name" => $name, "password" => $password,"confirm_password" =>$confirm_password ,"errors" => $errors]);
     }
 
 
