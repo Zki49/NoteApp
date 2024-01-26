@@ -368,7 +368,39 @@ class ControllerNotes extends Controller{
     }
 
     public function deleteShared(): void{
+      $note=Notemixte::get_note_by_id($_POST["idNote"]);
+      $note->delete_shared($_POST["idUser"]);
+      self::shared2($_POST["idNote"]);
+    }
+
+    private function shared2(int $idNote): void{
+      $user=$this->get_user_or_redirect();
       
+      $userShare="";
+        $id=$idNote;
+
+        if(isset($_POST["idUser"]) && isset($_POST["editor"])){
+          
+          $tabAddShare[$_POST["idUser"]]=$_POST["editor"];
+          $note=Notemixte::get_note_by_id($id);
+          $note->add_shared($tabAddShare);
+          
+        }
+
+        $tabUsers=User::not_into_shared($id);
+
+        $tabUSersAlready=User::tab_user_in_share($id);
+        (new View("shared"))->show(["tabUsers"=>$tabUsers, "idnotes"=>$id, "tabUSerAlready"=>$tabUSersAlready]);
+      
+    }
+
+    public function toggle(): void{
+      $idNote=$_POST["idNote"];
+      $note=Notemixte::get_note_by_id($idNote);
+      $idUser=$_POST["idUser"];
+
+      $note->change_permission($idUser);
+      self::shared2($_POST["idNote"]);
     }
 
  }

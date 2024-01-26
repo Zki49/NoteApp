@@ -192,22 +192,22 @@ abstract class Note  extends Model{
         }
 
     } 
-    public function change_permission(int $id) : void{
-        if(self::get_permission($id)){
-            self::execute("UPDATE notes_shares ns
+    public function change_permission(int $idUser) : void{
+        if(self::get_permission($idUser)){
+            self::execute("UPDATE note_shares ns
                             SET ns.editor = 0
-                            WHERE id = :id ", ["id"=>$id]);
+                            WHERE ns.note = :id AND ns.user=:idUser" , ["id"=>$this->get_id(), "idUser"=>$idUser]);
         }else{
-            self::execute("UPDATE notes_shares ns
+            self::execute("UPDATE note_shares ns
                             SET ns.editor = 1
-                            WHERE id = :id ", ["id"=>$id]);
+                            WHERE ns.note = :id AND ns.user=:idUser", ["id"=>$this->get_id(), "idUser"=>$idUser]);
         }
     }
-    public function get_permission(int $id) : bool{
+    public function get_permission(int $idUser) : bool{
         $query = self::execute("SELECT *
                                 FROM note_shares ns 
-                                WHERE ns.note = :id
-                                AND ns.editor = 1", ["id"=>$id]);
+                                WHERE ns.note = :id AND ns.user = :idUser
+                                AND ns.editor = 1", ["id"=>$this->get_id(), "idUser"=>$idUser]);
 
         if($query->rowCount() == 0){
             return false;
@@ -222,10 +222,8 @@ abstract class Note  extends Model{
         }
     }
 
-    public function delete_shared(array $tabUsers): void{
-        foreach($tabUsers as $user=>$editor){
-            self::execute("Delete From note_shares where note=:idNote and user=:idUser", ["idUser"=>$user, "idNote"=>$this->get_id()]);
-        }
+    public function delete_shared(int $idUser): void{
+        self::execute("Delete From note_shares where note=:idNote and user=:idUser", ["idUser"=>$idUser, "idNote"=>$this->get_id()]);
     }
 }
 
