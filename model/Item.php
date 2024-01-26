@@ -50,7 +50,7 @@ class Item  extends Model{
         self::execute("DELETE FROM checklist_note_items WHERE checklist_note= :id;",["id"=>$idnote]);
     }
      public function persit(){
-        self::execute("UPDATE checklist_note_items SET content = :content, checked = :check WHERE id = :id",
+        self::execute("UPDATE checklist_note_items SET content = :content, checked= :check WHERE id = :id",
         ["id"=>$this->id,"content"=>$this->content,"check"=>$this->check]);
      }
 
