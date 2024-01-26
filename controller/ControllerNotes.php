@@ -395,7 +395,12 @@ class ControllerNotes extends Controller{
     }
 
     public function toggle(): void{
-      
+      $idNote=$_POST["idNote"];
+      $note=Notemixte::get_note_by_id($idNote);
+      $idUser=$_POST["idUser"];
+
+      $note->change_permission($idUser);
+      self::shared2($_POST["idNote"]);
     }
 
  }
