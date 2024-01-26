@@ -27,7 +27,6 @@ class Notetext extends Note{
     }
     
     public function persist(){
-        //bug a regle mais je ne comprend pas 
         if(self::get_note_by_id($this->get_id($this->get_id())) ){
             self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ;
                            UPDATE text_notes set content = :description where id=:id", 

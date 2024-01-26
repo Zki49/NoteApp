@@ -326,6 +326,13 @@ class ControllerNotes extends Controller{
           
        }
     }
+    public function check():void{
+      $item = Item::get_un_item($_GET['param1']);
+      $item->unchecked_checked();
+      $item->persit();
+      $idNote= $item->get_id_my_note();
+      $this->redirect("notes","reopen",$idNote);
+    }
     public function deleteitem():void {
       if(isset($_POST["item"])&& isset($_POST['id'])){
         $id= $_POST["id"];

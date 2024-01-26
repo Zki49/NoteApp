@@ -55,7 +55,7 @@ class Notecheck extends Note{
         }
     }*/
 
-    public function item_is_checked(int $id): bool {
+   /* public function item_is_checked(int $id): bool {
         $query = self::execute("SELECT * 
                                 FROM checklist_note_items cl 
                                 WHERE cl.id = :id
@@ -65,7 +65,7 @@ class Notecheck extends Note{
             return true;
         }
         return false;
-    }
+    }*/
     //encore un peut de mofi et on y est 
     public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("select * ,n.id idnote

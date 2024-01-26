@@ -43,6 +43,25 @@
             background: #323232;
             border: none;
         }
+        .throughline{
+            text-decoration: line-through;
+        }
+        #monBouton {
+      opacity: 0;
+      pointer-events: none; 
+    }
+
+   
+    #maCheckbox:checked + label #monBouton {
+      opacity: 1;
+    }
+
+   
+    #monBouton {
+      color: blue;
+      text-decoration: underline;
+      transition: opacity 0.3s; 
+    }
     </style>
 </head>
 
@@ -66,11 +85,20 @@
             echo"<form action='notes/deleteitem' method='post'>
             <div class='input-group mb-3'>
             <div class='input-group-text'>
+            <a href='notes/check/";
+               echo $item->get_id();
+               echo"'>
                 <input class='form-check-input mt-0' type='checkbox' ";
                 if($item->item_checked()){echo"checked";}
                 echo" input'>
+              
+             </a>
             </div>
-            <input type='text' class='form-control' aria-label='Text input with checkbox' name='item' value='";
+            <input type='text' class='form-control ";
+            if($item->item_checked()){
+                echo"throughline";
+            }
+            echo"' aria-label='Text input with checkbox ' name='item' value='";
              echo $item->get_content()  ;
              if(!empty($mode)){echo"' ";}else{echo " ' readonly";}
              echo"  >";
