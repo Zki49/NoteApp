@@ -95,20 +95,15 @@
                                     name="confirm_password" placeholder="Confirm your Password"
                                     value="<?= $confirm_password ?>" required>
                             </div>
-
-                            
-
-
-                            
                                 <div class="text-center d-grid gap-2 col-14 mx-auto">
                                     <button type="submit" class="btn btn-primary custom-button-size">Signup</button>
                                 </div>
                                 <p></p>
+                        </form>
                                 <div class="text-center d-grid gap-2 col-14 mx-auto">
-                                    <button type="button" href="#" class="btn btn-outline-danger custom-button-size">Cancel</button>
-                                </div>
-                                <a href="login/index" > login</a>
-
+                                    <a href= "#">
+                                        <button type="button" href="login/index" class="btn btn-outline-danger custom-button-size">Cancel</button>
+                                    </a>
                             <?php
                             if (!empty($errors)) {
                                 foreach ($errors as $error): ?>
@@ -116,7 +111,7 @@
                             <?php endforeach;
                             }?>
 
-                        </form>
+                        
                     </span>
                 </div>
             </div>
