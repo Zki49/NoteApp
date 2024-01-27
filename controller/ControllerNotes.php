@@ -206,6 +206,7 @@ class ControllerNotes extends Controller{
       $notes->get_weight_notes_by_user($user);
     }
     public function delete():void{
+      var_dump($_GET);
       if(isset($_GET['param1'])){
         $id = Tools::sanitize($_GET['param1']);
         if(Note::iamcheck($id)){
@@ -221,7 +222,7 @@ class ControllerNotes extends Controller{
             $note->delete();
             $note=null;
         }
-        $this->redirect("notes");
+        $this->redirect("notes/archive");
       }
     }
 
@@ -232,9 +233,9 @@ class ControllerNotes extends Controller{
       (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
     }
     public function save():void{
-      if(isset($_POST['title']) && isset( $_POST['text'])&& $_POST['idnotes']){
+    
+      if(isset($_POST['title']) && isset( $_POST['text'])&& isset($_POST['idnotes'])){    
         $id = Tools::sanitize($_POST['idnotes']);
-        var_dump($id);
         $title= Tools::sanitize($_POST['title']);
         $text= Tools::sanitize($_POST['text']);
         if( Note::iamcheck($id)){
@@ -242,6 +243,7 @@ class ControllerNotes extends Controller{
         }else{
           $note = Notetext::get_note_by_id($id);
           if($note==false){
+            var_dump($note);
            $user= $this->get_user_or_redirect();
             $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
             $weight= $note->max_weight();
