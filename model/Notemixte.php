@@ -41,6 +41,9 @@ return $results;
      public function delete():void{
 
      }
+     public function update_title(string $title):void{
+        self::execute("update notes set title=:title where id=:id",["title"=>$title,"id"=>$this->get_id()]);
+     }
      public function get_weight_notes_by_user() : void {
         $query = self::execute("SELECT * ,n.id idnote
                                 FROM notes n  

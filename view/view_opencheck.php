@@ -75,8 +75,19 @@
         
         echo"
         <div class='mb-3  bg-dark text-white'>
-        <label for='title' class='form-label' style='background-color: #323232'>Title</label>
-        <input type='text' class='form-control'  aria-describedby='button-addon2' style='background-color: #323232; color: white;' value = '"; echo($notes->get_title());    echo"' disabled readonly >
+        <form action='notes/save' metod='post'>
+        <input type='hidden' name='idnotes' value='";
+        echo $notes->get_id();
+        echo"'>
+        <label for='title' class='form-label''>Title</label>
+        <input type='text'  name='title' class='form-control'  aria-describedby='button-addon2'  ' value = '"; echo($notes->get_title());    
+        if(empty($mode)){
+            echo"'  readonly";
+        }else{
+            echo"'";
+        }
+
+            echo" >
     </div>
     ";
     echo" </form>";

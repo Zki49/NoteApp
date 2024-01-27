@@ -240,14 +240,20 @@ class ControllerNotes extends Controller{
       (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
     }
     public function save():void{
-    
-      if(isset($_POST['title']) && isset( $_POST['text'])&& isset($_POST['idnotes'])){    
+       if(isset($_POST['title']) && isset($_POST['idnotes'])){
         $id = Tools::sanitize($_POST['idnotes']);
         $title= Tools::sanitize($_POST['title']);
-        $text= Tools::sanitize($_POST['text']);
         if( Note::iamcheck($id)){
-
-        }else{
+          $note= Notemixte::get_note_by_id($id);
+          $error=$note->set_title($title);
+          if(empty($error)){
+            $note->update_title($title); 
+          }
+           $this->redirect("notes"); 
+        }
+      if( isset( $_POST['text'])){    
+        $text= Tools::sanitize($_POST['text']);
+        
           $note = Notetext::get_note_by_id($id);
           if($note==false){
             var_dump($note);
@@ -268,9 +274,10 @@ class ControllerNotes extends Controller{
               $note->persist();
             }
             
-          }
+          
           $this->redirect("notes");
         }
+      }
       }
       $this->redirect("notes");
     }
