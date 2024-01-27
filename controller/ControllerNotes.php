@@ -187,7 +187,11 @@ class ControllerNotes extends Controller{
              $note->get_weight_notes_by_user();
         }
       }
-      $this->redirect("notes");
+      if($note->archived()){
+        $this->redirect("notes","archive");
+      }else{
+           $this->redirect("notes");
+      }
     }
     public function movedown():void{
       if(isset($_POST["idnotes"])){
@@ -197,7 +201,11 @@ class ControllerNotes extends Controller{
            $note->movedown();
         }
       }
-      $this->redirect("notes");
+      if($note->archived()){
+        $this->redirect("notes","archive");
+      }else{
+           $this->redirect("notes");
+      }
     }
     public function move_note():void {
       $user = $this->get_user_or_redirect();
