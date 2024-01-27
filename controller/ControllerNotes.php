@@ -206,7 +206,6 @@ class ControllerNotes extends Controller{
       $notes->get_weight_notes_by_user($user);
     }
     public function delete():void{
-      var_dump($_GET);
       if(isset($_GET['param1'])){
         $id = Tools::sanitize($_GET['param1']);
         if(Note::iamcheck($id)){

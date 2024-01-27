@@ -92,8 +92,10 @@ class Notecheck extends Note{
      }
     
      public function delete():void{
+        if(!empty($this->content)){
        $item= $this->content[0];
        $item->delete_all_by_note($this->get_id());
+        }
         self::execute("DELETE from checklist_notes WHERE id =:id;
         DELETE from notes WHERE id = :id;",["id"=>$this->get_id()]);
      }
