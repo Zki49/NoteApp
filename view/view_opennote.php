@@ -117,9 +117,6 @@
                           </svg>';
                            }?></a>
                
-                <form  class="form-container"  action="notes/archived" method="post">
-                <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
-                <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
                  <?php
                         }else{
                             //echo"  <form class='form-container'   action=' notes/delete' method='get'>
