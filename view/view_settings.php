@@ -13,6 +13,12 @@
     
     <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.20.0/font/bootstrap-icons.css">
+    <style>
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
 </head>
 <body class="bg-dark text-light">
 
