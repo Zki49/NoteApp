@@ -51,9 +51,13 @@ margin:10px;
 <?php
    if ($mode===" "){
    if(!empty($array_notes)){
-      echo"<div class=row>
-         <h4>pinned</h4>";
-       
+      echo"<div class=row>";
+         foreach($array_notes as $notes){
+          if (!$notes->archived()&&$notes->pinned()){
+             echo"<h4>pinned</h4>";
+             break;
+          }
+        }
       foreach($array_notes as $notes){
         if(!$notes-> archived()&& $notes->pinned()){
         if($notes->are_you_check()){
