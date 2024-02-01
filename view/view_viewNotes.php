@@ -51,9 +51,25 @@ margin:10px;
 <?php
    if ($mode===" "){
    if(!empty($array_notes)){
-      echo"<div class=row>";
-       foreach($array_notes as $notes){
-            if(!$notes-> archived()){
+      echo"<div class=row>
+         <h4>pinned</h4>";
+       
+      foreach($array_notes as $notes){
+        if(!$notes-> archived()&& $notes->pinned()){
+        if($notes->are_you_check()){
+          echo '<div class="col-6 col-md-6 col-lg-3">';
+          (new View("notecheck"))->show(["notes"=>$notes]);
+        }else{
+          echo '<div class="col-6 col-md-6 col-lg-3">';
+          (new View("note"))->show(["notes"=>$notes]);
+        }
+        echo"</div>";   
+  }
+}
+      echo"<div><h4>other</h4></div>";
+      
+             foreach($array_notes as $notes){
+            if(!$notes-> archived()&& !$notes->pinned()){
             if($notes->are_you_check()){
               echo '<div class="col-6 col-md-6 col-lg-3">';
               (new View("notecheck"))->show(["notes"=>$notes]);
