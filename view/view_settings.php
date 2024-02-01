@@ -18,6 +18,10 @@
             text-decoration: none;
             color: white;
         }
+        a:hover{
+            font-weight: 900;
+            
+        }
     </style>
 </head>
 <body class="bg-dark text-light">
