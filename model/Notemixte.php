@@ -60,6 +60,7 @@ return $results;
                     $this->set_weight($tmp);
                     $this->persist();
                     $note_tmp->persist();
+                    $note_tmp=null;
                     return;
                 }
             }
@@ -70,7 +71,7 @@ return $results;
                                 FROM notes n  
                                 WHERE n.owner = :owner
                                 and n.weight < :weight  
-                                ORDER BY `n`.`weight` desc" , ["owner" => $this->get_idowner(), "weight" => $this->get_weight()]);
+                                ORDER BY n.weight desc" , ["owner" => $this->get_idowner(), "weight" => $this->get_weight()]);
         $data = $query->fetchAll();
         if (!empty($data)){
             foreach($data as $row){

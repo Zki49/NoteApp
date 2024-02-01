@@ -29,7 +29,10 @@ abstract class Note  extends Model{
     public function get_id():int {
         return $this->id;
     }
-
+    
+    public function owner():User{
+        return $this->owner;
+    }
 
     public function set_pinned () :bool {
         $this->pinned= !$this->pinned;

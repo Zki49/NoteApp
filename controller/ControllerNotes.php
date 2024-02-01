@@ -80,19 +80,10 @@ class ControllerNotes extends Controller{
       if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
         $this->redirect("notes","reopen", $id);
-       /* if(Note::iamcheck($id)){
-          $notes= Notecheck::get_note_by_id($id);
-        }else{
-        $notes= Notetext::get_note_by_id($id);
-        }
-        $user= $this->get_user_or_redirect();
-        $is_editor = $user->editor($notes->get_id());
-        (new View("opennote"))->show(["notes"=>$notes, "is_editor"=>$is_editor]);*/
       }
     }
     public function pinned():void{
       if(isset($_POST["idnotes"])){
-        $id=Tools::sanitize($_POST["idnotes"]);
         $id=Tools::sanitize($_POST["idnotes"]);
         $notes = Notemixte::get_note_by_id($id);
         $notes->set_pinned ();
@@ -103,12 +94,16 @@ class ControllerNotes extends Controller{
     }
 
     public function archived():void{
-      if(isset($_POST["idnotes"])){
-        $id=Tools::sanitize($_POST["idnotes"]);
+      if(isset($_GET["param1"])){
+        $id=Tools::sanitize($_GET["param1"]);
         $notes = Notemixte::get_note_by_id($id);
+        if(($this->get_user_or_redirect())->editor($id)){
         $notes->set_archived();
         $notes->persist();
         $this->redirect("notes","reopen", $id);
+        }else{
+          (new view("error"))->show(["error"=>"you are note editor"]);
+        }
       }
 
      }
@@ -224,12 +219,15 @@ class ControllerNotes extends Controller{
         if($note===false){
           (new View("error"))->show(["errors"=>"cette note n'existe pas"]);
         }
-        //verifier si editeur cest ok pour sup ou il faut absolument etre proprio 
-        if(($this->get_user_or_redirect())->editor($id)){
+        
+        if(($this->get_user_or_redirect())==$note->owner()){
             $note->delete();
             $note=null;
+            $this->redirect("notes/archive");
+        }else{
+          (new View("error"))->show(["error"=>"your are not owner  "]);
         }
-        $this->redirect("notes/archive");
+        
       }
     }
 
