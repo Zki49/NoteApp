@@ -183,9 +183,8 @@ class ControllerNotes extends Controller{
       if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
         $note= Notemixte::get_note_by_id($id);
-        if(!$note->pinned()){
-             $note->get_weight_notes_by_user();
-        }
+        $note->get_weight_notes_by_user();
+      
       }
       if($note->archived()){
         $this->redirect("notes","archive");
@@ -197,9 +196,7 @@ class ControllerNotes extends Controller{
       if(isset($_POST["idnotes"])){
         $id=Tools::sanitize($_POST["idnotes"]);
         $note= Notemixte::get_note_by_id($id);
-        if(!$note->pinned()){
-           $note->movedown();
-        }
+        $note->movedown();        
       }
       if($note->archived()){
         $this->redirect("notes","archive");

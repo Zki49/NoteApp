@@ -53,7 +53,8 @@ return $results;
         $data = $query->fetchAll();
         if (!empty($data)){
             foreach($data as $row){
-                if ($row['pinned'] === 0){
+                if(!$this->pinned()){
+                   if ($row['pinned'] === 0){
                     $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
                     $tmp = $note_tmp->get_weight();
                     $note_tmp->set_weight($this->get_weight());
@@ -62,7 +63,19 @@ return $results;
                     $note_tmp->persist();
                     $note_tmp=null;
                     return;
-                }
+                  }
+               }else{
+                if ($row['pinned'] === 1){
+                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
+                    $tmp = $note_tmp->get_weight();
+                    $note_tmp->set_weight($this->get_weight());
+                    $this->set_weight($tmp);
+                    $this->persist();
+                    $note_tmp->persist();
+                    $note_tmp=null;
+                    return;
+                  }
+               }
             }
         }
     }
@@ -75,6 +88,7 @@ return $results;
         $data = $query->fetchAll();
         if (!empty($data)){
             foreach($data as $row){
+                if(!$this->pinned()){
                 if ($row['pinned'] === 0){
                     $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
                     $tmp = $note_tmp->get_weight();
@@ -84,8 +98,19 @@ return $results;
                     $note_tmp->persist();
                     return;
                 }
+            }else{
+                if ($row['pinned'] === 1){
+                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
+                    $tmp = $note_tmp->get_weight();
+                    $note_tmp->set_weight($this->get_weight());
+                    $this->set_weight($tmp);
+                    $this->persist();
+                    $note_tmp->persist();
+                    return;
+            }
             }
         }
     }
  }
+}
  ?>
