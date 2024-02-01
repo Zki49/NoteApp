@@ -121,7 +121,12 @@ class ControllerNotes extends Controller{
         }
         $user= $this->get_user_or_redirect();
         $is_editor = $user->editor($notes->get_id());
+        if(isset($_GET['param2'])){
+        (new View("opennote"))->show(["notes"=>$notes ,"is_editor"=>$is_editor,"deleted"=>$_GET['param2']]);
+        }
+        else{
         (new View("opennote"))->show(["notes"=>$notes,"is_editor"=>$is_editor]);
+        }
       }else {
         $this->redirect("notes");
       }
@@ -384,6 +389,13 @@ class ControllerNotes extends Controller{
       }
       else{
         (new View("shared"))->show([]);
+      }
+
+    }
+    public function confirm():void{
+      if(isset($_GET['param1'])){
+         $cofirm =true;
+         $this->redirect("notes","reopen",$_GET['param1'],$cofirm);
       }
 
     }

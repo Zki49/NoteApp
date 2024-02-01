@@ -109,7 +109,7 @@
                             //<input type='hidden' name='check' value='";
                             //echo $notes->are_you_check();
                             //echo"'>
-                            echo"<a href='notes/delete/";
+                            echo"<a href='notes/confirm/";
                             echo $notes->get_id();
                             echo"'>
                             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash3-fill red' viewBox='0 0 16 16'>
@@ -157,6 +157,23 @@
                     
                     <div class="row">
                      <div class="col-12"><?php
+                     if(isset($deleted)&&$deleted){
+                        echo " 
+                        <dialog open>
+                         <p>do you want deleted this note whith title : ";
+                         echo $notes->get_title(); 
+                         echo" </p>
+                          <form method='dialog'>
+                          <a href='notes/delete/";
+                          echo $notes->get_id();
+                          echo"'>
+                            <button>OK</button>
+                            </a>
+                            <button>CANCEL</button>
+                          </form>
+                        </dialog>
+                      ";
+                     }
                      if($notes->are_you_check()){
                         (new View("opencheck"))->show(["notes"=>$notes]);
                       }else{
