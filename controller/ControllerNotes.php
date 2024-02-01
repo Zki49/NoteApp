@@ -83,8 +83,8 @@ class ControllerNotes extends Controller{
       }
     }
     public function pinned():void{
-      if(isset($_POST["idnotes"])){
-        $id=Tools::sanitize($_POST["idnotes"]);
+      if(isset($_GET["param1"])){
+        $id=$_GET["param1"];
         $notes = Notemixte::get_note_by_id($id);
         $notes->set_pinned ();
         $notes->persist();
@@ -95,7 +95,7 @@ class ControllerNotes extends Controller{
 
     public function archived():void{
       if(isset($_GET["param1"])){
-        $id=Tools::sanitize($_GET["param1"]);
+        $id=$_GET["param1"];
         $notes = Notemixte::get_note_by_id($id);
         if(($this->get_user_or_redirect())->editor($id)){
         $notes->set_archived();
