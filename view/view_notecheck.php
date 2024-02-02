@@ -74,9 +74,10 @@
                         </div>
                     </button>
                 </form>
-
+                 <?php if(!$notes->archived()){?>
                 <div class="d-flex justify-content-between">
                     <?php
+
                 if(($notes->max_weight() - $notes->get_weight())!=0){
                     ?>
                     <form action="notes/moveup" method="post">
@@ -95,6 +96,7 @@
                     </button>
                    </form>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </div>
