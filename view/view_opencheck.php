@@ -4,65 +4,8 @@
 <head>
    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            background-color:  #323232 ;
-            color: white;
-        }
-
-        .navbar {
-            background-color: black;
-        }
-        .styled-link-button {
-            background: #323232;
-            border: none;
-            color: #ffffff;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .custom-container {
-            width: 100vw;
-            padding: 20px;
-        }
-
-        .black-textarea {
-            width: 100%;
-            box-sizing: border-box;
-            color: white; 
-        }
-        label{
-            color: white;
-        }
-        textarea{
-            background-color: black;
-            color: white;
-        }
-        input{
-            background: #323232;
-            border: none;
-        }
-        .throughline{
-            text-decoration: line-through;
-        }
-        #monBouton {
-      opacity: 0;
-      pointer-events: none; 
-    }
-
-   
-    #maCheckbox:checked + label #monBouton {
-      opacity: 1;
-    }
-
-   
-    #monBouton {
-      color: blue;
-      text-decoration: underline;
-      transition: opacity 0.3s; 
-    }
-    </style>
+    <link href="css/style_view_openCheck.css" rel="stylesheet">
+  
 </head>
 
 

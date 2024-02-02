@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+      <link href="css/style_edit_profil.css" rel="stylesheet">
     <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.20.0/font/bootstrap-icons.css">
     <title>Edit Profile</title>
@@ -19,37 +20,7 @@
         crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-size: 1.2rem;
-        }
-
-        .card {
-            margin-top: 50px;
-            background-color: black;
-        }
-
-        .form-group label {
-            font-size: 1.2rem;
-        }
-
-        .title-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        /* Ajout de l'espace entre les champs */
-        .form-group {
-            margin-bottom: 20px;
-            color: #fff;
-        }
-      
-    </style>
+    
 </head>
 
 <body>
