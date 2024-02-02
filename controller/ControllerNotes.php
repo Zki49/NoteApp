@@ -432,6 +432,32 @@ class ControllerNotes extends Controller{
       $note->change_permission($idUser);
       self::shared2($_POST["idNote"]);
     }
+    public function get_shared_notes() : void {
+      if ($this->user_logged() ) {
+          $user = $this->get_user_or_redirect();
+          $userShared = User::get_user_by_id($_GET["param1"]);
+          
+          $array_shared_notes = Note::get_shared_notes($user, $userShared);
+          $array_shared_notes_editor = Note::get_shared_notes_editor($user, $userShared);
+          $array_shared_notes_not_editor = Note::get_shared_notes_not_editor($user, $userShared);
+          $tab_shared = User::array_shared_user_by_mail($user);
+          if(!empty($array_shared_notes_editor)){
+             usort($array_shared_notes_editor, array($this, "comparenote"));
+          }
+          if(!empty($array_shared_notes_not_editor)){
+          usort($array_shared_notes_not_editor, array($this, "comparenote"));
+          }
+
+  
+  
+          (new View("shared_notes"))->show(["array_shared_notes_editor" => $array_shared_notes_editor,
+                                            "array_shared_notes_not_editor"=>$array_shared_notes_not_editor, 
+                                            "tab_shared"=>$tab_shared,
+                                            "userShared"=>$userShared]);
+      } else {
+          (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
+      }
+  }
 
  }
 ?>
