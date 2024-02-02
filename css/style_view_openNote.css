@@ -1,0 +1,60 @@
+dialog{
+    background-color:#0056b3;
+    color: white;
+}
+.anchor-button {
+display: inline-block;
+padding: 10px 20px;
+background-color: #007bff; /* Couleur de fond */
+color: #ffffff; /* Couleur du texte */
+text-decoration: none;
+border: none;
+border-radius: 5px; /* Coins arrondis */
+cursor: pointer; /* Curseur au survol */
+transition: background-color 0.3s ease; /* Animation sur le changement de couleur de fond */
+}
+
+.anchor-button:hover {
+background-color: #0056b3; /* Changement de couleur de fond au survol */
+}
+body {
+    margin: 0px;
+    background-color: black;
+    color: white;
+}
+
+.navbar {
+    background-color: black;
+}
+.red{
+    color: red;
+}
+.styled-link-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.custom-container {
+    width: 100vw;
+    padding: 20px;
+}
+
+.black-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    color: white; 
+}
+label{
+    color: white;
+}
+textarea{
+    background-color: black;
+    color: white;
+}
+.form-container {
+    display: inline-block;
+    margin-right: 10px; /* Espace entre les formulaires, ajustez selon vos besoins */
+}

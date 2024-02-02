@@ -1,0 +1,29 @@
+        /* Custom style for input fields matching bg-dark */
+        .custom-input-bg {
+            background-color: #343a40 !important; /* Important declaration to override Bootstrap styles */
+            color: white; /* Text color for better visibility */
+        }
+
+        /* Custom style for border around signup section */
+        .signup-section {
+            border: 1px solid #6c757d; /* Border color */
+            border-radius: 8px; /* Border radius */
+            padding: 15px 20px !important; /* Important declaration to override Bootstrap styles */
+        }
+
+        /* Custom style for span elements */
+        .custom-span-color {
+            color: #6c757d !important; /* Important declaration to override Bootstrap styles */
+        }
+
+        /* Custom style for horizontal line below "Signup" */
+        .signup-line {
+            border-top: 1px solid #6c757d; /* Border color */
+            margin-top: 10px; /* Adjusted margin for space */
+            margin-bottom: 15px; /* Adjusted margin for space */
+        }
+
+        /* Custom style to match button size with input fields */
+        .custom-button-size {
+            min-width: 100%; /* Set button width to match input fields */
+        }

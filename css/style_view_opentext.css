@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    background-color: black;
+    color: white;
+}
+
+.navbar {
+    background-color: black;
+}
+
+
+.custom-container {
+    width: 100vw;
+    padding: 20px;
+}
+
+.black-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    color: white; 
+}
+label{
+    color: white;
+}
+textarea{
+    background-color: black;
+    color: white;
+}

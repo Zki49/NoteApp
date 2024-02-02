@@ -1,0 +1,8 @@
+body {
+    padding-top: 56px; /* Ajouter une marge en haut pour la barre de navigation fixe */
+    background-color: black;
+    color: white;
+  }
+  .container {
+    margin-top: 20px;
+  }
