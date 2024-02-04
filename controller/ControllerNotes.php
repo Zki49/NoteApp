@@ -126,6 +126,25 @@ class ControllerNotes extends Controller{
         $this->redirect("notes");
       }
      }
+     public function openshare():void{
+      if(isset($_GET["param1"])){
+        $id = Tools::sanitize($_GET["param1"]);
+        if(Note::iamcheck($id)){
+          $notes= Notecheck::get_note_by_id($id);
+          
+        }else{
+        $notes= Notetext::get_note_by_id($id);
+        }
+        if($notes==false){
+          (new View("error"))->show(["error"=>"cette note nexiste pas"]);
+        }
+        $user= $this->get_user_or_redirect();
+        $is_editor = $user->editor($notes->get_id());
+        (new View("opennote"))->show(["notes"=>$notes,"is_editor"=>$is_editor,"share"=>true]);
+    }else {
+      $this->redirect("notes");
+    }
+     }
 
      public function edit():void{
       $user= $this->get_user_or_redirect();

@@ -33,12 +33,13 @@
         foreach($array_shared_notes_editor as $sharenote){
          
           $note=$sharenote->get_note();
+          
           if($note->are_you_check()){
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare",$sharenote]);
+            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare"=>$sharenote]);
           }else{
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare",$sharenote]);
+            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare"=>$sharenote]);
           }
           echo"</div>";   
         }
@@ -50,10 +51,10 @@
           $note=$sharenote->get_note();
           if($note->are_you_check()){
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare",$sharenote]);
+            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare"=>$sharenote]);
           }else{
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare",$sharenote]);
+            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare"=>$sharenote]);
           }
           echo"</div>";   
         }

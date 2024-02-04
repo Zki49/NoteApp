@@ -18,7 +18,14 @@
         <div class="card half-width">
             <div class="card-body">
 
-                <form action="notes/open/<?= $notes->get_id(); ?>" method="get">
+            <form action=<?php if(!isset($share)){ echo'"notes/open/';
+                    echo $notes->get_id();
+                    echo'"'; 
+                }else{
+                     echo'"notes/openshare/';
+                     echo $notes->get_id();
+                     echo'"'; 
+                    } ?> method="get">
                 
 
                     <button type="submit" class="styled-link-button">

@@ -15,11 +15,14 @@
             <div class="card-body">
             
                 <!-- Formulaire caché -->
-                <form action="notes/open/<?=$notes->get_id(); ?> <?php 
-                if(isset($share)){
-                  
-                }?>" method="get">
-                
+                <form action=<?php if(!isset($share)){ echo'"notes/open/';
+                    echo $notes->get_id();
+                    echo'"'; 
+                }else{
+                     echo'"notes/openshare/';
+                     echo $notes->get_id();
+                     echo'"'; 
+                    } ?> method="get">
                  
                 <!-- Lien stylisé comme un bouton de soumission de formulaire -->
                 <button type="submit" class="styled-link-button">
