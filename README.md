@@ -14,9 +14,7 @@
 
 ### Liste des bugs connus
 
-  * bug 1
-  * bug 2
-  * ...
+  * bug de back dans open quand on ouvre une note partager le back revien dans les notes de lutilisateur 
 
 ### Liste des fonctionnalités supplémentaires
 
