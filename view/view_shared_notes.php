@@ -30,13 +30,14 @@
     if (!empty($array_shared_notes_editor)){
       echo"<label class='form-label text-light fw-bold' > Notes shared to you by  ";?><?php echo $userShared->get_fullnam() ?><?php echo" as editor</label>";
       echo"<div class=row>";
-        foreach($array_shared_notes_editor as $note){
+        foreach($array_shared_notes_editor as $sharenote){
+          $note=$sharenote->get_note();
           if($note->are_you_check()){
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("notecheck"))->show(["notes"=>$note]);
+            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared()]);
           }else{
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("note"))->show(["notes"=>$note]);
+            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared()]);
           }
           echo"</div>";   
         }
@@ -44,13 +45,14 @@
     if (!empty($array_shared_notes_not_editor)){
       echo"<label class='form-label text-light fw-bold' > Notes shared to you by  ";?><?php echo $userShared->get_fullnam() ?><?php echo" as reader</label>";
       echo"<div class=row>";
-        foreach($array_shared_notes_not_editor as $note){
+        foreach($array_shared_notes_not_editor as $sharenote){
+          $note=$sharenote->get_note();
           if($note->are_you_check()){
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("notecheck"))->show(["notes"=>$note]);
+            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared()]);
           }else{
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("note"))->show(["notes"=>$note]);
+            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared()]);
           }
           echo"</div>";   
         }
@@ -79,7 +81,7 @@
     if(!empty($tab_shared)){
       foreach($tab_shared as $user): ?>
         <li class="nav-item">
-          <a class="nav-link link-secondary" href='test/get_shared_notes/<?= $user->get_id()?>'>Shared by <?php echo $user->get_fullnam() ?></a>
+          <a class="nav-link link-secondary" href='Notes/get_shared_notes/<?= $user->get_id()?>'>Shared by <?php echo $user->get_fullnam() ?></a>
         </li>
   <?php endforeach;}
     $tab_shared = null; 

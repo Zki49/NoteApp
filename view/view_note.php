@@ -27,7 +27,7 @@
                     </p>
                 </button>
                 </form>
-                <?php if(!$notes->archived()){?>
+                <?php if(!$notes->archived()&&!isset($share)){?>
                 <div class="d-flex justify-content-between">
                     <?php
                     if(($notes->max_weight() - $notes->get_weight())!=0){

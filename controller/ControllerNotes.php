@@ -6,10 +6,11 @@ require_once "model/Note.php";
 require_once "model/Notetext.php";
 require_once "model/Notecheck.php";
 require_once "model/Notemixte.php";
+require_once  "model/Sharenote.php";
 
 
 class ControllerNotes extends Controller{ 
-  private function comparenote(Note $n1,Note $n2) :int{
+  private function comparenote(Note|Sharenote $n1,Note|Sharenote $n2) :int{
     if($n1===$n2||$n1->get_weight()==$n2->get_weight()){
         return 0;
     }
@@ -437,9 +438,8 @@ class ControllerNotes extends Controller{
           $user = $this->get_user_or_redirect();
           $userShared = User::get_user_by_id($_GET["param1"]);
           
-          $array_shared_notes = Note::get_shared_notes($user, $userShared);
-          $array_shared_notes_editor = Note::get_shared_notes_editor($user, $userShared);
-          $array_shared_notes_not_editor = Note::get_shared_notes_not_editor($user, $userShared);
+          $array_shared_notes_editor = Sharenote::get_shared_notes_editor($user, $userShared);
+          $array_shared_notes_not_editor = Sharenote::get_shared_notes_not_editor($user, $userShared);
           $tab_shared = User::array_shared_user_by_mail($user);
           if(!empty($array_shared_notes_editor)){
              usort($array_shared_notes_editor, array($this, "comparenote"));

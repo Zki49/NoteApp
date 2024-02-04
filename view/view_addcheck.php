@@ -12,7 +12,7 @@ $errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme u
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
     <link href="css/style_addCheck.css" rel="stylesheet">
 
-    <style>
+  <!--  <style>
     /* Style pour le fond de la page */
     body {
         background-color: #343a40; /* Couleur foncée de Bootstrap */
@@ -57,7 +57,7 @@ $errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme u
         cursor: pointer;
         text-decoration: none;
     }
-</style>
+</style>-->
 
 
     <title>Titre de la page</title>
