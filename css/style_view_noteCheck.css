@@ -1,0 +1,30 @@
+/* Ajoutez ici votre style personnalisé si nécessaire */
+.half-width {
+    /* width: 40%; *//* La carte occupe la moitié de la largeur de son contenant */
+     margin: 10px; /* Pour centrer la carte sur la page */
+     background-color: black; /* Fond de la carte en noir */
+     color: white; /* Texte en blanc */
+     border: 1px solid white; /* Bordure blanche autour de la carte */
+     border-radius: 10px; /* Coins arrondis */
+ }
+
+ .card-title {
+     border-bottom: 1px solid white; /* Bordure blanche en bas du titre */
+     padding-bottom: 10px; /* Espace sous le titre */
+ }
+
+ .hidden-checkboxes {
+    height: 5em; /* Hauteur maximale de trois lignes (2.4em par ligne + espacement) */
+     overflow: hidden;
+ }
+ a {
+     text-decoration: none; /* Enlever le soulignage */
+     color: #ffffff; /* Définir la couleur du texte en blanc */
+ }
+ .styled-link-button {
+     background: none;
+     border: none;
+     color: #ffffff;
+     cursor: pointer;
+     text-decoration: none;
+ }

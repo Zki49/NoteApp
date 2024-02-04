@@ -1,0 +1,31 @@
+.half-width {
+    margin: 10px;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.card-title {
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+}
+.d-flex {
+    border-top: 1px solid white;
+    padding-top: 10px;
+}
+.truncate-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    height: 4.5em;
+}
+.styled-link-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+}

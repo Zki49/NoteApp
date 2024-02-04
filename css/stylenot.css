@@ -1,0 +1,25 @@
+a{
+    text-decoration: none;
+    color:white;
+  }
+  h4{
+    color:white;
+  }
+  
+.btn-transparent {
+    background-color: #222529;
+    border: none; /* Supprimer la bordure */
+}
+.right-yellow {
+color: yellow;
+padding: 10px;
+
+}
+.right-yellow-container {
+position: fixed;
+bottom: 0;
+right: 0;
+display: flex;
+flex-direction: row;
+margin:10px;
+}

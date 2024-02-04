@@ -1,0 +1,22 @@
+body {
+    background-color: #323232;
+    color: white;
+}
+
+.navbar {
+    background-color: #323232;
+}
+.styled-link-button {
+    background: #323232;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+.page-header {
+    background-color: #323232;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
