@@ -89,7 +89,7 @@
   ?>
 
   <li class="nav-item">
-    <a class="nav-link link-secondary" href="#">Settings</a>
+    <a class="nav-link link-secondary" href="settings">Settings</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
