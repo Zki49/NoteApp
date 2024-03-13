@@ -76,13 +76,7 @@ class ControllerNotes extends Controller{
         $tab_shared = User::array_shared_user_by_mail($user);  
         ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
-    public function open():void{
-      
-      if(isset($_POST["idnotes"])){
-        $id=Tools::sanitize($_POST["idnotes"]);
-        $this->redirect("notes","reopen", $id);
-      }
-    }
+  
     public function pinned():void{
       if(isset($_GET["param1"])){
         $id=$_GET["param1"];
@@ -90,7 +84,7 @@ class ControllerNotes extends Controller{
         $notes->set_pinned ();
         $notes->persist();
         
-        $this->redirect("notes","reopen", $id);
+        $this->redirect("notes","open", $id);
       }
     }
 
@@ -101,14 +95,14 @@ class ControllerNotes extends Controller{
         if(($this->get_user_or_redirect())->editor($id)){
         $notes->set_archived();
         $notes->persist();
-        $this->redirect("notes","reopen", $id);
+        $this->redirect("notes","open", $id);
         }else{
           (new view("error"))->show(["error"=>"you are note editor"]);
         }
       }
 
      }
-     public function reopen():void{
+     public function open():void{
       if(isset($_GET["param1"])){
         $id = Tools::sanitize($_GET["param1"]);
         if(Note::iamcheck($id)){
@@ -131,6 +125,25 @@ class ControllerNotes extends Controller{
       }else {
         $this->redirect("notes");
       }
+     }
+     public function openshare():void{
+      if(isset($_GET["param1"])){
+        $id = Tools::sanitize($_GET["param1"]);
+        if(Note::iamcheck($id)){
+          $notes= Notecheck::get_note_by_id($id);
+          
+        }else{
+        $notes= Notetext::get_note_by_id($id);
+        }
+        if($notes==false){
+          (new View("error"))->show(["error"=>"cette note nexiste pas"]);
+        }
+        $user= $this->get_user_or_redirect();
+        $is_editor = $user->editor($notes->get_id());
+        (new View("opennote"))->show(["notes"=>$notes,"is_editor"=>$is_editor,"share"=>true]);
+    }else {
+      $this->redirect("notes");
+    }
      }
 
      public function edit():void{
@@ -348,7 +361,7 @@ class ControllerNotes extends Controller{
       $item->unchecked_checked();
       $item->persit();
       $idNote= $item->get_id_my_note();
-      $this->redirect("notes","reopen",$idNote);
+      $this->redirect("notes","open",$idNote);
     }
     public function deleteitem():void {
       if(isset($_POST["item"])&& isset($_POST['id'])){
@@ -393,7 +406,7 @@ class ControllerNotes extends Controller{
     public function confirm():void{
       if(isset($_GET['param1'])){
          $cofirm =true;
-         $this->redirect("notes","reopen",$_GET['param1'],$cofirm);
+         $this->redirect("notes","open",$_GET['param1'],$cofirm);
       }
 
     }
@@ -436,6 +449,7 @@ class ControllerNotes extends Controller{
     public function get_shared_notes() : void {
       if ($this->user_logged() ) {
           $user = $this->get_user_or_redirect();
+          if(isset($_GET["param1"])){
           $userShared = User::get_user_by_id($_GET["param1"]);
           
           $array_shared_notes_editor = Sharenote::get_shared_notes_editor($user, $userShared);
@@ -454,6 +468,7 @@ class ControllerNotes extends Controller{
                                             "array_shared_notes_not_editor"=>$array_shared_notes_not_editor, 
                                             "tab_shared"=>$tab_shared,
                                             "userShared"=>$userShared]);
+        }
       } else {
           (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
       }

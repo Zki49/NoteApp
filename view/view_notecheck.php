@@ -18,8 +18,15 @@
         <div class="card half-width">
             <div class="card-body">
 
-                <form action="notes/open" method="post">
-                    <input type="hidden" name="idnotes" value="<?= $notes->get_id() ?>">
+            <form action=<?php if(!isset($share)){ echo'"notes/open/';
+                    echo $notes->get_id();
+                    echo'"'; 
+                }else{
+                     echo'"notes/openshare/';
+                     echo $notes->get_id();
+                     echo'"'; 
+                    } ?> method="get">
+                
 
                     <button type="submit" class="styled-link-button">
                         <h5 class="card-title"><?= $notes->get_title(); ?></h5>

@@ -67,6 +67,9 @@ class Sharenote extends Model{
    public function shared():bool{
     return true;
    }
+   public function share_by():User{
+    return $this->note->owner();
+   }
     
 }
 

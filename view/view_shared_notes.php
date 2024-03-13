@@ -31,13 +31,15 @@
       echo"<label class='form-label text-light fw-bold' > Notes shared to you by  ";?><?php echo $userShared->get_fullnam() ?><?php echo" as editor</label>";
       echo"<div class=row>";
         foreach($array_shared_notes_editor as $sharenote){
+         
           $note=$sharenote->get_note();
+          
           if($note->are_you_check()){
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared()]);
+            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare"=>$sharenote]);
           }else{
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared()]);
+            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare"=>$sharenote]);
           }
           echo"</div>";   
         }
@@ -49,10 +51,10 @@
           $note=$sharenote->get_note();
           if($note->are_you_check()){
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared()]);
+            (new View("notecheck"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare"=>$sharenote]);
           }else{
             echo '<div class="col-6 col-md-6 col-lg-3">';
-            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared()]);
+            (new View("note"))->show(["notes"=>$note,"share"=>$sharenote->shared(),"noteshare"=>$sharenote]);
           }
           echo"</div>";   
         }
@@ -88,7 +90,7 @@
   ?>
 
   <li class="nav-item">
-    <a class="nav-link link-secondary" href="#">Settings</a>
+    <a class="nav-link link-secondary" href="settings">Settings</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
