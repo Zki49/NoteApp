@@ -73,6 +73,12 @@ abstract class Note  extends Model{
         }
         return $errors;
     }
+    public function is_shared():bool{
+        $query = self::execute("SELECT * 
+                                FROM note_shares ns 
+                                WHERE ns.note = :id ",["id" => $this->get_id()]);
+        return $query->rowCount() == 0 ? false : true;
+    }
     
     public function persist(){
         if($this->get_note_by_id($this->get_id())){
