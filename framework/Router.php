@@ -14,7 +14,9 @@ class Router
                 $copy[$key] = $this->sanitize_all_array($value);
             } else {
                 if(!Configuration::get("insafe_inputs") || (Configuration::get("insafe_inputs") && !in_array($key,  Configuration::get("insafe_inputs"))))
-                    $copy[$key] = Tools::sanitize($value);
+
+                $copy[$key] = Tools::sanitize($value);
+
                 else
                     $copy[$key] = $value;
             }
