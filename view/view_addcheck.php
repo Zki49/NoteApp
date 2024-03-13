@@ -12,6 +12,23 @@ $errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme u
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
     <link href="css/style_addCheck.css" rel="stylesheet">
 
+    <script src="lib/jqueryjs" type="text/javascript"></script>
+    <script>
+        $(document).ready(function() {
+        $('#title').on('input', function() {
+            var title = $(this).val();
+            
+            if (title.length > 3) {
+                console.log('longueur supérieure à 3.');
+            } else {
+                console.log('longueur pas supérieure à 3.');
+            }
+        });
+    });
+
+    </script>
+
+
   <!--  <style>
     /* Style pour le fond de la page */
     body {
