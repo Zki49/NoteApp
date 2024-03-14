@@ -51,6 +51,7 @@
                         </div>
                     </button>
                 </form>
+                <noscript>
                  <?php if(!$notes->archived()&&!isset($share)){?>
                 <div class="d-flex justify-content-between">
                     <?php
@@ -74,6 +75,7 @@
                    </form>
                 </div>
                 <?php } ?>
+                </noscript>
             </div>
         </div>
     </div>
