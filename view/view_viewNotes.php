@@ -65,7 +65,7 @@ margin:10px;
       echo"<div id='dropable' class=row>";
          foreach($array_notes as $notes){
           if (!$notes->archived()&&$notes->pinned()){
-             echo"<h4>pinned</h4>";
+             echo"<h4 id='undropable'>pinned</h4>";
              break;
           }
         }
@@ -82,7 +82,7 @@ margin:10px;
         echo"</div>";   
   }
 }
-      echo"<div><h4>other</h4></div>";
+      echo"<div><h4 id='undragable'>other</h4></div>";
       
              foreach($array_notes as $notes){
             if(!$notes-> archived()&& !$notes->pinned()){
