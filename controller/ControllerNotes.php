@@ -102,6 +102,16 @@ class ControllerNotes extends Controller{
       }
 
      }
+     public function move_service(): void{
+      /*
+      si la note est pined la depined si elle a ete droper dans 'other' et inversement  
+       swap le poids (plutot metre un poids entre la note precedente et la note suivante)
+      */
+      if(isset($_GET['param1'])&& $_GET['param1']!==" "){
+        
+      }
+
+     }
      public function open():void{
       if(isset($_GET["param1"])){
         $id = Tools::sanitize($_GET["param1"]);

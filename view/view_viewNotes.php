@@ -19,7 +19,11 @@
     <script>
        $( function() {
     $( "#dropable" ).sortable({
-      connectWith: ".connectedSortable"
+      connectWith: ".connectedSortable",
+      update: function(event, ui) {
+            var draggedItem = ui.item;
+            var draggedItemId = draggedItem.attr('id');
+      }
     }).disableSelection();
   } );
     </script>    
