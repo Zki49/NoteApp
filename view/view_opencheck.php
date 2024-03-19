@@ -25,13 +25,12 @@
         <label for='title' class='form-label''>Title</label>
         <input type='text' id='title'  name='title' class='form-control'  aria-describedby='button-addon2'  ' value = '"; echo($notes->get_title());    
         echo"
+       
         <div class='input-group has-validation'>
-          <span class='input-group-text' id='inputGroupPrepend'>@</span>
-          <input type='text' class='form-control' id='validationCustomUsername' aria-describedby='inputGroupPrepend' required>
           <div class='invalid-feedback'>
-            Please choose a username.
+            Title lenght must be between 3 and 25
           </div>
-        </div>
+        
       </div>
         ";
         if(empty($mode)){

@@ -20,14 +20,12 @@
         console.log("test");
         $(document).ready(function(){
             $('#title').on('input', function() {
-                const input = document.querySelector("#title");
-            input.addEventListener("change" , console.log("stp marche"));
                 var title = $(this).val();
                 
-                if (title.length > 3) {
-                    console.log('longueur supérieure à 3.');
+                if (title.length < 3 || title.length > 25) {
+                    $(this).addClass('is-invalid');
                 } else {
-                    console.log('longueur pas supérieure à 3.');
+                    $(this).removeClass('is-invalid');
                 }
             });
         });
