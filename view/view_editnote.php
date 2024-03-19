@@ -26,6 +26,7 @@
                     $(this).addClass('is-invalid');
                 } else {
                     $(this).removeClass('is-invalid');
+                    $(this).addClass('is-valid');
                 }
             });
         });

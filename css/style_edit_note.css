@@ -24,3 +24,7 @@ body {
     border-color: red;
     background-color: transparent;
 }
+.is-valid {
+    border: green;
+    background-color: transparent;
+}
