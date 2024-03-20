@@ -15,13 +15,14 @@
   <script>
     let idUser, selectedOptionUser, userName,
     idPermission, selectedOptionPerm, permName,
-    div;
+    div, toggleBtn;
     
 
     $(function(){
       $("#btnplus").click(viewShare);
-      $('#toggleBtn').click();
-      $('#deleteBtn').click();
+      
+
+      //$('#deleteBtn').click(erase);
       
   //$("#userDropdown").focus(); // This will give focus to the userDropdown element
 //});
@@ -45,30 +46,33 @@
     });
 
     function viewShare(){
-      let html = "<form action='notes/deleteShared' method='Post'>";
-      html += '<input id="user" name="user" value="';
+      let html = '<input id="user" name="user" value="';
       html += userName;
       html += " (";
       html += permName;
       html += ')"';
       html += ' readonly></input>';
-      html += '<button type="submit" onclick="toggle" class="btn btn-primary mb-2" formaction="notes/toggle">'
+      html += '<button type="submit" class="btn btn-primary mb-2" >'
       html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">'
       html += '<path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>'
       html += '<path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>'
       html += '</svg>'
       html += ' </button>'
-      html += '<button type="submit" onclick="erase" class="btn btn-primary mb-2  btn-danger"">'
+      html += '<button type="submit" class="btn btn-primary mb-2  btn-danger">'
       html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">'
       html+= '<path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>'
       html+= '</svg>'
       html+= '</button>'
 
       div.append(html);
-      
-      console.log(html);
-            
-      console.log(div);
+    }
+
+    function toggleA(){
+      console.log("1111");
+    }
+
+    function erase(){
+
     }
   </script>
 </head>
