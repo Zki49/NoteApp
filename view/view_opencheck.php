@@ -24,9 +24,7 @@
         echo"'>
         <label for='title' class='form-label''>Title</label>
         <input type='text' id='title'  name='title' class='form-control'  aria-describedby='button-addon2'  ' value = '"; echo($notes->get_title());    
-        echo"
-       
-        <div class='input-group has-validation'>
+        echo"'>
           <div class='invalid-feedback'>
             Title lenght must be between 3 and 25
           </div>
@@ -36,7 +34,7 @@
         if(empty($mode)){
             echo"'  readonly";
         }else{
-            echo"'";
+            echo"' ";
         }
 
             echo" >
@@ -65,6 +63,12 @@
              echo $item->get_content()  ;
              if(!empty($mode)){echo"' ";}else{echo " ' readonly";}
              echo"  >";
+             echo"
+                <div class='invalid-feedback'>
+                    Title lenght must be between 3 and 25
+                </div>
+             ";
+             //
              if(!empty($mode)){echo"   
                 <button class='btn btn-danger' type='submit'>
                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-dash' viewBox='0 0 16 16'>
