@@ -55,7 +55,7 @@
               
              </a>
             </div>
-            <input type='text' class='form-control ";
+            <input id='"; echo $items-> ;echo"' type='text' class='form-control ";
             if($item->item_checked()){
                 echo"throughline";
             }

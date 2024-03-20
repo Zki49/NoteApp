@@ -23,7 +23,7 @@
         inputs.forEach(function(input){
             console.log(input);
         });
-        console.log("test");
+        
         $(document).ready(function(){
             $('#title').on('input', function() {
                 var title = $(this).val();

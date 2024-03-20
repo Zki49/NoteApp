@@ -9,23 +9,7 @@
         integrity="sha384-MQwA9UQGx909+8zz3bV5P1/zPr27R2aFWsUZt5Xz5a9Tq2XUn/6Zl3DSd0ZUEwC" crossorigin="anonymous">
     <link href="css/style_view_noteCheck.css" rel="stylesheet">
 
-    <script src="lib/jquery.js" type="text/javascript"></script>
-
-    <title>Ma Carte</title>
-    <script>
-        console.log("test");
-            $('#title').on('input', function() {
-                const input = document.querySelector("#title");
-            input.addEventListener("change" , console.log("stp marche"));
-                var title = $(this).val();
-                
-                if (title.length > 3) {
-                    console.log('longueur supérieure à 3.');
-                } else {
-                    console.log('longueur pas supérieure à 3.');
-                }
-            });
-    </script>
+    
 </head>
 
 <body>
