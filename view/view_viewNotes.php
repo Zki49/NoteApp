@@ -18,11 +18,15 @@
     <script src="lib/jquery.ui.touch-punch.min.js"></script>
     <script>
        $( function() {
-    $( "#dropable" ).sortable({
+    $( "#dropable1, #dropable2" ).sortable({
       connectWith: ".connectedSortable",
       update: function(event, ui) {
             var draggedItem = ui.item;
             var draggedItemId = draggedItem.attr('id');
+            console.log(draggedItem.html());
+            console.log(ui.item.parent().html());
+            draggedItem=null;
+            draggedItemId=null;
       }
     }).disableSelection();
   } );
@@ -66,13 +70,14 @@ margin:10px;
 <?php
    if ($mode===" "){
    if(!empty($array_notes)){
-      echo"<div id='dropable' class=row>";
+      echo"<div  class=row>";
          foreach($array_notes as $notes){
           if (!$notes->archived()&&$notes->pinned()){
-             echo"<h4 id='undropable'>pinned</h4>";
+             echo"<h4 >pinned</h4>";
              break;
           }
         }
+        echo"<div  id='dropable2' class='row , connectedSortable'>";
       foreach($array_notes as $notes){
         if(!$notes-> archived()&& $notes->pinned()){
         if($notes->are_you_check()){
@@ -86,7 +91,7 @@ margin:10px;
         echo"</div>";   
   }
 }
-      echo"<div><h4 id='undragable'>other</h4></div>";
+      echo"</div><div><h4>other</h4></div><div id='dropable1' class='row , connectedSortable'>";
       
              foreach($array_notes as $notes){
             if(!$notes-> archived()&& !$notes->pinned()){
@@ -100,9 +105,9 @@ margin:10px;
             echo"</div>";   
       }
     }
-      echo"</div>";
+      echo"</div></div>";
   }else{
-      echo"<h4>your note are empty</h4> ";
+      echo"<h4>your Notes are empty</h4> ";
     }
   }else{
     if(!empty($array_notes)){
@@ -122,7 +127,10 @@ margin:10px;
     
   }
     echo"</div>";
-}}
+}else{
+  echo"<h4>your archive is empty</h4> ";
+}
+}
   $array_notes = null;
 ?>
  
