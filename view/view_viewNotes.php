@@ -71,10 +71,13 @@ margin:10px;
    if ($mode===" "){
    if(!empty($array_notes)){
       echo"<div  class=row>";
-         foreach($array_notes as $notes){
+        $pined_exist = false;
+         for( $i =0;$i<sizeof($array_notes)&& $pined_exist===false;$i++){
+          $notes=$array_notes[$i];
           if (!$notes->archived()&&$notes->pinned()){
              echo"<h4 >pinned</h4>";
-             break;
+             $pined_exist=true;
+             
           }
         }
         echo"<div  id='dropable2' class='row , connectedSortable'>";
