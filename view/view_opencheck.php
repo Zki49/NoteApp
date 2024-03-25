@@ -42,25 +42,24 @@
     ";
     echo" </form>";
    echo" <label for='title' class='form-label'>Items</label>";
-        foreach($items as $item){
-            echo"<form action='notes/deleteitem' method='post'>
+   for($i = 0; $i < count($items); $i++){
+    echo "<form action='notes/deleteitem' method='post'>
             <div class='input-group mb-3'>
-            <div class='input-group-text'>
-            <a href='notes/check/";
-               echo $item->get_id();
-               echo"'>
-                <input class='form-check-input mt-0' type='checkbox' ";
-                if($item->item_checked()){echo"checked";}
-                echo" input'>
-              
-             </a>
-            </div>
-            <input id='"; echo $items-> ;echo"' type='text' class='form-control ";
-            if($item->item_checked()){
-                echo"throughline";
-            }
+                <div class='input-group-text'>
+                    <a href='notes/check/" . $items[$i]->get_content() . "'>
+                        <input class='form-check-input mt-0' type='checkbox' ";
+    if($items[$i]->item_checked()) {
+        echo "checked ";
+    }
+    echo "input'>
+                    </a>
+                </div>
+                <input id='" .$i . "' type='text' class='form-control ";
+    if($items[$i]->item_checked()) {
+        echo "throughline";
+    }
             echo"' aria-label='Text input with checkbox ' name='item' value='";
-             echo $item->get_content()  ;
+             echo $items[$i]->get_content()  ;
              if(!empty($mode)){echo"' ";}else{echo " ' readonly";}
              echo"  >";
              echo"

@@ -18,7 +18,9 @@
     <title>Ma Carte</title>
     <script>
         console.log("test");
-        var inputs = document.querySelectorAll('input');
+        var inputs = document.querySelectorAll('#input');
+        console.log(inputs.length);
+        let inputTitle;
 
         inputs.forEach(function(input){
             console.log(input);
