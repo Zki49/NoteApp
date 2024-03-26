@@ -473,6 +473,15 @@ class ControllerNotes extends Controller{
           (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
       }
   }
-
+    public function note_exists_service():void{
+      $res = "false";
+      if(isset($_GET["param1"]) && $_GET["param1"] !== ""){
+          $note = Notecheck::get_note_by_id($_GET["param1"]);
+          if($note)
+              $res =  "true";
+      } 
+      echo $res;
+    }
+    
  }
 ?>

@@ -17,7 +17,7 @@
 
     <title>Ma Carte</title>
     <script>
-        let inputTitle;
+        let inputTitle,idNote;
         var inputs = document.querySelectorAll('input[id^="[0-9]"]');
         var valeursInputs = [];
         
@@ -42,7 +42,11 @@
         }
 
         async function uniqueNoteByOwner(){
-
+            idNote = $("#idNote");
+            const data = await $.getJSON("Notes/note_exists_service/" + idNote.val());
+            if(data){
+                console.log("ntm");
+            }
         }
         function uniqueItems(arrayContent){
             var arrayError = [];
@@ -77,7 +81,7 @@
                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
             </svg>
                          </a>
-                        
+                        <p type="hidden" id= "idNote"><?= $notes->getId() ?></p>
                         
                         
                         <form action="notes/save" method="post">
