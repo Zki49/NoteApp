@@ -17,16 +17,16 @@
 
     <title>Ma Carte</title>
     <script>
-        console.log("test");
-        var inputs = document.querySelectorAll('#input');
-        console.log(inputs.length);
         let inputTitle;
-
-        inputs.forEach(function(input){
-            console.log(input);
-        });
+        var inputs = document.querySelectorAll('input[id^="[0-9]"]');
+        var valeursInputs = [];
         
         $(document).ready(function(){
+            inputTitle = $("#title");
+            inputTitle.bind("input",valideTitle);
+        });
+
+        function valideTitle(){
             $('#title').on('input', function() {
                 var title = $(this).val();
                 
@@ -36,10 +36,37 @@
                 } else {
                     $(this).removeClass('is-invalid');
                     $(this).addClass('is-valid');
-                    ("#buttonSave").prop('disabled',false);
+                    $("#buttonSave").prop('disabled',false);
                 }
             });
-        });
+        }
+
+        async function uniqueNoteByOwner(){
+
+        }
+        function uniqueItems(arrayContent){
+            var arrayError = [];
+            for (var i = 0; i < arrayContent.length; i++) {
+                var elementI = arrayContent[i];
+                for (var j = 0; j < arrayContent.length; j++) {
+                    if (i !== j) {
+                        var elementJ = arrayContent[j];
+                        if (elementI === elementJ) {
+                            arrayError.push(["Items must be unique"]);
+                            break; // Pour éviter d'ajouter plusieurs fois le même message d'erreur pour le même élément
+                        }
+                    }
+                }
+            }
+            return arrayError;
+        }
+        function getAllValueInputs4Items(){
+            inputs.forEach(function(input) {
+                var valeurInput = input.value;
+                valeursInputs.push(valeurInput);
+            });
+        }
+
     </script>
 </head>
 

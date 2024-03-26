@@ -64,7 +64,7 @@
              echo"  >";
              echo"
                 <div class='invalid-feedback'>
-                    Title lenght must be between 3 and 25
+                    Item lenght must be between 1 and 60
                 </div>
              ";
              //
