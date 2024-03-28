@@ -15,9 +15,9 @@ class ControllerSettings extends Controller {
         $user = $this->get_user_or_redirect(); 
         
         $errors=[];
-
         if(isset($_POST["mail"]) && isset($_POST["fullname"])){
             $mail=Tools::sanitize($_POST["mail"]);
+            
         
             $fullname=Tools::sanitize($_POST["fullname"]);  
             

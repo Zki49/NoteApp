@@ -42,7 +42,9 @@ class User extends Model{
 
        self::execute("UPDATE users SET mail=:newMail ,full_name =:fullname WHERE mail =:mail ", 
                           [ "mail"=>$this->mail,"fullname"=>$this->fullname, "newMail"=>$mail]);
-
+    
+         $this->mail=$mail;
+                       
        return $errors;
     }
     public function get_mail() : string{

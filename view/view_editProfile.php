@@ -55,7 +55,7 @@
                             <div class="form-group">
                                 <label for="email">Email:</label>
 
-                                <input type="email" class="form-control form-control-lg" id="email"
+                                <input type="email" class="form-control form-control-lg" id="email" name="mail"
                                 value="<?= $user->get_mail()?>">
 
                             </div>
