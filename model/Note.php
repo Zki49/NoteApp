@@ -69,7 +69,7 @@ abstract class Note  extends Model{
         if(empty($errors)){
             $this->title= $title;
         }else{
-            $this->title= "il y a un souci ";
+            $this->title= " ";
         }
         return $errors;
     }

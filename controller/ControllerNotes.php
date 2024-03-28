@@ -270,7 +270,6 @@ class ControllerNotes extends Controller{
         
           $note = Notetext::get_note_by_id($id);
           if($note==false){
-            var_dump($note);
            $user= $this->get_user_or_redirect();
             $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
             $weight= $note->max_weight();
@@ -279,6 +278,8 @@ class ControllerNotes extends Controller{
             $note->set_description($text);
             if(empty($error)){
               $note->persist();
+            }else{
+              (new View("editnote"))->show(["notes"=>$note,"mode"=>"edit","errors"=>$error]);
             }
           }else{
             //remetre les ereur dans les vue si il y en a 
@@ -293,7 +294,7 @@ class ControllerNotes extends Controller{
         }
       }
       }
-      $this->redirect("notes");
+      //$this->redirect("notes");
     }
    
     public function addcheck() : void{
