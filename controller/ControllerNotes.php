@@ -288,10 +288,13 @@ class ControllerNotes extends Controller{
             $note->set_description($text);
             if(empty($error)){
               $note->persist();
+              $this->redirect("notes");
+            }else{
+              (new View("editnote"))->show(["notes"=>$note,"mode"=>"edit","errors"=>$error]);
             }
             
           
-          $this->redirect("notes");
+         
         }
       }
      // $this->redirect("notes");
