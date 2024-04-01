@@ -17,21 +17,36 @@
 
     <title>Ma Carte</title>
     <script>
-        let inputTitle,idNote;
+        let inputTitle,idNote,errTitle;
         var inputs = document.querySelectorAll('input[id^="[0-9]"]');
         var valeursInputs = [];
+        var arrayError = [];
+        var numberOfItems = 0;
         
         $(document).ready(function(){
             inputTitle = $("#title");
+            idNote = $("#idNote");
+            errTitle = $("#errTitle");
+
             inputTitle.bind("input",valideTitle);
+            inputTitle.bind("input" , uniqueNoteByOwner);
+
+            getNumberOfItems();
+            getAllValueInputs4Items(numberOfItems);
+            uniqueItems(valeursInputs);
+            console.log(arrayError);
+            console.log(valeursInputs);
+            console.log(numberOfItems);
+            
         });
 
         function valideTitle(){
             $('#title').on('input', function() {
                 var title = $(this).val();
-                
+                errTitle.html("");
                 if (title.length < 3 || title.length > 25) {
                     $(this).addClass('is-invalid');
+                    errTitle.append("Title lenght must be between 3 and 25.");
                     $("#buttonSave").prop('disabled',true);
                 } else {
                     $(this).removeClass('is-invalid');
@@ -40,35 +55,78 @@
                 }
             });
         }
-
+// Colruyt tartiflette
         async function uniqueNoteByOwner(){
-            idNote = $("#idNote");
             const data = await $.getJSON("Notes/note_exists_service/" + idNote.val());
             if(data){
-                console.log("ntm");
+                
+                console.log('ça marche ! ')
+                errTitle.append("Note already exists.");
+                $("#buttonSave").prop('disabled',true);
+            }else{
+                console.log('ça marche ! ')
+
+                $("#buttonSave").prop('disabled',false);   
             }
+       
         }
         function uniqueItems(arrayContent){
-            var arrayError = [];
-            for (var i = 0; i < arrayContent.length; i++) {
-                var elementI = arrayContent[i];
-                for (var j = 0; j < arrayContent.length; j++) {
-                    if (i !== j) {
-                        var elementJ = arrayContent[j];
-                        if (elementI === elementJ) {
-                            arrayError.push(["Items must be unique"]);
-                            break; // Pour éviter d'ajouter plusieurs fois le même message d'erreur pour le même élément
+            /*
+            $(this).on('input', function() {
+                for (var i = 0; i < arrayContent.length; i++) {
+                    var elementI = arrayContent[i];
+                    for (var j = 0; j < arrayContent.length; j++) {
+                        if (i !== j) {
+                            var elementJ = arrayContent[j];
+                            if (elementI === elementJ) {
+                                arrayError.push(["Items must be unique"]);
+                                break; // Pour éviter d'ajouter plusieurs fois le même message d'erreur pour le même élément
+                            }
                         }
                     }
                 }
-            }
+            });
+            */
+            var inputs = document.querySelectorAll('input[type="text"]');
+
+            inputs.forEach(function(input) {
+                input.addEventListener('focus', function() {
+                    console.log("L'utilisateur écrit dans l'input avec l'ID : " + input.id);
+                    $('#'+input.id).on('input', function() {
+                    console.log("L'utilisateur écrit dans l'input avec l'ID : " + input.id);
+                    for (var i = 0; i < arrayContent.length; i++) {
+                        var elementI = input.value;
+                        for (var j = 0; j < arrayContent.length; j++) {
+                            if (i !== j) {
+                                var elementj = arrayContent[j];
+                                if(elementI === elementj){
+                                    console.log("error");
+                                    $(input.id).addClass('is-invalid');
+                                    $("#buttonSave").prop('disabled',true);
+                                }
+                                console.log("error1");
+                            }
+                        }
+                    }
+                });
+                });
+            });
             return arrayError;
         }
-        function getAllValueInputs4Items(){
-            inputs.forEach(function(input) {
-                var valeurInput = input.value;
-                valeursInputs.push(valeurInput);
-            });
+        function getAllValueInputs4Items(numberOfItems){
+            for(var i = 0 ; i < numberOfItems ; i++) {
+                var valeurInput = document.getElementById(i);
+                valeursInputs.push(valeurInput.value);
+            } 
+        }
+        function getNumberOfItems(){
+                var inputs = document.querySelectorAll('input[type="text"]');
+
+                for (var i = 0; i < inputs.length; i++) {
+                    if (!isNaN(parseInt(inputs[i].id))) {
+                        numberOfItems++;
+                    }
+                }
         }
 
     </script>
@@ -81,7 +139,7 @@
                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
             </svg>
                          </a>
-                        <p type="hidden" id= "idNote"><?= $notes->getId() ?></p>
+                        <p style = "display: none; " id= "idNote"><?= $notes-> get_id() ?></p>
                         
                         
                         <form action="notes/save" method="post">

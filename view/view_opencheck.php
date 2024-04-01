@@ -25,9 +25,10 @@
         <label for='title' class='form-label''>Title</label>
         <input type='text' id='title'  name='title' class='form-control'  aria-describedby='button-addon2'  ' value = '"; echo($notes->get_title());    
         echo"'>
-          <div class='invalid-feedback'>
-            Title lenght must be between 3 and 25
+          <div class='invalid-feedback' id='errTitle'>
+            
           </div>
+          <td class='is-invalid'></td>
         
       </div>
         ";
