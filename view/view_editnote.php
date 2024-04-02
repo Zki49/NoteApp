@@ -53,22 +53,21 @@
                     $(this).addClass('is-valid');
                     $("#buttonSave").prop('disabled',false);
                 }
+                uniqueNoteByOwner();
             });
         }
 // Colruyt tartiflette
         async function uniqueNoteByOwner(){
-            const data = await $.getJSON("Notes/note_exists_service/" + idNote.val());
-            if(data){
-                
-                console.log('ça marche ! ')
-                errTitle.append("Note already exists.");
-                $("#buttonSave").prop('disabled',true);
-            }else{
-                console.log('ça marche ! ')
-
-                $("#buttonSave").prop('disabled',false);   
-            }
-       
+            var title = $('#title').val();
+                const data = await $.getJSON("Notes/note_exists_service/" + title);
+                if(data){
+                    console.log('ça marche vraiment  ! ')
+                    errTitle.append("Note already exists.");
+                    $("#buttonSave").prop('disabled',true);
+                }else{
+                    $("#buttonSave").prop('disabled',false);   
+                }
+            
         }
         function uniqueItems(arrayContent){
             /*
@@ -91,7 +90,6 @@
 
             inputs.forEach(function(input) {
                 input.addEventListener('focus', function() {
-                    console.log("L'utilisateur écrit dans l'input avec l'ID : " + input.id);
                     $('#'+input.id).on('input', function() {
                     console.log("L'utilisateur écrit dans l'input avec l'ID : " + input.id);
                     for (var i = 0; i < arrayContent.length; i++) {

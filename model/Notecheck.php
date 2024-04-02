@@ -22,6 +22,15 @@ class Notecheck extends Note{
         }
         
     }
+    public static function note_already_exist(string $title): bool {
+        $query = self::execute("SELECT * FROM notes n where n.title = :title ", ["title"=>$title] );
+        if ($query->rowCount() == 0) { 
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
     public  function get_items():array{
         return $this->content;
     }

@@ -25,6 +25,15 @@ class Notetext extends Note{
         }
         
     }
+    public static function note_already_exist(string $title): bool {
+        $query = self::execute("SELECT * FROM notes n where n.title = :title ", ["title"=>$title] );
+        if ($query->rowCount() == 0) { 
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
     
     public function persist(){
         if(self::get_note_by_id($this->get_id($this->get_id())) ){

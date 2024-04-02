@@ -14,7 +14,7 @@ abstract class Note  extends Model{
     }
 
     abstract public static function get_note_by_id(int $id):Note |false;
-
+    abstract public static function note_already_exist(String $title): bool;
     abstract public static function get_notes_by_user(User $user):array |false ;
     abstract public function are_you_check(): bool;
     abstract public function delete():void;
