@@ -2,3 +2,8 @@ body{
     background-color: black;
     color: white;
 }
+a{
+    text-decoration: none;
+    color: white;
+    font-size: 5 em;
+}
