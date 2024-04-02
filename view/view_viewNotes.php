@@ -23,10 +23,11 @@
       update: function(event, ui) {
             var draggedItem = ui.item;
             var draggedItemId = draggedItem.attr('id');
+            var listOfDrop= ui.item.parent();
             console.log(draggedItem.html());
+            console.log(draggedItemId);
             console.log(ui.item.parent().html());
-            draggedItem=null;
-            draggedItemId=null;
+            
       }
     }).disableSelection();
   } );

@@ -27,7 +27,7 @@
                  
                 <!-- Lien stylisé comme un bouton de soumission de formulaire -->
                 <button type="submit" class="styled-link-button">
-                    
+                    <p id="id" value=<?= $notes->get_id()?>></p>
                     <h5 class="card-title"><?=$notes->get_title(); ?></h5>
                     <p class="card-text truncate-text">
                         <?=$notes->get_description()===null?" ":$notes->get_description(); ?>
