@@ -477,9 +477,10 @@ class ControllerNotes extends Controller{
       $res = false;
       if(isset($_GET["param1"]) && $_GET["param1"] !== ""){
           $note = Notecheck::note_already_exist($_GET["param1"]);
-          if($note)
+          if($note == true)
               $res = true;
       } 
+      echo($res);
       return $res;
     }
     

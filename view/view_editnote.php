@@ -53,15 +53,19 @@
                     $(this).addClass('is-valid');
                     $("#buttonSave").prop('disabled',false);
                 }
-                uniqueNoteByOwner();
+                const a = await(uniqueNoteByOwner);
             });
         }
 // Colruyt tartiflette
         async function uniqueNoteByOwner(){
-            var title = $('#title').val();
+            var title = inputTitle.value;
+            try{
                 const data = await $.getJSON("Notes/note_exists_service/" + title);
+                
+            }catch(e){
+                console.log();
+            }
                 if(data){
-                    console.log('ça marche vraiment  ! ')
                     errTitle.append("Note already exists.");
                     $("#buttonSave").prop('disabled',true);
                 }else{
@@ -70,22 +74,6 @@
             
         }
         function uniqueItems(arrayContent){
-            /*
-            $(this).on('input', function() {
-                for (var i = 0; i < arrayContent.length; i++) {
-                    var elementI = arrayContent[i];
-                    for (var j = 0; j < arrayContent.length; j++) {
-                        if (i !== j) {
-                            var elementJ = arrayContent[j];
-                            if (elementI === elementJ) {
-                                arrayError.push(["Items must be unique"]);
-                                break; // Pour éviter d'ajouter plusieurs fois le même message d'erreur pour le même élément
-                            }
-                        }
-                    }
-                }
-            });
-            */
             var inputs = document.querySelectorAll('input[type="text"]');
 
             inputs.forEach(function(input) {
@@ -98,11 +86,16 @@
                             if (i !== j) {
                                 var elementj = arrayContent[j];
                                 if(elementI === elementj){
-                                    console.log("error");
-                                    $(input.id).addClass('is-invalid');
+                                    console.log(elementI + " : " +input.id);
+                                    console.log(elementj);
+                                    $(this).addClass('is-invalid');
                                     $("#buttonSave").prop('disabled',true);
+                               /* }else{
+                                    $(this).removeClass('is-invalid');
+                                    $(this).addClass('is-valid');
+                                    $("#buttonSave").prop('disabled',false);
+                                }*/
                                 }
-                                console.log("error1");
                             }
                         }
                     }
