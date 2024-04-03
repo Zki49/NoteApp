@@ -104,6 +104,24 @@
             });
             return arrayError;
         }
+
+        function validateItems(){
+            $(this).on('input', function() {
+                var item = $(this).val();
+                errTitle.html("");
+                if (item.length < 1 || item.length > 60) {
+                    $(this).addClass('is-invalid');
+                    errorInput1.append("Item lenght must be between 1 and 60");
+                    $("#buttonSave").prop('disabled',true);
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $(this).addClass('is-valid');
+                    $("#buttonSave").prop('disabled',false);
+                }
+                uniqueItems(valeursInputs);
+            });
+        }
+
         function getAllValueInputs4Items(numberOfItems){
             for(var i = 0 ; i < numberOfItems ; i++) {
                 var valeurInput = document.getElementById(i);
