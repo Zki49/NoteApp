@@ -17,7 +17,7 @@
 
     <title>Ma Carte</title>
     <script>
-        let inputTitle,idNote,errTitle;
+        let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem;
         var inputs = document.querySelectorAll('input[id^="[0-9]"]');
         var valeursInputs = [];
         var arrayError = [];
@@ -27,13 +27,20 @@
             inputTitle = $("#title");
             idNote = $("#idNote");
             errTitle = $("#errTitle");
+            inputItem = $("#addItem");
+            errorAddItem = $("#errorAddItem");
+            
 
             inputTitle.bind("input",valideTitle);
             inputTitle.bind("input" , uniqueNoteByOwner);
+            inputItem.bind("input",addItem);
+
+            //$("#addItem").addClass('is-invalid');
 
             getNumberOfItems();
             getAllValueInputs4Items(numberOfItems);
             uniqueItems(valeursInputs);
+            validateItems();
             console.log(arrayError);
             console.log(valeursInputs);
             console.log(numberOfItems);
@@ -41,7 +48,7 @@
         });
 
         function valideTitle(){
-            $('#title').on('input', function() {
+            $(inputTitle).on('input', function() {
                 var title = $(this).val();
                 errTitle.html("");
                 if (title.length < 3 || title.length > 25) {
@@ -106,12 +113,18 @@
         }
 
         function validateItems(){
+            console.log("a");
             $(this).on('input', function() {
-                var item = $(this).val();
-                errTitle.html("");
-                if (item.length < 1 || item.length > 60) {
+                console.log("b");
+            
+                var item = $(input.id).val();
+                console.log(item);
+                errorInput.html("");
+                if (item.value.trim == ""  || item.length > 60) {
+                    console.log("c");
                     $(this).addClass('is-invalid');
-                    errorInput1.append("Item lenght must be between 1 and 60");
+                    errorInput = document.getElementById("errorInput"+i);
+                    errorInput.append("Item lenght must be between 1 and 60");
                     $("#buttonSave").prop('disabled',true);
                 } else {
                     $(this).removeClass('is-invalid');
@@ -137,6 +150,41 @@
                     }
                 }
         }
+        function addItem(){
+            $(inputItem).on('input', function() {
+                var newItem = $(this).val();
+                errorAddItem.html("");
+                if (newItem.length < 1 || newItem.length > 60) {
+                    $(this).addClass('is-invalid');
+                    errorAddItem.append("Item lenght must be between 1 and 60");
+                    $("#buttonSave").prop('disabled',true);
+                } if (ItemAlreadyExist(valeursInputs)){
+                    $(this).addClass('is-invalid');
+                    errorAddItem.append("Item must be unique ");
+                    $("#buttonSave").prop('disabled',true);
+                    console.log("error")
+                }
+                else{
+                    $(this).removeClass('is-invalid');
+                    $(this).addClass('is-valid');
+                    $("#buttonSave").prop('disabled',false);
+                }
+                
+            });   
+        }
+        function ItemAlreadyExist(arrayContent){
+            let trouve = false;
+            var newItem = $(this).val; 
+            arrayContent.forEach(function(element) {
+                if (element === newItem) {
+                    trouve = true;
+                }
+            });
+            return trouve;
+            
+        }
+
+
 
     </script>
 </head>
@@ -179,6 +227,7 @@
             </nav>
         </div>
     </div>
+    <noscript>
     <?php
     if(!empty($errors)){
         echo"<h6>
@@ -190,6 +239,7 @@
         }
     }
         ?>
+    </noscript>
 </body>
 
 </html>
