@@ -107,10 +107,21 @@ class ControllerNotes extends Controller{
       si la note est pined la depined si elle a ete droper dans 'other' et inversement  
        swap le poids (plutot metre un poids entre la note precedente et la note suivante)
       */
-      if(isset($_GET['param1'])&& $_GET['param1']!==" "){
+      if(isset($_GET['param1'])&& $_GET['param1']!==" "&& isset($_GET['param2'])&& $_GET['param2']!==" "){
+        $listnote = $_GET['param2'];
+        $notemove= $_GET['param1'];
+        for($i=0;$i<sizeof($listnote);$i++){
+          if($listnote[$i]==$notemove){
+            //pas oubli de verifier si on est au debut ou a la fin de la list 
+           $this->swap($notemove,$listnote[$i-1]);
+          }
+        }
         
       }
 
+     }
+     private function swap($idnotemove,$idnote):void{
+       
      }
      public function open():void{
       if(isset($_GET["param1"])){
