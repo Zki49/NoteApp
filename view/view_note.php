@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <div class="card half-width">
-            <div class="card-body">
+            <div class="card-body" id= <?= $notes->get_id() ?>>
             
                 <!-- Formulaire caché -->
                 <form action=<?php if(!isset($share)){ echo'"notes/open/';
@@ -27,7 +27,7 @@
                  
                 <!-- Lien stylisé comme un bouton de soumission de formulaire -->
                 <button type="submit" class="styled-link-button">
-                    <p id="id" value=<?= $notes->get_id()?>></p>
+                    <p id="id-<?= $notes->get_id()?>" value=<?= $notes->get_id()?>></p>
                     <h5 class="card-title"><?=$notes->get_title(); ?></h5>
                     <p class="card-text truncate-text">
                         <?=$notes->get_description()===null?" ":$notes->get_description(); ?>

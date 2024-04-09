@@ -108,28 +108,46 @@ class ControllerNotes extends Controller{
 
      }
      public function move_service(): void{
-      echo $_GET;
-      echo $_POST;
+     // echo $_GET;
+      var_dump($_POST);
       
       /*
       si la note est pined la depined si elle a ete droper dans 'other' et inversement  
        swap le poids (plutot metre un poids entre la note precedente et la note suivante)
       */
-      if(isset($_GET['param1'])&& $_GET['param1']!==" "&& isset($_GET['param2'])&& $_GET['param2']!==" "){
-        $listnote = $_GET['param2'];
-        $notemove= $_GET['param1'];
-        for($i=0;$i<sizeof($listnote);$i++){
-          if($listnote[$i]==$notemove){
+      if(isset($_POST['draggedItemId'])&& isset($_POST['listOfDrop'])){
+        $list_id_note = $_POST['listOfDrop'];
+        $notemove= $_POST['draggedItemId'];
+       // $this->replace($notemove,$list_id_note[1]);
+        for($i=0;$i<sizeof($list_id_note);$i++){
+          if($list_id_note[$i]==$notemove){
             //pas oubli de verifier si on est au debut ou a la fin de la list 
-           $this->swap($notemove,$listnote[$i-1]);
+            if($i==0){
+              $this->replace($notemove,$list_id_note[$i+1]);
+            }else{
+              $this->replace($notemove,$list_id_note[$i-1]);
+            }
+           
           }
         }
         
       }
 
      }
-     private function swap($idnotemove,$idnote):void{
-       
+     private function replace($idnotemove,$idnote):void{
+       $notemove=Notemixte::get_note_by_id($idnotemove);
+       $noteref=Notemixte::get_note_by_id($idnote);
+      // $notemove->set_weight(200);
+       //$notemove->set_pinned();
+       $notemove->persist();
+       if($notemove->pinned()!==$noteref->pinned()){
+        $notemove->set_pinned();
+       }
+       //si la noteref est la note la plus grand des notes pinned ou unpinned 
+      // if($noteref->){
+
+      // }
+       $notemove->persist();
      }
      public function open():void{
       if(isset($_GET["param1"])){

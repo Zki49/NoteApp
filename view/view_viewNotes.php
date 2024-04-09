@@ -18,18 +18,33 @@
     <script src="lib/jquery.ui.touch-punch.min.js"></script>
     <script>
        $( function() {
-    $( "#dropable1, #dropable2" ).sortable({
+    $( "#pined, #unpined" ).sortable({
       connectWith: ".connectedSortable",
       update: function(event, ui) {
             var draggedItem = ui.item;
-            var draggedItemId = draggedItem.attr('id');
-           //deopable 2 == pined
-            var listOfDrop= ui.item.parent();
-           $.post("notes/move_service"+listOfDrop);
-            console.log(draggedItem.html());
-            console.log(event.target.id);
+            var draggedItemId = draggedItem.find('.card-body').attr('id');
+            var listOfDrop= ui.item.parent().find('.card-body').map(function() {
+                return this.id;
+            }).get();;
+            $.ajax({
+                type: "POST",
+                url: "notes/move_service",
+                data: {
+                  draggedItemId: draggedItemId,
+                  listOfDrop: listOfDrop
+                },
+                success: function(response) {
+                    console.log("Data successfully sent to server.");
+                    // Handle response from server if needed
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:",  error);
+                    console.log(lastDraggedId + " "+ pinnedListIDs +" "+ otherListIDs);
+                    // Handle error if needed
+                }
+            });
             console.log(draggedItemId);
-            console.log(ui.item.parent().html());
+            console.log(listOfDrop);
             
       }
     }).disableSelection();
@@ -84,7 +99,7 @@ margin:10px;
              
           }
         }
-        echo"<div  id='dropable2' class='row , connectedSortable'>";
+        echo"<div  id='pined' class='row , connectedSortable'>";
       foreach($array_notes as $notes){
         if(!$notes-> archived()&& $notes->pinned()){
         if($notes->are_you_check()){
@@ -98,7 +113,7 @@ margin:10px;
         echo"</div>";   
   }
 }
-      echo"</div><div><h4>other</h4></div><div id='dropable1' class='row , connectedSortable'>";
+      echo"</div><div><h4>other</h4></div><div id='unpined' class='row , connectedSortable'>";
       
              foreach($array_notes as $notes){
             if(!$notes-> archived()&& !$notes->pinned()){
