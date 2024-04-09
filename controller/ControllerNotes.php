@@ -225,6 +225,7 @@ class ControllerNotes extends Controller{
       $notes->get_weight_notes_by_user($user);
     }
     public function delete():void{
+       $res = '';
       if(isset($_GET['param1'])){
         $id = Tools::sanitize($_GET['param1']);
         if(Note::iamcheck($id)){
@@ -245,6 +246,33 @@ class ControllerNotes extends Controller{
         }
         
       }
+    }
+    public function delete_service(){
+      
+        $res = 'false';
+       if(isset($_GET['param1'])){
+         $id = Tools::sanitize($_GET['param1']);
+         if(Note::iamcheck($id)){
+           $note = Notecheck::get_note_by_id($id);
+         }else{
+           $note = Notetext::get_note_by_id($id);
+         }
+         if($note===false){
+           (new View("error"))->show(["errors"=>"cette note n'existe pas"]);
+         }
+         
+         if(($this->get_user_or_redirect())==$note->owner()){
+             $note->delete();
+             $note=null;
+             //$this->redirect("notes/archive");
+             $res = 'true';
+         }else{
+          
+           (new View("error"))->show(["error"=>"your are not owner  "]);
+         }
+         
+       }
+       echo($res);
     }
 
     public function addtext():void{
@@ -473,15 +501,29 @@ class ControllerNotes extends Controller{
           (new View("login"))->show(["pseudo" => "", "password" => "", "errors" => ""]);
       }
   }
-    public function note_exists_service():bool{
+    /*public function note_exists_service():bool{
       $res = false;
+      $user = $this->get_user_or_redirect();
       if(isset($_GET["param1"]) && $_GET["param1"] !== ""){
           $note = Notecheck::note_already_exist($_GET["param1"]);
           if($note == true)
               $res = true;
       } 
-      echo($res);
       return $res;
+      
+    }*/
+
+    public function note_exists_service(){
+      $res = "false";
+      $user = $this->get_user_or_redirect();
+      $title=$_POST["title"];
+      var_dump($title);
+      if(isset($title)){
+          $note = Notecheck::note_already_exist($title,$user->get_id());
+          if($note)
+              $res = "true";
+      } 
+      echo($res);
     }
     
  }

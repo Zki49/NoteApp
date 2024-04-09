@@ -17,7 +17,7 @@
 
     <title>Ma Carte</title>
     <script>
-        let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem;
+        let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem,titleAtFirst;
         var inputs = document.querySelectorAll('input[id^="[0-9]"]');
         var valeursInputs = [];
         var arrayError = [];
@@ -25,6 +25,7 @@
         
         $(document).ready(function(){
             inputTitle = $("#title");
+            titleAtFirst = inputTitle.val();
             idNote = $("#idNote");
             errTitle = $("#errTitle");
             inputItem = $("#addItem");
@@ -60,24 +61,42 @@
                     $(this).addClass('is-valid');
                     $("#buttonSave").prop('disabled',false);
                 }
-                const a = await(uniqueNoteByOwner);
+                
             });
         }
 // Colruyt tartiflette
         async function uniqueNoteByOwner(){
-            var title = inputTitle.value;
-            try{
-                const data = await $.getJSON("Notes/note_exists_service/" + title);
+            var title = inputTitle.val();
+            errTitle = $("#errTitle");
+            var URL = "&title=" + title;
+            console.log(title);
+            errTitle.html("");
+          
+                const res = await fetch("Notes/note_exists_service/", {
+                                        method: 'POST',
+                                        headers: {"Content-type": "application/x-www-form-urlencoded"},
+                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL
+                                        });
+                const data = await res.text();
                 
-            }catch(e){
-                console.log();
-            }
-                if(data){
+
+                await console.log(data);
+                if(data == true){
+                    //console.log(data);
+                    console.log("test");
+                    $("#title").addClass('is-invalid');
                     errTitle.append("Note already exists.");
                     $("#buttonSave").prop('disabled',true);
                 }else{
+
+                    //console.log(data);
+                    console.log("test2");
+                    $("#title").removeClass('is-invalid');
+                    $("#title").addClass('is-valid');
+                    errTitle.append("");
                     $("#buttonSave").prop('disabled',false);   
                 }
+            
             
         }
         function uniqueItems(arrayContent){
@@ -86,7 +105,7 @@
             inputs.forEach(function(input) {
                 input.addEventListener('focus', function() {
                     $('#'+input.id).on('input', function() {
-                    console.log("L'utilisateur écrit dans l'input avec l'ID : " + input.id);
+                    //console.log("L'utilisateur écrit dans l'input avec l'ID : " + input.id);
                     for (var i = 0; i < arrayContent.length; i++) {
                         var elementI = input.value;
                         for (var j = 0; j < arrayContent.length; j++) {
@@ -112,16 +131,12 @@
             return arrayError;
         }
 
-        function validateItems(){
-            console.log("a");
+        /*function validateItems(){
             $(this).on('input', function() {
-                console.log("b");
-            
-                var item = $(input.id).val();
+                var item = $(this).val();
                 console.log(item);
                 errorInput.html("");
                 if (item.value.trim == ""  || item.length > 60) {
-                    console.log("c");
                     $(this).addClass('is-invalid');
                     errorInput = document.getElementById("errorInput"+i);
                     errorInput.append("Item lenght must be between 1 and 60");
@@ -133,7 +148,7 @@
                 }
                 uniqueItems(valeursInputs);
             });
-        }
+        }*/
 
         function getAllValueInputs4Items(numberOfItems){
             for(var i = 0 ; i < numberOfItems ; i++) {
@@ -153,16 +168,17 @@
         function addItem(){
             $(inputItem).on('input', function() {
                 var newItem = $(this).val();
+                //console.log(newItem);
                 errorAddItem.html("");
                 if (newItem.length < 1 || newItem.length > 60) {
                     $(this).addClass('is-invalid');
                     errorAddItem.append("Item lenght must be between 1 and 60");
                     $("#buttonSave").prop('disabled',true);
-                } if (ItemAlreadyExist(valeursInputs)){
+                } if (newItem == "test "){
                     $(this).addClass('is-invalid');
                     errorAddItem.append("Item must be unique ");
                     $("#buttonSave").prop('disabled',true);
-                    console.log("error")
+                    console.log("error");
                 }
                 else{
                     $(this).removeClass('is-invalid');

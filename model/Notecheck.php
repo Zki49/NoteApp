@@ -22,8 +22,10 @@ class Notecheck extends Note{
         }
         
     }
-    public static function note_already_exist(string $title): bool {
-        $query = self::execute("SELECT * FROM notes n where n.title = :title ", ["title"=>$title] );
+    public static function note_already_exist(string $title , int $id) : bool {
+        $query = self::execute("SELECT * FROM notes n where n.title = :title and n.owner = :id ", ["title"=>$title , "id"=>$id] );
+        //var_dump($query);
+        //sleep(5);
         if ($query->rowCount() == 0) { 
             return false;
         } else {
