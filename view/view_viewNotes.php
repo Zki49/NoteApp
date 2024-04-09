@@ -23,8 +23,11 @@
       update: function(event, ui) {
             var draggedItem = ui.item;
             var draggedItemId = draggedItem.attr('id');
+           //deopable 2 == pined
             var listOfDrop= ui.item.parent();
+           $.post("notes/move_service"+listOfDrop);
             console.log(draggedItem.html());
+            console.log(event.target.id);
             console.log(draggedItemId);
             console.log(ui.item.parent().html());
             

@@ -81,10 +81,15 @@ class ControllerNotes extends Controller{
       if(isset($_GET["param1"])){
         $id=$_GET["param1"];
         $notes = Notemixte::get_note_by_id($id);
+        if($notes!=false){
         $notes->set_pinned ();
         $notes->persist();
-        
         $this->redirect("notes","open", $id);
+        }else{
+          (new view("error"))->show(["error"=>"notes with id $id not exist"]);
+        }
+        
+       
       }
     }
 
@@ -103,6 +108,9 @@ class ControllerNotes extends Controller{
 
      }
      public function move_service(): void{
+      echo $_GET;
+      echo $_POST;
+      
       /*
       si la note est pined la depined si elle a ete droper dans 'other' et inversement  
        swap le poids (plutot metre un poids entre la note precedente et la note suivante)
@@ -403,14 +411,18 @@ class ControllerNotes extends Controller{
       $user=$this->get_user_or_redirect();
       
       if(isset($_POST["idnotes"])){
+        if($user->owner($_POST["idnotes"])){
         $userShare="";
         $id=$_POST["idnotes"];
 
         if(isset($_POST["idUser"]) && isset($_POST["editor"])){
-          
-          $tabAddShare[$_POST["idUser"]]=$_POST["editor"];
+          $useer=User::get_user_by_id($_POST["idUser"]);
+         
+            $tabAddShare[$_POST["idUser"]]=$_POST["editor"];
           $note=Notemixte::get_note_by_id($id);
           $note->add_shared($tabAddShare);
+          
+          
           
         }
 
@@ -418,7 +430,10 @@ class ControllerNotes extends Controller{
 
         $tabUSersAlready=User::tab_user_in_share($id);
         (new View("shared"))->show(["tabUsers"=>$tabUsers, "idnotes"=>$id, "tabUSerAlready"=>$tabUSersAlready]);
+      }else{
+        (new View("error"))->show(["error"=>"your are not owner"]);
       }
+    }
       else{
         (new View("shared"))->show([]);
       }
