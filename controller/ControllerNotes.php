@@ -225,7 +225,6 @@ class ControllerNotes extends Controller{
       $notes->get_weight_notes_by_user($user);
     }
     public function delete():void{
-       $res = '';
       if(isset($_GET['param1'])){
         $id = Tools::sanitize($_GET['param1']);
         if(Note::iamcheck($id)){
@@ -248,10 +247,11 @@ class ControllerNotes extends Controller{
       }
     }
     public function delete_service(){
-      
+
         $res = 'false';
        if(isset($_GET['param1'])){
          $id = Tools::sanitize($_GET['param1']);
+         var_dump($id);
          if(Note::iamcheck($id)){
            $note = Notecheck::get_note_by_id($id);
          }else{

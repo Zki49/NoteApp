@@ -14,24 +14,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+   
+</style>
     <script>
         let idNote;
         $(document).ready(function(){
             $("#supprimer").click(function(){
                 const myModal = new bootstrap.Modal(document.getElementById('myModal'));
                 $('#myModal').modal('show');
-               
             });
 
-            async function deleteNote(id){
+            idNote = $("idnotes").val();
+            $("#deleteNote").click(function(){
+                deleteNote(idNote);
+            });
+            
+        });
+        async function deleteNote(id){
                 try {
-                    await $.post("notes/delete_service/" + id);
+                    await $.get("notes/delete_service/" + id);
                     
                 } catch(e) {
                     console.log(e);
                 }
             }
-        });
     
     </script>
    
@@ -107,24 +114,30 @@
                             <path d='M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5'/>
                           </svg>
                           <noscript>
-                          </a></noscript>
-                          <div class='modal' tabindex='-1' id = 'myModal'>
-                            <div class='modal-dialog'>
-                                <div class='modal-content'>
+                          </a>
+                          </noscript>
+
+                          <div class='modal fade' id='myModal' aria-hidden='true' aria-labelledby='exampleModalToggleLabel' tabindex='-1'>
+                            <div class='modal-dialog modal-dialog-centered'>
+                                <div class='.modal-content'>
                                 <div class='modal-header'>
-                                    <h5 class='modal-title'>Modal title</h5>
+                                    <h1 class='modal-title fs-5' id='exampleModalToggleLabel'>Modal 1</h1>
                                     <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                                 </div>
                                 <div class='modal-body'>
-                                    <p>Modal body text goes here.</p>
+                                    Show a second modal and hide this one with the button below.
                                 </div>
                                 <div class='modal-footer'>
-                                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                                    <button type='button' class='btn btn-primary'>Save changes</button>
+                                    <button class=' btn btn-primary' id='cancel' data-bs-target='#myModal' data-bs-toggle='modal'>Cancel</button>
+                                    <button class='btn btn-primary' id='deleteNote' data-bs-target='#exampleModalToggle2' data-bs-toggle='modal'>Supprimer</button>
                                 </div>
                                 </div>
                             </div>
                             </div>
+
+                            
+
+
 
                           ";
 
@@ -196,7 +209,25 @@
                     </div>
                 
              
-      
+      <?php
+        echo"
+        <div class='.modal fade' id='exampleModalToggle2' aria-hidden='true' aria-labelledby='exampleModalToggleLabel2' tabindex='-1'>
+        <div class='modal-dialog modal-dialog-centered'>
+            <div class='modal-content'>
+            <div class='modal-header'>
+                <h1 class='modal-title fs-5' id='myModal2'>Modal 2</h1>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+            </div>
+            <div class='modal-body'>
+                Hide this modal and show the first with the button below.
+            </div>
+            <div class='modal-footer'>
+                <button class='btn btn-primary' data-bs-target='#exampleModalToggle' data-bs-toggle='modal'>Back to first</button>
+            </div>
+            </div>
+        </div>
+        </div>";
+      ?>
 </body>
 
 </html>

@@ -58,3 +58,10 @@ textarea{
     display: inline-block;
     margin-right: 10px; /* Espace entre les formulaires, ajustez selon vos besoins */
 }
+.modal-content {
+    background-color: #212528;
+    color: white;
+}
+.btn-primary {
+    background-color: red;
+}
