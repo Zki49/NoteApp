@@ -72,15 +72,25 @@
       html += ' </button>'
       html += '<button type="submit" class="btn btn-primary mb-2  btn-danger" id="btnErase-';
       html += idUser;
-      html += '" onclick="erase()">';
+      html += '" value="';
+      html += idUser;
+      html += '">';
       html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">'
       html+= '<path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>'
       html+= '</svg>'
       html+= '</button>'
       html+='</div>'
       
+      
+
       div.append(html);
       $("#optionJS-"+idUser).remove();
+      $("#btnErase-"+idUser).on("click",function(){
+        idUser = $(this).val(); 
+        erase();
+        console.log("aaaaa");
+      })
+
     }
 
     function toggleA(){
@@ -100,6 +110,9 @@
     }
 
     function erase(){
+      
+      
+
       $("#btnToggleJS-"+idUser).remove();
       $("#btnErase-"+idUser).remove();
       $("#userJS-"+idUser).remove();
