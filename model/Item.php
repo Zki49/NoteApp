@@ -24,13 +24,16 @@ class Item  extends Model{
         $data =$query->fetch();
         return $data["checklist_note"];
     }
-    public static function get_un_item(int $id){
+    public static function get_un_item(int $id): Item|bool {
         $query = self::execute("SELECT * 
                                 FROM checklist_note_items cl 
                                 WHERE cl.id = :id", ["id"=>$id]);
         $data =$query->fetch();
+        if ($query->rowCount() == 0) { 
+            return false;
+        } else{ return new Item($data['id'],$data['content'],$data["checked"]==1?true:false);}
 
-        return new Item($data['id'],$data['content'],$data["checked"]==1?true:false);
+       
 
     }
     public function get_content():string{

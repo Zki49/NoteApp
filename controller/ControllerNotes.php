@@ -134,6 +134,14 @@ class ControllerNotes extends Controller{
       }
 
      }
+     public function check_uncheck_service(){
+      $item = Item::get_un_item($_GET['param1']);
+      if($item){
+        $item->unchecked_checked();
+        $item->persit();
+      }
+     
+     }
      private function replace($idnotemove,$idnote):void{
        $notemove=Notemixte::get_note_by_id($idnotemove);
        $noteref=Notemixte::get_note_by_id($idnote);
@@ -405,10 +413,15 @@ class ControllerNotes extends Controller{
     }
     public function check():void{
       $item = Item::get_un_item($_GET['param1']);
-      $item->unchecked_checked();
-      $item->persit();
-      $idNote= $item->get_id_my_note();
-      $this->redirect("notes","open",$idNote);
+      if($item){
+        $item->unchecked_checked();
+        $item->persit();
+        $idNote= $item->get_id_my_note();
+        $this->redirect("notes","open",$idNote);
+      }else{
+        (new View('error'))->show(["error"=>"this item not exist"]);
+      }
+      
     }
     public function deleteitem():void {
       if(isset($_POST["item"])&& isset($_POST['id'])){
