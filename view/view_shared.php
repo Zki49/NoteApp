@@ -34,6 +34,7 @@
         userName = selectedOption.text();
         console.log("ID de l'utilisateur: ", idUser);
         console.log("Nom de l'utilisateur: ", userName);
+        
         });
 
       $("#permissionDropdown").change(function(){
@@ -53,23 +54,25 @@
       html+= 'name="user" ';
       html += 'id="' 
       //html += idUser;
-      html += 'user'
+      html += 'userJS-';
+      html += idUser;
       html += '" value="';
       html += userName;
       html += " (";
       html += permName;
       html += ')"';
       html += ' readonly></input>';
-      html += '<input type="hidden" name="idUser" value="';
+      html += '<button type="submit" class="btn btn-primary mb-2" id="btnToggleJS-'; 
       html += idUser;
-       html += '">';
-      html += '<button type="submit" class="btn btn-primary mb-2" onclick="toggleA('+ idUser +')" >'
+      html += '">';
       html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">'
       html += '<path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>'
       html += '<path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>'
       html += '</svg>'
       html += ' </button>'
-      html += '<button type="submit" class="btn btn-primary mb-2  btn-danger" onclick="erase()">'
+      html += '<button type="submit" class="btn btn-primary mb-2  btn-danger" id="btnErase-';
+      html += idUser;
+      html += '" onclick="erase()">';
       html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">'
       html+= '<path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>'
       html+= '</svg>'
@@ -77,9 +80,10 @@
       html+='</div>'
       
       div.append(html);
+      $("#optionJS-"+idUser).remove();
     }
 
-    function toggleA(idUser){
+    function toggleA(){
       if(idPermission == 1){
         idPermission = 0;
         permName = " (Reader)";
@@ -96,7 +100,22 @@
     }
 
     function erase(){
-      $("#textPers").remove();
+      $("#btnToggleJS-"+idUser).remove();
+      $("#btnErase-"+idUser).remove();
+      $("#userJS-"+idUser).remove();
+    
+      console.log("#btnErase-"+idUser);
+      
+      let htm = '<option id="optionJS-';
+      htm += idUser;
+      htm += '"value="';
+      htm += idUser;
+      htm += '">';
+      htm += userName;
+      htm += '</option>';
+
+      var newUser = $("#userDropdown");
+      newUser.append(htm);
     }
   </script>
 </head>
@@ -161,7 +180,9 @@
           <option disabled selected>Choisir un utilisateur...</option>
             <?php
                 foreach($tabUsers as $user){
-                    echo '<option value="';
+                    echo '<option id="optionJS-';
+                    echo $user->get_id();
+                    echo '"value="';
                     echo $user->get_id();
                     echo'">';
                     echo $user->getFullnam();
