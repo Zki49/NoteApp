@@ -117,23 +117,50 @@ class ControllerNotes extends Controller{
       */
       if(isset($_POST['draggedItemId'])&& isset($_POST['listOfDrop'])){
         $list_id_note = $_POST['listOfDrop'];
-        $notemove= $_POST['draggedItemId'];
+        $notemoveId= $_POST['draggedItemId'];
        // $this->replace($notemove,$list_id_note[1]);
         for($i=0;$i<sizeof($list_id_note);$i++){
-          if($list_id_note[$i]==$notemove){
-            //pas oubli de verifier si on est au debut ou a la fin de la list 
+          if($list_id_note[$i]==$notemoveId){
             if($i==0){
-              $this->replace($notemove,$list_id_note[$i+1]);
-            }else{
-              $this->replace($notemove,$list_id_note[$i-1]);
+              $notemove=Notemixte::get_note_by_id($notemoveId);
+              $noteref= Notemixte::get_note_by_id($list_id_note[$i+1]);
+              if($notemove->pinned()!==$noteref->pinned()){
+                $notemove->set_pinned();
+                $notemove->set_weigth_max();
+                $notemove->persist();
+                
+               }
+             
+
+            }
+            else{
+              $notemove=Notemixte::get_note_by_id($notemoveId);
+              $noteref= Notemixte::get_note_by_id($list_id_note[$i+1]);
+              if($notemove->pinned()!==$noteref->pinned()){
+                $notemove->set_pinned();
+               // $notemove->set_weigth_max();
+                $notemove->persist();
+                
+               }
             }
            
           }
         }
         
       }
-
+     
      }
+     public function wheigt():void{
+      $notemove= Notemixte::get_note_by_id($_GET['param1']);
+      echo"old poids :";
+      echo $notemove->get_weight();
+       $notemove->set_weigth_max();
+       $notemove->persist();
+      echo"new poids :";
+      echo $notemove->get_weight();
+      
+    }
+
      public function check_uncheck_service(){
       $item = Item::get_un_item($_GET['param1']);
       if($item){
@@ -142,21 +169,21 @@ class ControllerNotes extends Controller{
       }
      
      }
-     private function replace($idnotemove,$idnote):void{
-       $notemove=Notemixte::get_note_by_id($idnotemove);
-       $noteref=Notemixte::get_note_by_id($idnote);
+    // private function replace($idnotemove,$listebefore):void{
+       //$notemove=Notemixte::get_note_by_id($idnotemove);
+      
       // $notemove->set_weight(200);
        //$notemove->set_pinned();
-       $notemove->persist();
-       if($notemove->pinned()!==$noteref->pinned()){
-        $notemove->set_pinned();
-       }
+       //$notemove->persist();
+       //if($notemove->pinned()!==$noteref->pinned()){
+       // $notemove->set_pinned();
+//}
        //si la noteref est la note la plus grand des notes pinned ou unpinned 
       // if($noteref->){
 
       // }
-       $notemove->persist();
-     }
+      // $notemove->persist();
+     //}
      public function open():void{
       if(isset($_GET["param1"])){
         $id = Tools::sanitize($_GET["param1"]);

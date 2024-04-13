@@ -41,6 +41,18 @@ return $results;
      public function delete():void{
 
      }
+
+                
+    public function set_weigth_max():void{
+       $query= self::execute("SELECT MAX(weight)
+                           from notes
+                           WHERE pinned = :pined and owner= :idoner ",["idoner"=>$this->owner()->get_id(),"pined"=>$this->pinned()] );
+         $maxweight=$query->fetch();
+         $this->set_weight($maxweight['MAX(weight)']+10);
+         $this->persist();                  
+        
+    } 
+
      public function update_title(string $title):void{
         self::execute("update notes set title=:title where id=:id",["title"=>$title,"id"=>$this->get_id()]);
      }
