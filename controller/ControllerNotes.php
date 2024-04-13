@@ -151,6 +151,7 @@ class ControllerNotes extends Controller{
      
      }
      public function wheigt():void{
+      //ce service est un service de debug 
       $notemove= Notemixte::get_note_by_id($_GET['param1']);
       echo"old poids :";
       echo $notemove->get_weight();
