@@ -120,7 +120,7 @@ class ControllerNotes extends Controller{
         $notemoveId= $_POST['draggedItemId'];
         $pos=0;
         $find=false;
-        $indexref=0;
+       // $indexref=0;
       
        // $this->replace($notemove,$list_id_note[1]);
         for($i=0;$i<sizeof($list_id_note)&&!$find;$i++){
@@ -136,7 +136,7 @@ class ControllerNotes extends Controller{
                $notemove->set_weigth_max();
                $notemove->persist();
             }else{
-              $indexref=$i-1;
+              //$indexref=$i-1;
             }
             $pos=$i;
             $find=true;
@@ -144,13 +144,14 @@ class ControllerNotes extends Controller{
            
           }
           $notemove=Notemixte::get_note_by_id($notemoveId);
-         // $noteref=Notemixte::get_note_by_id($indexref);
+        
           if($pos!=0){
+            $noteref=Notemixte::get_note_by_id($list_id_note[0]);
             $notemove->set_weigth_max();
-           /* if($notemove->pinned()!==$noteref->pinned()){
+           if($notemove->pinned()!==$noteref->pinned()){
               $notemove->set_pinned();
               $notemove->persist(); 
-             }*/
+             }
           }
           
           for($i=0;$i<$pos;$i++){
