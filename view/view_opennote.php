@@ -21,24 +21,80 @@
         let idNote;
         $(document).ready(function(){
             $("#supprimer").click(function(){
+                
                 const myModal = new bootstrap.Modal(document.getElementById('myModal'));
                 $('#myModal').modal('show');
-            });
+                $('#myModal').addEventListener('show.bs.modal', event => {
+                    $("#btn-supp").click(function() {
+                    console.log("test");
+                    alert("alert");
+                    deleteNote(idnote);
+                    isDeleted(idnote);
+                });
+                /*const myModalEl = document.getElementById('myModal')
+                myModalEl.addEventListener('show.bs.modal', event => {
+                    $("#btn-supp").click(function() {
+                        if($('#myModal').is('show'))
+                            console.log("test");
+                    alert("alert");
+                    deleteNote(idnote);
+                    isDeleted(idnote);
+                });
+                })*/
 
-            idNote = $("idnotes").val();
-            $("#deleteNote").click(function(){
-                deleteNote(idNote);
+                
+            
+                
             });
+        })
+
+        
+
+            idNote = $('#idnotes');
+            idnote = idNote.val();
+            
+            console.log(idnote);
+
+            $("myModal").ready(function(){
+
+                $("#btn-supp").click(function() {
+                    if($('#myModal').is('show'))
+                        console.log("test");
+                alert("alert");
+                deleteNote(idnote);
+                isDeleted(idnote);
+            });
+                
+            })
+            /*console.log($('#btn-supp'));
+            $("#btn-supp").on('click',function() {
+                console.log("test");
+                alert("alert");
+                deleteNote(idnote);
+                isDeleted(idnote);
+            });*/
+            
+            
             
         });
         async function deleteNote(id){
-                try {
-                    await $.get("notes/delete_service/" + id);
-                    
-                } catch(e) {
-                    console.log(e);
-                }
+            console.log("test");
+            try {
+                await $.get("notes/delete_service/" + id);            
+            } catch(e) {
+                console.log(e);
             }
+            
+        }
+        async function isDeleted(id){
+            const data = await $.get("notes/has_been_deleted/" + id);    
+            console.log(data);
+            if(data === "true"){
+                console.log(typeof data);
+                $('#myModal').modal('hide');
+                $('#myModal2').modal('show');
+            }
+        }
     
     </script>
    
@@ -77,7 +133,8 @@
                         ?>
                         <!-- Ajoutez ici vos propres icônes -->
                         <form class="form-container"   action=" notes/shared" method="post">
-                            <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                            <input type="hidden" id="idnotes" value="<?= $notes->get_id()?>">
+                            
                             <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
                             <button type="submit" class="styled-link-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
@@ -109,36 +166,44 @@
                             //echo"'>
                             echo"<noscript><a href='notes/confirm/";
                             echo $notes->get_id();
-                            echo"'></noscript>
+                            echo"'></noscript>";
+                            echo" <input type='hidden' id='idnotes' value='";
+                            echo $notes->get_id();
+                            echo"'>
                             <svg id='supprimer' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash3-fill red' viewBox='0 0 16 16'>
                             <path d='M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5'/>
                           </svg>
+
+
                           <noscript>
                           </a>
                           </noscript>
 
-                          <div class='modal fade' id='myModal' aria-hidden='true' aria-labelledby='exampleModalToggleLabel' tabindex='-1'>
+                          <div class='modal' id='myModal' aria-hidden='true' aria-labelledby='exampleModalToggleLabel' tabindex='-1'>
                             <div class='modal-dialog modal-dialog-centered'>
                                 <div class='.modal-content'>
                                 <div class='modal-header'>
-                                    <h1 class='modal-title fs-5' id='exampleModalToggleLabel'>Modal 1</h1>
-                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                    <h1 class='modal-title fs-5' id='exampleModalToggleLabel'>Are you sure ?</h1>
+                                    <button type='button' id='' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                                 </div>
                                 <div class='modal-body'>
-                                    Show a second modal and hide this one with the button below.
+                                    Do you really want to delete note <b> \""; 
+                                    echo $notes->get_title(); echo "\"</b> and all of its dependencies ? 
+                                    <br>
+                                    <br>
+                                    This process cannote be undone.
                                 </div>
                                 <div class='modal-footer'>
-                                    <button class=' btn btn-primary' id='cancel' data-bs-target='#myModal' data-bs-toggle='modal'>Cancel</button>
-                                    <button class='btn btn-primary' id='deleteNote' data-bs-target='#exampleModalToggle2' data-bs-toggle='modal'>Supprimer</button>
+                                    <button class=' btn btn-secondary' id ='cancel' data-bs-target='#myModal' data-bs-toggle='modal'>Cancel</button>
+                                    <button class=' btn btn-danger' id ='sup' data-bs-target='#myModal' data-bs-toggle='modal'>Supprimer</button>
+                                    <button id='btn-supp' type='button' class='btn btn-secondary btn-sm'>Supprimerrrr</button>
+                                    <svg id ='free' onclick='console.log('test');' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash3-fill red' viewBox='0 0 16 16'>
+                                        <path d='M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5'/>
+                                    </svg>
                                 </div>
                                 </div>
                             </div>
-                            </div>
-
-                            
-
-
-
+                          </div>
                           ";
 
 
@@ -147,15 +212,22 @@
                 <!-- Lien stylisé comme un bouton de soumission de formulaire -->
                         <a href="notes/archived/<?= $notes->get_id()?>" class="styled-link-button"><?php
                         if(!$notes->archived()){
-                            echo'<svg id="archive" data-bs-toggle="modal" data-bs-target="#myModal" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+                            echo'<svg id="archive"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
                             <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5zm13-3H1v2h14zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
-                          </svg>';
+                          </svg>
+
+                          
+                          ';
                           
                         }else{
                             echo'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
                             <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
-                          </svg>';
+                          </svg>
+                          
+
+                          ';
                         }}?></a> 
+                        
                          <?php
                         if ($is_editor) {
                             if(!$notes->archived()||isset($share)){
@@ -211,22 +283,25 @@
              
       <?php
         echo"
-        <div class='.modal fade' id='exampleModalToggle2' aria-hidden='true' aria-labelledby='exampleModalToggleLabel2' tabindex='-1'>
-        <div class='modal-dialog modal-dialog-centered'>
+        <div class='modal'id='myModal2' tabindex='-1'>
+        <div class='modal-dialog'>
             <div class='modal-content'>
             <div class='modal-header'>
-                <h1 class='modal-title fs-5' id='myModal2'>Modal 2</h1>
+                <h5 class='modal-title'>Modal title</h5>
                 <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
             </div>
             <div class='modal-body'>
-                Hide this modal and show the first with the button below.
+                <p>Modal body text goes here.</p>
             </div>
             <div class='modal-footer'>
-                <button class='btn btn-primary' data-bs-target='#exampleModalToggle' data-bs-toggle='modal'>Back to first</button>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                <button type='button' class='btn btn-primary'>Save changes</button>
             </div>
             </div>
         </div>
-        </div>";
+        </div>
+";
+        
       ?>
 </body>
 

@@ -315,8 +315,7 @@ class ControllerNotes extends Controller{
             if(empty($error)){
               $note->persist();
             }
-            
-          
+
           $this->redirect("notes");
         }
       }
@@ -395,6 +394,21 @@ class ControllerNotes extends Controller{
       if(isset($_POST["item"])&& isset($_POST['id'])){
         $id= $_POST["id"];
         $item=$_POST["item"];
+        if(Note::iamcheck($id)){
+          $note= Notecheck::get_note_by_id($id);
+          $note->deleteitem($item);
+          $note= Notecheck::get_note_by_id($id);
+        (new View("editnote"))->show(["notes"=>$note,"mode"=>'edit']);
+        }else{
+         
+        }
+      }
+    }
+
+    public function service_delete_item():void {
+      if(isset($_POST["idItem"])&& isset($_POST['idNote'])){
+        $id= $_POST["idNote"];
+        $item=$_POST["idItem"];
         if(Note::iamcheck($id)){
           $note= Notecheck::get_note_by_id($id);
           $note->deleteitem($item);
@@ -523,6 +537,16 @@ class ControllerNotes extends Controller{
           if($note)
               $res = "true";
       } 
+      echo($res);
+    }
+
+    public function has_been_deleted() :void{
+      $res = "false";
+      $note = Notemixte::get_note_by_id($_GET['param1']);
+      //$is_deleted = $note->has_been_deleted();
+      if($note === false){
+        $res = "true";
+      }
       echo($res);
     }
     

@@ -154,6 +154,10 @@ class Notecheck extends Note{
        self::execute("delete from checklist_note_items where checklist_note = :id and content = :item ",
                       ["id"=>$this->get_id(),"item"=>$item]);
      }
+     public function service_delete_item(int $iditem){
+        self::execute("delete from checklist_note_items where checklist_note = :id and id = :idItem ",
+                       ["id"=>$this->get_id(),"idItem"=>$iditem]);
+      }
     
      private function validateitem(string $new):array{
         $result = [];

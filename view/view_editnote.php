@@ -26,12 +26,15 @@
         $(document).ready(function(){
             inputTitle = $("#title");
             titleAtFirst = inputTitle.val();
-            idNote = $("#idNote");
+            
+            idNote = $("#idnotes");
+            idnote = idNote.val();
+            console.log(idnote);
             errTitle = $("#errTitle");
             inputItem = $("#addItem");
             errorAddItem = $("#errorAddItem");
             
-
+            
             inputTitle.bind("input",valideTitle);
             inputTitle.bind("input" , uniqueNoteByOwner);
             inputItem.bind("input",addItem);
@@ -53,12 +56,12 @@
                 var title = $(this).val();
                 errTitle.html("");
                 if (title.length < 3 || title.length > 25) {
-                    $(this).addClass('is-invalid');
+                    $(inputTitle).addClass('is-invalid');
                     errTitle.append("Title lenght must be between 3 and 25.");
                     $("#buttonSave").prop('disabled',true);
                 } else {
-                    $(this).removeClass('is-invalid');
-                    $(this).addClass('is-valid');
+                    $(inputTitle).removeClass('is-invalid');
+                    $(inputTitle).addClass('is-valid');
                     $("#buttonSave").prop('disabled',false);
                 }
                 
@@ -80,8 +83,8 @@
                 const data = await res.text();
                 
 
-                await console.log(data);
-                if(data == true){
+                await console.log(typeof data);
+                if(data === 'true'){
                     //console.log(data);
                     console.log("test");
                     $("#title").addClass('is-invalid');
@@ -199,6 +202,16 @@
             return trouve;
             
         }
+        async function deleteItem(id){
+            var URL = "&idItem=" + id +"/&idNote=" + idnote;
+            const res = await fetch("Notes/service_delete_item/", {
+                                        method: 'POST',
+                                        headers: {"Content-type": "application/x-www-form-urlencoded"},
+                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL
+                                        });
+            const data = await res.text();
+            console.log(typeof data);
+        }
 
 
 
@@ -216,7 +229,7 @@
                         
                         
                         <form action="notes/save" method="post">
-                        <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                        <input type="hidden" id="idnotes" value="<?= $notes->get_id()?>">
                         <button id="buttonSave" type="submit" class="styled-link-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
                         <path d="M11 2H9v3h2z"/>

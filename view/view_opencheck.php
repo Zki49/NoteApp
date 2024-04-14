@@ -24,7 +24,16 @@
         echo"'>
         <label for='title' class='form-label''>Title</label>
         <input type='text' id='title'  name='title' class='form-control'  aria-describedby='button-addon2'  ' value = '"; echo($notes->get_title());    
-        echo"'>
+        if(empty($mode)){
+            echo"'  readonly>";
+        }else{
+            echo"' >";
+        }
+
+            echo" 
+    </div>
+    ";
+    echo"
           <div class='invalid-feedback' id='errTitle'>
             
           </div>
@@ -32,15 +41,6 @@
         
       </div>
         ";
-        if(empty($mode)){
-            echo"'  readonly";
-        }else{
-            echo"' ";
-        }
-
-            echo" >
-    </div>
-    ";
     echo" </form>";
    echo" <label for='title' class='form-label'>Items</label>";
    for($i = 0; $i < count($items); $i++){
@@ -76,8 +76,8 @@
                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-dash' viewBox='0 0 16 16'>
                 <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>
               </svg>
-              <input type='hidden' name='id' value='";
-              echo $id;
+              <input type='hidden' id='idItem' value='";
+              echo $items[$i]->get_id();
               echo"'>
            </button>";}else{echo "";}
             
