@@ -81,25 +81,14 @@ class ControllerNotes extends Controller{
       if(isset($_GET["param1"])){
         $id=$_GET["param1"];
         $notes = Notemixte::get_note_by_id($id);
-<<<<<<< HEAD
-        if($notes==false){
-          (new view("error"))->show(["error"=>"this Note not exist"]);
-        }else{
-=======
         if($notes!=false){
->>>>>>> draganddrop
+
         $notes->set_pinned ();
         $notes->persist();
         $this->redirect("notes","open", $id);
-<<<<<<< HEAD
-        }
-=======
         }else{
           (new view("error"))->show(["error"=>"notes with id $id not exist"]);
         }
-        
-       
->>>>>>> draganddrop
       }
     }
 
