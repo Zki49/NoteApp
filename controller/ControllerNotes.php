@@ -109,7 +109,7 @@ class ControllerNotes extends Controller{
      }
      public function move_service(): void{
      // echo $_GET;
-      var_dump($_POST);
+      
       
       /*
       si la note est pined la depined si elle a ete droper dans 'other' et inversement  
@@ -118,38 +118,51 @@ class ControllerNotes extends Controller{
       if(isset($_POST['draggedItemId'])&& isset($_POST['listOfDrop'])){
         $list_id_note = $_POST['listOfDrop'];
         $notemoveId= $_POST['draggedItemId'];
+        $pos=0;
+        $find=false;
+        $indexref=0;
+      
        // $this->replace($notemove,$list_id_note[1]);
-        for($i=0;$i<sizeof($list_id_note);$i++){
+        for($i=0;$i<sizeof($list_id_note)&&!$find;$i++){
           if($list_id_note[$i]==$notemoveId){
             if($i==0){
               $notemove=Notemixte::get_note_by_id($notemoveId);
               $noteref= Notemixte::get_note_by_id($list_id_note[$i+1]);
               if($notemove->pinned()!==$noteref->pinned()){
                 $notemove->set_pinned();
-                $notemove->set_weigth_max();
-                $notemove->persist();
+              
                 
                }
-             
-
+               $notemove->set_weigth_max();
+               $notemove->persist();
+            }else{
+              $indexref=$i-1;
             }
-            else{
-              $notemove=Notemixte::get_note_by_id($notemoveId);
-              $noteref= Notemixte::get_note_by_id($list_id_note[$i+1]);
-              if($notemove->pinned()!==$noteref->pinned()){
-                $notemove->set_pinned();
-               // $notemove->set_weigth_max();
-                $notemove->persist();
-                
-               }
+            $pos=$i;
+            $find=true;
             }
            
           }
+          $notemove=Notemixte::get_note_by_id($notemoveId);
+         // $noteref=Notemixte::get_note_by_id($indexref);
+          if($pos!=0){
+            $notemove->set_weigth_max();
+           /* if($notemove->pinned()!==$noteref->pinned()){
+              $notemove->set_pinned();
+              $notemove->persist(); 
+             }*/
+          }
+          
+          for($i=0;$i<$pos;$i++){
+
+           $notemove->movedown();
+          }
+          
         }
         
       }
      
-     }
+     
      public function wheigt():void{
       //ce service est un service de debug 
       $notemove= Notemixte::get_note_by_id($_GET['param1']);

@@ -46,12 +46,21 @@ return $results;
     public function set_weigth_max():void{
        $query= self::execute("SELECT MAX(weight)
                            from notes
-                           WHERE pinned = :pined and owner= :idoner ",["idoner"=>$this->owner()->get_id(),"pined"=>$this->pinned()] );
+                           WHERE  owner= :idoner ",["idoner"=>$this->owner()->get_id()] );
          $maxweight=$query->fetch();
-         $this->set_weight($maxweight['MAX(weight)']+10);
+         $this->set_weight($maxweight['MAX(weight)']+1);
          $this->persist();                  
         
     } 
+    public function set_weigth_min():void{
+        $query= self::execute("SELECT MIN(weight)
+                            from notes
+                            WHERE  owner= :idoner ",["idoner"=>$this->owner()->get_id()] );
+          $maxweight=$query->fetch();
+            $this->set_weight( $maxweight['MIN(weight)']-1);
+            $this->persist();
+
+     } 
 
      public function update_title(string $title):void{
         self::execute("update notes set title=:title where id=:id",["title"=>$title,"id"=>$this->get_id()]);
@@ -64,7 +73,9 @@ return $results;
                                 ORDER BY `n`.`weight` ASC" , ["owner" => $this->get_idowner(), "weight" => $this->get_weight()]);
         $data = $query->fetchAll();
         if (!empty($data)){
+            $ok=false;
             foreach($data as $row){
+                if(!$ok){
                 if(!$this->pinned()){
                    if ($row['pinned'] === 0){
                     $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
@@ -76,7 +87,8 @@ return $results;
                     $this->persist();
                     $note_tmp->persist();
                     $note_tmp=null;
-                    return;
+                    $ok=true;
+
                   }
                }else{
                 if ($row['pinned'] === 1){
@@ -89,10 +101,11 @@ return $results;
                     $this->persist();
                     $note_tmp->persist();
                     $note_tmp=null;
-                    return;
+                    $ok=true;
                   }
                }
             }
+        }
         }
     }
     public function movedown() : void {
@@ -103,7 +116,9 @@ return $results;
                                 ORDER BY n.weight desc" , ["owner" => $this->get_idowner(), "weight" => $this->get_weight()]);
         $data = $query->fetchAll();
         if (!empty($data)){
+            $ok=false;
             foreach($data as $row){
+                if(!$ok){
                 if(!$this->pinned()){
                 if ($row['pinned'] === 0){
                     $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
@@ -114,7 +129,7 @@ return $results;
                     $this->set_weight($tmp);
                     $this->persist();
                     $note_tmp->persist();
-                    return;
+                    $ok=true;
                 }
             }else{
                 if ($row['pinned'] === 1){
@@ -126,10 +141,12 @@ return $results;
                     $this->set_weight($tmp);
                     $this->persist();
                     $note_tmp->persist();
-                    return;
+                    $ok=true;
+
             }
             }
         }
+    }
     }
  }
 }
