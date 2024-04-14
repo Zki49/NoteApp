@@ -84,6 +84,7 @@ class ControllerNotes extends Controller{
         if($notes!=false){
 
         $notes->set_pinned ();
+        $notes->set_weigth_max();
         $notes->persist();
         $this->redirect("notes","open", $id);
         }else{
