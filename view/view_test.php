@@ -8,10 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-MQwA9UQGx909+8zz3bV5P1/zPr27R2aFWsUZt5Xz5a9Tq2XUn/6Zl3DSd0ZUEwC" crossorigin="anonymous">
         <title>test</title>
+        <script>
+     $(document).ready(function(){
+      let modal;
+
+      $("#ouvrirModal").click(function(){
+          modal = $("#myModal").modal();
+      });
+
+      $("#myModal").on('shown.bs.modal', function () {
+    
+          var bouton = $(this).find('button')
+          console.log(bouton);
+
+          
+          bouton.click(function() {
+              console.log("cc"); 
+          });
+      });
+    });
+  
+  </script>
 </head>
 <body class="bg-dark">
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-sliders"></i></button>
@@ -103,6 +124,47 @@
   </div>
 </div>
 </div>
+
+
+<!-- Bouton pour ouvrir la modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Ouvrir la modal
+</button>
+
+<!-- La modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <!-- En-tête de la modal -->
+      <div class="modal-header">
+        <h4 class="modal-title">Ma Modal</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Corps de la modal -->
+      <div class="modal-body">
+        <p>Contenu de ma modal...</p>
+      </div>
+      
+      <!-- Pied de la modal -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary">Sauvegarder</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript de Bootstrap (changez le lien pour votre propre version si nécessaire) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
 </body>
 </html>
 
