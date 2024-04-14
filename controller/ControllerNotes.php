@@ -81,14 +81,25 @@ class ControllerNotes extends Controller{
       if(isset($_GET["param1"])){
         $id=$_GET["param1"];
         $notes = Notemixte::get_note_by_id($id);
+<<<<<<< HEAD
         if($notes==false){
           (new view("error"))->show(["error"=>"this Note not exist"]);
         }else{
+=======
+        if($notes!=false){
+>>>>>>> draganddrop
         $notes->set_pinned ();
         $notes->persist();
-        
         $this->redirect("notes","open", $id);
+<<<<<<< HEAD
         }
+=======
+        }else{
+          (new view("error"))->show(["error"=>"notes with id $id not exist"]);
+        }
+        
+       
+>>>>>>> draganddrop
       }
     }
 
@@ -106,6 +117,98 @@ class ControllerNotes extends Controller{
       }
 
      }
+     public function move_service(): void{
+     // echo $_GET;
+      
+      
+      /*
+      si la note est pined la depined si elle a ete droper dans 'other' et inversement  
+       swap le poids (plutot metre un poids entre la note precedente et la note suivante)
+      */
+      if(isset($_POST['draggedItemId'])&& isset($_POST['listOfDrop'])){
+        $list_id_note = $_POST['listOfDrop'];
+        $notemoveId= $_POST['draggedItemId'];
+        $pos=0;
+        $find=false;
+       // $indexref=0;
+      
+       // $this->replace($notemove,$list_id_note[1]);
+        for($i=0;$i<sizeof($list_id_note)&&!$find;$i++){
+          if($list_id_note[$i]==$notemoveId){
+            if($i==0){
+              $notemove=Notemixte::get_note_by_id($notemoveId);
+              $noteref= Notemixte::get_note_by_id($list_id_note[$i+1]);
+              if($notemove->pinned()!==$noteref->pinned()){
+                $notemove->set_pinned();
+              
+                
+               }
+               $notemove->set_weigth_max();
+               $notemove->persist();
+            }else{
+              //$indexref=$i-1;
+            }
+            $pos=$i;
+            $find=true;
+            }
+           
+          }
+          $notemove=Notemixte::get_note_by_id($notemoveId);
+        
+          if($pos!=0){
+            $noteref=Notemixte::get_note_by_id($list_id_note[0]);
+            $notemove->set_weigth_max();
+           if($notemove->pinned()!==$noteref->pinned()){
+              $notemove->set_pinned();
+              $notemove->persist(); 
+             }
+          }
+          
+          for($i=0;$i<$pos;$i++){
+
+           $notemove->movedown();
+          }
+          
+        }
+        
+      }
+     
+     
+     public function wheigt():void{
+      //ce service est un service de debug 
+      $notemove= Notemixte::get_note_by_id($_GET['param1']);
+      echo"old poids :";
+      echo $notemove->get_weight();
+       $notemove->set_weigth_max();
+       $notemove->persist();
+      echo"new poids :";
+      echo $notemove->get_weight();
+      
+    }
+
+     public function check_uncheck_service(){
+      $item = Item::get_un_item($_GET['param1']);
+      if($item){
+        $item->unchecked_checked();
+        $item->persit();
+      }
+     
+     }
+    // private function replace($idnotemove,$listebefore):void{
+       //$notemove=Notemixte::get_note_by_id($idnotemove);
+      
+      // $notemove->set_weight(200);
+       //$notemove->set_pinned();
+       //$notemove->persist();
+       //if($notemove->pinned()!==$noteref->pinned()){
+       // $notemove->set_pinned();
+//}
+       //si la noteref est la note la plus grand des notes pinned ou unpinned 
+      // if($noteref->){
+
+      // }
+      // $notemove->persist();
+     //}
      public function open():void{
       if(isset($_GET["param1"])){
         $id = Tools::sanitize($_GET["param1"]);
@@ -368,10 +471,15 @@ class ControllerNotes extends Controller{
     }
     public function check():void{
       $item = Item::get_un_item($_GET['param1']);
-      $item->unchecked_checked();
-      $item->persit();
-      $idNote= $item->get_id_my_note();
-      $this->redirect("notes","open",$idNote);
+      if($item){
+        $item->unchecked_checked();
+        $item->persit();
+        $idNote= $item->get_id_my_note();
+        $this->redirect("notes","open",$idNote);
+      }else{
+        (new View('error'))->show(["error"=>"this item not exist"]);
+      }
+      
     }
     public function deleteitem():void {
       if(isset($_POST["item"])&& isset($_POST['id'])){
@@ -392,14 +500,18 @@ class ControllerNotes extends Controller{
       $user=$this->get_user_or_redirect();
       
       if(isset($_POST["idnotes"])){
+        if($user->owner($_POST["idnotes"])){
         $userShare="";
         $id=$_POST["idnotes"];
 
         if(isset($_POST["idUser"]) && isset($_POST["editor"])){
-          
-          $tabAddShare[$_POST["idUser"]]=$_POST["editor"];
+          $useer=User::get_user_by_id($_POST["idUser"]);
+         
+            $tabAddShare[$_POST["idUser"]]=$_POST["editor"];
           $note=Notemixte::get_note_by_id($id);
           $note->add_shared($tabAddShare);
+          
+          
           
         }
 
@@ -407,7 +519,10 @@ class ControllerNotes extends Controller{
 
         $tabUSersAlready=User::tab_user_in_share($id);
         (new View("shared"))->show(["tabUsers"=>$tabUsers, "idnotes"=>$id, "tabUSerAlready"=>$tabUSersAlready]);
+      }else{
+        (new View("error"))->show(["error"=>"your are not owner"]);
       }
+    }
       else{
         (new View("shared"))->show([]);
       }

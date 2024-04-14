@@ -28,7 +28,7 @@ class ControllerSignup extends Controller{
 
             if (count($errors) == 0) { 
                 $member->persist(); //sauve l'utilisateur
-                $this->log_user($member,"Test" );
+                $this->log_user($member,"login" );
             }
             /*$idUser = $member->get_id();
             $this->redirect("signup" , "redirect_prg", $idUser , $confirm_password);            

@@ -39,16 +39,24 @@
             echo"<form action='notes/deleteitem' method='post'>
             <div class='input-group mb-3'>
             <div class='input-group-text'>
+            <noscript>
             <a href='notes/check/";
                echo $item->get_id();
                echo"'>
-                <input class='form-check-input mt-0' type='checkbox' ";
+               </noscript>
+
+                <input  id='";
+                echo $item->get_id();
+                echo"'class='form-check-input mt-0' type='checkbox' ";
                 if($item->item_checked()){echo"checked";}
                 echo" input'>
               
              </a>
             </div>
-            <input type='text' class='form-control ";
+            <input type='text'id = ";
+            echo "text-";
+            echo $item->get_id();
+           echo " class='form-control ";
             if($item->item_checked()){
                 echo"throughline";
             }
@@ -116,5 +124,4 @@
 </form>
 
 </body>
-
 </html>

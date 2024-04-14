@@ -16,7 +16,7 @@
 
     <div class="container">
         <div class="card half-width">
-            <div class="card-body">
+        <div class="card-body" id= <?= $notes->get_id() ?>>
 
             <form action=<?php if(!isset($share)){ echo'"notes/open/';
                     echo $notes->get_id();
@@ -51,6 +51,7 @@
                         </div>
                     </button>
                 </form>
+                <noscript>
                  <?php if(!$notes->archived()&&!isset($share)){?>
                 <div class="d-flex justify-content-between">
                     <?php
@@ -74,6 +75,7 @@
                    </form>
                 </div>
                 <?php } ?>
+                </noscript>
             </div>
         </div>
     </div>

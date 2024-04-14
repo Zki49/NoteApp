@@ -249,6 +249,27 @@ class User extends Model{
         return false;   
         
     }
+    public function owner(int $id) : bool{
+    
+
+        $query =self::execute("SELECT u.mail
+                               from users u 
+                               WHERE  u.id in (SELECT owner 
+                                                  FROM notes
+                                                  WHERE id= :id) ",["id"=>$id]);
+       $data= $query->fetchAll() ;
+       if($query->rowCount() == 0){
+           return false;                      
+        }else{
+            foreach($data as $row){
+                if($this->get_mail()===$row["mail"]){
+                    return true;
+                }
+            }
+        }
+        return false;   
+        
+    }
 
     public static function not_into_shared(int $idNote): array{
         $query =self::execute("SELECT u.mail
