@@ -44,7 +44,7 @@
     echo" </form>";
    echo" <label for='title' class='form-label'>Items</label>";
    for($i = 0; $i < count($items); $i++){
-    echo "<form action='notes/deleteitem' method='post'>
+    echo "<noscript><form action='notes/deleteitem' method='post'></noscript>
             <div class='input-group mb-3'>
                 <div class='input-group-text'>
                     <a href='notes/check/" . $items[$i]->get_content() . "'>
@@ -73,29 +73,29 @@
                     
                 </div>
                 <td class='is-invalid'></td>
-                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-dash' viewBox='0 0 16 16'>
+                <svg id='";echo $items[$i]->get_id();echo"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='supItem' viewBox='0 0 16 16'>
                 <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>
               </svg>
               <input type='hidden' id='idItem' value='";
-              echo $items[$i]->get_id();
+              //echo $items[$i]->get_id();
               echo"'>
            </button>";}else{echo "";}
             
             echo" </div>
-             </form>" ;
+            <noscript> </form></noscript>" ;
        }
       
       
        if(!empty($mode)){ 
         echo"
-        <form action='notes/additem' method='post'>  
+        <noscript><form action='notes/additem' method='post'> </noscript> 
         <div class='input-group mb-3'>
         <input type='hidden' name='idnotes' value='" ;
         echo $id ;
         echo"'>
     <input id='addItem' type='text' class='form-control'  aria-describedby='button-addon2' style='background-color: #323232; color: white;'  name ='newitem'>
     <button class='btn btn-outline-secondary' type='submit' id='button-addon2' style='background-color: #0071FF; color: white;'>
-        <svg xmlns='http://www.w3.org/2000/svg' width='18' height='16' fill='currentColor' class='bi bi-plu' viewBox='0 0 16 16'>
+        <svg xmlns='http://www.w3.org/2000/svg' width='18' height='16' fill='currentColor' class='newItem' viewBox='0 0 16 16'>
             <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4'/>
         </svg>
     </button>
@@ -131,7 +131,7 @@
 
 
 
-</form>
+<noscript></form></noscript>
 
 </body>
 

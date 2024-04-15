@@ -150,11 +150,17 @@ class Notecheck extends Note{
         }
         return $error;
      }
+
+     public function service_add_item(string $new):void{
+        self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
+     }
+
      public function deleteitem(string $item){
        self::execute("delete from checklist_note_items where checklist_note = :id and content = :item ",
                       ["id"=>$this->get_id(),"item"=>$item]);
      }
-     public function service_delete_item(int $iditem){
+     public function service_delete_item(string $iditem){
+        $iditem = intval($iditem);
         self::execute("delete from checklist_note_items where checklist_note = :id and id = :idItem ",
                        ["id"=>$this->get_id(),"idItem"=>$iditem]);
       }

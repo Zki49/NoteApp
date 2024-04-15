@@ -383,6 +383,22 @@ class ControllerNotes extends Controller{
           
        }
     }
+    public function service_add_item():void{
+      /*$new = Tools::sanitize($_POST["newitem"]);
+         $id = Tools::sanitize($_POST["idnotes"]);
+        echo($new);
+         echo($id);*/
+      if(isset($_POST["newitem"]) && isset($_POST["idnotes"])){
+        sleep(5);
+         $new = Tools::sanitize($_POST["newitem"]);
+         $id = Tools::sanitize($_POST["idnotes"]);
+         if(Note::iamcheck($id)){
+             $note = Notecheck::get_note_by_id($id);
+             $note->additem($new);
+         }
+         
+      }
+   }
     public function check():void{
       $item = Item::get_un_item($_GET['param1']);
       $item->unchecked_checked();
@@ -411,11 +427,7 @@ class ControllerNotes extends Controller{
         $item=$_POST["idItem"];
         if(Note::iamcheck($id)){
           $note= Notecheck::get_note_by_id($id);
-          $note->deleteitem($item);
-          $note= Notecheck::get_note_by_id($id);
-        (new View("editnote"))->show(["notes"=>$note,"mode"=>'edit']);
-        }else{
-         
+          $note->service_delete_item($item);
         }
       }
     }

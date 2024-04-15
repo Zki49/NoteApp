@@ -34,6 +34,25 @@
             inputItem = $("#addItem");
             errorAddItem = $("#errorAddItem");
             
+            // Sélectionnez tous les boutons avec la classe 'btn' (vous pouvez ajuster le sélecteur en fonction de votre besoin)
+            const buttons = document.querySelectorAll('.supItem');
+            console.log(buttons);
+            // Parcourez chaque bouton et ajoutez un gestionnaire d'événements click
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Récupérez l'ID du bouton sur lequel vous avez cliqué
+                    const buttonId = this.id;
+                    deleteItem(this.id);
+                    console.log("ID du bouton : " + buttonId);
+                });
+            });
+            const newItem = $('.newItem');
+            console.log(newItem);
+            $(newItem).click(function(){
+                const item = $(inputItem).val();
+                addNewItem(item);
+            })
+           
             
             inputTitle.bind("input",valideTitle);
             inputTitle.bind("input" , uniqueNoteByOwner);
@@ -49,6 +68,7 @@
             console.log(valeursInputs);
             console.log(numberOfItems);
             
+
         });
 
         function valideTitle(){
@@ -134,7 +154,7 @@
             return arrayError;
         }
 
-        /*function validateItems(){
+        function validateItems(){
             $(this).on('input', function() {
                 var item = $(this).val();
                 console.log(item);
@@ -151,7 +171,7 @@
                 }
                 uniqueItems(valeursInputs);
             });
-        }*/
+        }
 
         function getAllValueInputs4Items(numberOfItems){
             for(var i = 0 ; i < numberOfItems ; i++) {
@@ -210,9 +230,45 @@
                                         body: "name=" + encodeURIComponent("A & B = ? / :") + URL
                                         });
             const data = await res.text();
-            console.log(typeof data);
-        }
 
+            /*
+            
+            var URL = "Notes/service_delete_item/";
+            var idItem = encodeURIComponent(id);
+            var idNote = encodeURIComponent(idnote);
+
+            // Construction de la chaîne de requête avec les paramètres
+            var params = new URLSearchParams();
+            params.append('name', 'A & B = ? / :'); // Paramètre name
+            params.append('idItem', idItem); // Paramètre idItem
+            params.append('idNote', idNote); // Paramètre idNote
+
+            // Envoi de la requête POST avec fetch
+            const res = await fetch(URL, {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded"
+                },
+                body: params // Utilisation des paramètres construits comme corps de la requête
+            });
+
+            const data = await res.text();
+                    
+            */ 
+
+            console.log(data);
+        }
+        async function addNewItem(newItem){
+            console.log("1");
+            var URL = "&newitem=" + newItem +"/&idnotes=" + idnote;
+            const res = await fetch("Notes/service_add_item/", {
+                                        method: 'POST',
+                                        headers: {"Content-type": "application/x-www-form-urlencoded"},
+                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL
+                                        });
+            const data = await res.text();
+            console.log("data");
+        }
 
 
     </script>
