@@ -52,7 +52,15 @@ class Item  extends Model{
      public function persit(){
         self::execute("UPDATE checklist_note_items SET content = :content, checked= :check WHERE id = :id",
         ["id"=>$this->id,"content"=>$this->content,"check"=>$this->check]);
-     }
+    }
+    public function valideItem(string $item):array{
+        $errors=[];
+        
+        if(strlen($item)<1||strlen($item)>60){
+          $errors []="The title must have between 3 and 25 characters";
+        }
+        return $errors;
+    }
 
 }
 

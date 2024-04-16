@@ -41,7 +41,7 @@
         
       </div>
         ";
-    echo" </form>";
+    
    echo" <label for='title' class='form-label'>Items</label>";
    for($i = 0; $i < count($items); $i++){
     echo "<noscript><form action='notes/deleteitem' method='post'></noscript>
@@ -82,13 +82,14 @@
            </button>";}else{echo "";}
             
             echo" </div>
-            <noscript> </form></noscript>" ;
+            <noscript> </form></noscript>
+            </form>" ;
        }
       
       
        if(!empty($mode)){ 
         echo"
-        <noscript><form action='notes/additem' method='post'> </noscript> 
+        <form action='notes/additem' method='post'>  
         <div class='input-group mb-3'>
         <input type='hidden' name='idnotes' value='" ;
         echo $id ;
@@ -102,7 +103,13 @@
     <div class='invalid-feedback' id = 'errorAddItem'>
 
     </div>
+    <br></br>
+    
+
 </div>
+<div class='listItems' id = 'listItems'>
+
+    </div>
 
 <!--<div class='input-group mb-3'>
         <div class='input-group-text'>

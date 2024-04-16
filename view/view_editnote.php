@@ -18,35 +18,42 @@
     <title>Ma Carte</title>
     <script>
         let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem,titleAtFirst;
+        let tableItems;
+        
         var inputs = document.querySelectorAll('input[id^="[0-9]"]');
-        var valeursInputs = [];
+        var valeursInputs;
         var arrayError = [];
         var numberOfItems = 0;
         
         $(document).ready(function(){
             inputTitle = $("#title");
             titleAtFirst = inputTitle.val();
-            
+            console.log(valeursInputs);
             idNote = $("#idnotes");
             idnote = idNote.val();
             console.log(idnote);
             errTitle = $("#errTitle");
             inputItem = $("#addItem");
             errorAddItem = $("#errorAddItem");
+            tableItems = $("#listItems");
             
-            // Sélectionnez tous les boutons avec la classe 'btn' (vous pouvez ajuster le sélecteur en fonction de votre besoin)
+            getItems();
+            displayItems();
+
+            inputTitle.bind("input",valideTitle);
+            inputTitle.bind("input" , uniqueNoteByOwner);
+            inputItem.bind("input",addItem);
+
             const buttons = document.querySelectorAll('.supItem');
             console.log(buttons);
-            // Parcourez chaque bouton et ajoutez un gestionnaire d'événements click
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // Récupérez l'ID du bouton sur lequel vous avez cliqué
                     const buttonId = this.id;
                     deleteItem(this.id);
                     console.log("ID du bouton : " + buttonId);
                 });
             });
-            const newItem = $('.newItem');
+            const newItem = $('#addItem');
             console.log(newItem);
             $(newItem).click(function(){
                 const item = $(inputItem).val();
@@ -54,9 +61,7 @@
             })
            
             
-            inputTitle.bind("input",valideTitle);
-            inputTitle.bind("input" , uniqueNoteByOwner);
-            inputItem.bind("input",addItem);
+            
 
             //$("#addItem").addClass('is-invalid');
 
@@ -64,9 +69,9 @@
             getAllValueInputs4Items(numberOfItems);
             uniqueItems(valeursInputs);
             validateItems();
-            console.log(arrayError);
-            console.log(valeursInputs);
-            console.log(numberOfItems);
+            //console.log(arrayError);
+          
+           // console.log(numberOfItems);
             
 
         });
@@ -229,32 +234,9 @@
                                         headers: {"Content-type": "application/x-www-form-urlencoded"},
                                         body: "name=" + encodeURIComponent("A & B = ? / :") + URL
                                         });
-            const data = await res.text();
-
-            /*
-            
-            var URL = "Notes/service_delete_item/";
-            var idItem = encodeURIComponent(id);
-            var idNote = encodeURIComponent(idnote);
-
-            // Construction de la chaîne de requête avec les paramètres
-            var params = new URLSearchParams();
-            params.append('name', 'A & B = ? / :'); // Paramètre name
-            params.append('idItem', idItem); // Paramètre idItem
-            params.append('idNote', idNote); // Paramètre idNote
-
-            // Envoi de la requête POST avec fetch
-            const res = await fetch(URL, {
-                method: 'POST',
-                headers: {
-                    "Content-type": "application/x-www-form-urlencoded"
-                },
-                body: params // Utilisation des paramètres construits comme corps de la requête
-            });
-
-            const data = await res.text();
-                    
-            */ 
+            getItems();
+            displayItems();
+            const data = await res.text(); 
 
             console.log(data);
         }
@@ -266,13 +248,70 @@
                                         headers: {"Content-type": "application/x-www-form-urlencoded"},
                                         body: "name=" + encodeURIComponent("A & B = ? / :") + URL
                                         });
+            getItems();
+            displayItems();
             const data = await res.text();
             console.log("data");
+        }
+        function displayItems(){
+            let html = "";
+            let cpt = 0;
+            for(let item of valeursInputs){
+                /*html += "<div class='input-group mb-3'>";
+                html += "<div class='input-group-text'>";
+                html += "<a href='notes/check/"+item.content+"'>";
+                html += "<input class='form-check-input mt-0' type='checkbox' input'>";
+                html += "</a>";
+                html += "<input id='"+cpt+"' type='text' class='form-control ' aria-label='Text input with checkbox ' name='item' value=' "+item.content+"'>";
+                html += "<button class='btn btn-danger' type='submit'>";
+                html += "<div class='invalid-feedback' id = 'errorInput"+cpt+"'>";
+                html += "</div>";
+                html += "</div>";
+                html += "</div>";
+                
+                html += "<td class='is-invalid'></td>";
+                html += "<svg id='"+item.id+"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='supItem' viewBox='0 0 16 16'>";
+                html += " <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>";
+                html += "</svg>";
+                html += "</button>";
+                html += "<input type='hidden' id='idItem' value=''>";
+                
+                
+                <div class="input-group mb-3">
+                <input type="file" class="form-control" id="inputGroupFile02">
+                <label class="input-group-text" for="inputGroupFile02"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Télécharger</font></font></label>
+                </div>
+
+                <input type='checkbox' class='input-group-text'>
+                <input type='text' class='form-control' aria-label='Amount (to the nearest dollar)'>
+                <button type='button' class='btn input-group-text'>.00</button>*/
+
+                
+                html += "<div class='input-group mb-3' >";
+                html += "<input type='checkbox' class='input-group-text'>";
+                html += "<input type='text' class='form-control' value='"+item.content+"'>";
+                html += "<svg id='"+item.id+"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='supItem' viewBox='0 0 16 16'>";
+                html += " <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>";
+                html += "</svg>";
+                html += "</div>";
+                cpt++;
+            }
+            tableItems.html(html);
+            /*    
+              <input type='hidden' id='idItem' value=''>*/
+            
+            
+        }
+        async function getItems(){
+            valeursInputs = await $.getJSON("Notes/get_all_items_service/" + idnote);
+            displayItems();
+            console.log(valeursInputs);
         }
 
 
     </script>
 </head>
+
 
 <body>
 <div class="page-header">                        
@@ -281,38 +320,37 @@
                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
             </svg>
                          </a>
-                        <p style = "display: none; " id= "idNote"><?= $notes-> get_id() ?></p>
-                        
-                        
+                       
+                       
+                       
                         <form action="notes/save" method="post">
-                        <input type="hidden" id="idnotes" value="<?= $notes->get_id()?>">
-                        <button id="buttonSave" type="submit" class="styled-link-button">
+                        <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                        <button type="submit" class="styled-link-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
                         <path d="M11 2H9v3h2z"/>
                         <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
                         </svg>
                         </button>
-
-</div>                 
-                    
+ 
+</div>                
+                   
                     <div class="row">
                      <div class="col-12">
-                      <?php
+                     <?php
                      if($notes->are_you_check()){
                         (new View("opencheck"))->show(["notes"=>$notes,"mode"=>$mode ]);
                       }else{
                         (new View("opentext"))->show(["title"=>$notes->get_title(),"description"=>$notes->get_description(),"mode"=>$mode,"id"=>$notes->get_id()]);
                       }
                       $notes=null;
-                      ?> 
-                    
+                      ?>
+                   
                    
              
                 </div>
             </nav>
         </div>
     </div>
-    <noscript>
     <?php
     if(!empty($errors)){
         echo"<h6>
@@ -324,7 +362,8 @@
         }
     }
         ?>
-    </noscript>
 </body>
 
+
 </html>
+

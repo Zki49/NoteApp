@@ -39,7 +39,8 @@ class ControllerNotes extends Controller{
                                                                   /*donne un seul tableau avec toute les notes 
                                                                    et on peut les identifier gracce a la methode 
                                                                    are you check qui dit si cest une check notes ou pas*/
-      $tab_shared = User::array_shared_user_by_mail($user);   
+      $tab_shared = User::array_shared_user_by_mail($user); 
+      
       ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
 
@@ -156,10 +157,13 @@ class ControllerNotes extends Controller{
         if($user->editor($_POST["idnotes"])){
            if(Note::iamcheck($id)){
              $notes= Notecheck::get_note_by_id($id);
+             $itemsJson = Notecheck::get_all_items_service_as_json($notes);
+             (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode,"itemsJson"=>$itemsJson]);
             }else{
               $notes= Notetext::get_note_by_id($id);
+              (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
             }
-             (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
+             //(new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
         }else{
           (new View("error"))->show(["error"=>"bien essayer"]);
         }
@@ -285,17 +289,29 @@ class ControllerNotes extends Controller{
        if(isset($_POST['title']) && isset($_POST['idnotes'])){
         $id = Tools::sanitize($_POST['idnotes']);
         $title= Tools::sanitize($_POST['title']);
+        
         if( Note::iamcheck($id)){
+          if(isset($_POST['items'])){
+            $items = $_POST['items'];
+            $error[];
+              foreach($items as $item){
+                 $error = $item->valideItem($item->get_content());
+                 if(empty($error)){
+                    $item->persit();
+                 }
+              }
+          }
           $note= Notemixte::get_note_by_id($id);
           $error=$note->set_title($title);
           if(empty($error)){
             $note->update_title($title); 
+            for
           }
            $this->redirect("notes"); 
         }
-      if( isset( $_POST['text'])){    
+      if( isset($_POST['text'])){    
         $text= Tools::sanitize($_POST['text']);
-        
+
           $note = Notetext::get_note_by_id($id);
           if($note==false){
             var_dump($note);
@@ -560,6 +576,11 @@ class ControllerNotes extends Controller{
         $res = "true";
       }
       echo($res);
+    }
+    public function get_all_items_service() : void{
+      $note = Notecheck::get_note_by_id($_GET['param1']);
+      $noteJson = $note->get_all_items_service_as_json($note);
+      echo($noteJson);
     }
     
  }

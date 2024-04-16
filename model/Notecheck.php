@@ -36,6 +36,18 @@ class Notecheck extends Note{
     public  function get_items():array{
         return $this->content;
     }
+    public static function get_all_items_service_as_json(Notecheck $note) : string{
+        $items = $note->get_items();
+        $table = [];
+        foreach($items as $item){
+            $row = [];
+            $row["id"] = $item->get_id();
+            $row["content"] = $item->get_content();
+            $row["checked"] = $item->item_checked();
+            $table[] = $row;
+        }
+        return json_encode($table);
+    }
     /*private static function get_item(int $id) : array  {
         $query = self::execute("SELECT * 
                                 FROM checklist_note_items cl 
