@@ -44,7 +44,7 @@
     
    echo" <label for='title' class='form-label'>Items</label>";
    for($i = 0; $i < count($items); $i++){
-    echo "<noscript><form action='notes/deleteitem' method='post'></noscript>
+    echo "<noscript><form action='notes/deleteitem' method='post'>
             <div class='input-group mb-3'>
                 <div class='input-group-text'>
                     <a href='notes/check/" . $items[$i]->get_content() . "'>
@@ -82,11 +82,11 @@
            </button>";}else{echo "";}
             
             echo" </div>
-            <noscript> </form></noscript>
-            </form>" ;
+            </form>
+            </form></noscript>" ;
        }
       
-      
+       echo"<div class='listItems' id = 'listItems'></div>";
        if(!empty($mode)){ 
         echo"
         <form action='notes/additem' method='post'>  
@@ -107,9 +107,7 @@
     
 
 </div>
-<div class='listItems' id = 'listItems'>
 
-    </div>
 
 <!--<div class='input-group mb-3'>
         <div class='input-group-text'>

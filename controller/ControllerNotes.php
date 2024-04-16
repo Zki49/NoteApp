@@ -293,7 +293,7 @@ class ControllerNotes extends Controller{
         if( Note::iamcheck($id)){
           if(isset($_POST['items'])){
             $items = $_POST['items'];
-            $error[];
+            
               foreach($items as $item){
                  $error = $item->valideItem($item->get_content());
                  if(empty($error)){
@@ -305,7 +305,7 @@ class ControllerNotes extends Controller{
           $error=$note->set_title($title);
           if(empty($error)){
             $note->update_title($title); 
-            for
+            
           }
            $this->redirect("notes"); 
         }

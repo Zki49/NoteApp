@@ -28,24 +28,19 @@
         $(document).ready(function(){
             inputTitle = $("#title");
             titleAtFirst = inputTitle.val();
-            console.log(valeursInputs);
             idNote = $("#idnotes");
             idnote = idNote.val();
-            console.log(idnote);
             errTitle = $("#errTitle");
             inputItem = $("#addItem");
             errorAddItem = $("#errorAddItem");
             tableItems = $("#listItems");
             
             getItems();
-            displayItems();
-
-            inputTitle.bind("input",valideTitle);
-            inputTitle.bind("input" , uniqueNoteByOwner);
-            inputItem.bind("input",addItem);
-
-            const buttons = document.querySelectorAll('.supItem');
-            console.log(buttons);
+            
+            const buttons = document.querySelector(".supItem");
+    
+    // Afficher le nombre de boutons trouvés
+    console.log("Nombre de boutons avec la classe 'supItem': " + buttons);
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
                     const buttonId = this.id;
@@ -53,6 +48,12 @@
                     console.log("ID du bouton : " + buttonId);
                 });
             });
+
+            inputTitle.bind("input",valideTitle);
+            inputTitle.bind("input" , uniqueNoteByOwner);
+            inputItem.bind("input",addItem);
+
+            
             const newItem = $('#addItem');
             console.log(newItem);
             $(newItem).click(function(){
@@ -257,48 +258,49 @@
             let html = "";
             let cpt = 0;
             for(let item of valeursInputs){
-                /*html += "<div class='input-group mb-3'>";
+                html += "<div class='input-group mb-3'>";
                 html += "<div class='input-group-text'>";
                 html += "<a href='notes/check/"+item.content+"'>";
-                html += "<input class='form-check-input mt-0' type='checkbox' input'>";
-                html += "</a>";
-                html += "<input id='"+cpt+"' type='text' class='form-control ' aria-label='Text input with checkbox ' name='item' value=' "+item.content+"'>";
+                if (item.checked){
+                    html += "<input class='form-check-input mt-0' type='checkbox' checked>";
+                }else{
+                    html += "<input class='form-check-input mt-0' type='checkbox'>";
+                }
+                html += " </a>";
+                html += "</div>";
+                html += "<input id='"+cpt+"' type='text' class='form-control ' aria-label='Text input with checkbox ' name='item' value='"+item.content+"' >";
                 html += "<button class='btn btn-danger' type='submit'>";
                 html += "<div class='invalid-feedback' id = 'errorInput"+cpt+"'>";
                 html += "</div>";
-                html += "</div>";
-                html += "</div>";
-                
                 html += "<td class='is-invalid'></td>";
                 html += "<svg id='"+item.id+"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='supItem' viewBox='0 0 16 16'>";
-                html += " <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>";
+                html += "<path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>";
                 html += "</svg>";
-                html += "</button>";
                 html += "<input type='hidden' id='idItem' value=''>";
-                
-                
-                <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02">
-                <label class="input-group-text" for="inputGroupFile02"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Télécharger</font></font></label>
-                </div>
-
-                <input type='checkbox' class='input-group-text'>
-                <input type='text' class='form-control' aria-label='Amount (to the nearest dollar)'>
-                <button type='button' class='btn input-group-text'>.00</button>*/
-
-                
-                html += "<div class='input-group mb-3' >";
-                html += "<input type='checkbox' class='input-group-text'>";
-                html += "<input type='text' class='form-control' value='"+item.content+"'>";
-                html += "<svg id='"+item.id+"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='supItem' viewBox='0 0 16 16'>";
-                html += " <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>";
-                html += "</svg>";
+                html += "</button>";
                 html += "</div>";
+                
                 cpt++;
             }
             tableItems.html(html);
-            /*    
-              <input type='hidden' id='idItem' value=''>*/
+            /* 
+                   
+  
+                
+               
+                
+                <button class='btn btn-danger' type='submit'>
+                <div class='invalid-feedback' id = 'errorInput0'>
+                    
+                </div>
+                <td class='is-invalid'></td>
+                <svg id='35'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='supItem' viewBox='0 0 16 16'>
+                <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>
+              </svg>
+              <input type='hidden' id='idItem' value=''>
+           </button> 
+           </div>   
+            */
             
             
         }
@@ -324,7 +326,7 @@
                        
                        
                         <form action="notes/save" method="post">
-                        <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                        <input type="hidden" id="idnotes" value="<?= $notes->get_id()?>">
                         <button type="submit" class="styled-link-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
                         <path d="M11 2H9v3h2z"/>
