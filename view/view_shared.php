@@ -22,30 +22,21 @@
 
     $(function(){
       $("#btnplus").click(viewShare);
-      
-
-      //$('#deleteBtn').click(erase);
-      
-  //$("#userDropdown").focus(); // This will give focus to the userDropdown element
-//});
+     
         $("#userDropdown").change(function() {
         idUser = $(this).val(); // Capture the value of the selected option
         selectedOption = $(this).find("option:selected");
         userName = selectedOption.text();
-        console.log("ID de l'utilisateur: ", idUser);
-        console.log("Nom de l'utilisateur: ", userName);
-        
         });
 
       $("#permissionDropdown").change(function(){
         idPermission = $(this).val();
         selectedOptionPerm = $(this).find("option:selected");
         permName = selectedOptionPerm.text();
-        console.log("id Perm: ", idPermission); //id Editor : 1, id Reader : 0
+       //id Editor : 1, id Reader : 0
       })
 
       div=$("#viewSharee");
-      console.log(div);
     });
 
     function viewShare(){
@@ -53,16 +44,17 @@
       html += '<input ';
       html+= 'name="user" ';
       html += 'id="' 
-      //html += idUser;
       html += 'userJS-';
       html += idUser;
       html += '" value="';
       html += userName;
-      html += " (";
+      html += ' (';
       html += permName;
       html += ')"';
       html += ' readonly></input>';
       html += '<button type="submit" class="btn btn-primary mb-2" id="btnToggleJS-'; 
+      html += idUser;
+      html += '" value="';
       html += idUser;
       html += '">';
       html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">'
@@ -81,16 +73,18 @@
       html+= '</button>'
       html+='</div>'
       
-      
-
       div.append(html);
+
       $("#optionJS-"+idUser).remove();
       $("#btnErase-"+idUser).on("click",function(){
         idUser = $(this).val(); 
         erase();
-        console.log("aaaaa");
       })
 
+      $("#btnToggleJS-"+idUser).on("click",function(){
+        idUser = $(this).val();
+        toggleA();
+      })
     }
 
     function toggleA(){
@@ -104,21 +98,16 @@
         permName = " (Editor)";
       }
 
-      userName = $("#user").val().split(" ")[0];
-      $("#user").attr("value",userName + permName);
-                
+      userName = $("#userJS-"+idUser).val().split(" ")[0];
+      $("#userJS-"+idUser).attr("value",userName + permName);
+
     }
 
     function erase(){
-      
-      
-
       $("#btnToggleJS-"+idUser).remove();
       $("#btnErase-"+idUser).remove();
       $("#userJS-"+idUser).remove();
-    
-      console.log("#btnErase-"+idUser);
-      
+          
       let htm = '<option id="optionJS-';
       htm += idUser;
       htm += '"value="';
