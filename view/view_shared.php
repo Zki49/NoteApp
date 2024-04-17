@@ -85,17 +85,19 @@
         idUser = $(this).val();
         toggleA();
       })
+
+      //AJAX
     }
 
     function toggleA(){
       if(idPermission == 1){
         idPermission = 0;
-        permName = " (Reader)";
+        permName = "Reader";
         
       }
       else{
         idPermission = 1;
-        permName = " (Editor)";
+        permName = "Editor";
       }
 
       userName = $("#userJS-"+idUser).val().split(" ")[0];
