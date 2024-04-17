@@ -20,7 +20,8 @@
         let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem,titleAtFirst;
         let tableItems;
         
-        var inputs = document.querySelectorAll('input[id^="[0-9]"]');
+        var inputs = $('input[id^="[0-9]"]');
+        
         var valeursInputs;
         var arrayError = [];
         var numberOfItems = 0;
@@ -36,11 +37,12 @@
             tableItems = $("#listItems");
             
             getItems();
+            console.log(valeursInputs);
             
-            const buttons = document.querySelector(".supItem");
+            const buttons = document.querySelectorAll('.supItem');
     
     // Afficher le nombre de boutons trouvés
-    console.log("Nombre de boutons avec la classe 'supItem': " + buttons);
+    console.log("Nombre de boutons avec la classe 'supItem': " + buttons.length);
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
                     const buttonId = this.id;
@@ -364,6 +366,29 @@
         }
     }
         ?>
+
+        <?php echo"
+                 <div id='savechange' class='modal hide fade' role='dialog'>
+                 <div class='modal-dialog'>
+                     <div class='modal-content bg-dark text-white' style='margin-top:240px;'>
+                         <div class='modal-body'>
+                             <div class='header'><h3>Usnsaved changes !</h3></div>
+                             <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                             <div class='body'>Are you sure you want to leave this form ?
+                                 <br>
+                                 <br>
+                                 Changes you made will not be saved.
+                             </div>
+                             <div class='footer' style='text-align: right;'>
+                                 <button class='btn btn-secondary' id='btnClose'>Cancel</button>
+                                 <button class='btn btn-danger' id='btnSup'>Leave Page</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+        
+        "; ?>
 </body>
 
 

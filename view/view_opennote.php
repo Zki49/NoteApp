@@ -147,21 +147,24 @@
 
                           
                           <div id='loader' class='modal hide fade' role='dialog'>
-                          <div class='modal-dialog'>
-                          <div class='modal-content' style='margin-top:240px;'>
-                          <div class='modal-body'>
-                          <div class ='header'>titre</div>
-                          <div>body</div>
-                          <div class = 'footer'>
-                          <button class='btn btn-secondary' id='btnClose'>Close</button>
-                          <button class='btn btn-danger' id='btnSup'>Yes , delete it !</button>
-                          </div>
-                          </div>
-                          </div>
-                          </div>
-                          </div>
-                          
-
+                            <div class='modal-dialog'>
+                                <div class='modal-content bg-dark text-white' style='margin-top:240px;'>
+                                    <div class='modal-body'>
+                                        <div class='header'><h3>Are you sure ?</h3></div>
+                                        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                        <div class='body'>Do you really want to delete note <b>\"";echo $notes->get_title();echo"\"</b> and all of its dependencies ?
+                                            <br>
+                                            <br>
+                                            This process cannot bu undone.
+                                        </div>
+                                        <div class='footer' style='text-align: right;'>
+                                            <button class='btn btn-secondary' id='btnClose'>Cancel</button>
+                                            <button class='btn btn-danger' id='btnSup'>Yes, delete it!</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                           ";
 
 
@@ -241,22 +244,23 @@
              
       <?php
         echo"
-        <div class='modal'id='myModal2' tabindex='-1'>
-        <div class='modal-dialog'>
-            <div class='modal-content'>
-            <div class='modal-header'>
-                <h5 class='modal-title'>Modal title</h5>
-                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-            </div>
-            <div class='modal-body'>
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class='modal-footer'>
-                <button id='btnCloseModal2' type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-            </div>
+        <div class='modal' id='myModal2' tabindex='-1'>
+            <div class='modal-dialog modal-dialog-centered'>
+                <div class='modal-content' style='background-color: #212121; color: white;'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title'>Deleted</h5>
+                        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                    </div>
+                    <div class='modal-body'>
+                        <p>This note has been deleted.</p>
+                    </div>
+                    <div class='modal-footer'>
+                        <button id='btnCloseModal2' type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
+
 ";
         
       ?>
