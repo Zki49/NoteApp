@@ -475,9 +475,9 @@ class ControllerNotes extends Controller{
   }
 
   public function sharedAdd_service() : void{
-    if(isset($_POST["idUser"]) && isset($_POST["permission"]) && isset($_POST["idNote"])){
+    if(isset($_POST["idUser"]) && isset($_POST["idPermission"]) && isset($_POST["idNote"])){
       $userShar=User::get_user_by_id($_POST["idUser"]);
-      $userPerm=$_POST["permission"];
+      $userPerm=$_POST["idPermission"];
       $note=Notemixte::get_note_by_id($_POST["idNote"]);
 
       $tabShare = array($userShar => $userPerm);

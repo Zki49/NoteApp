@@ -16,11 +16,12 @@
     let idUser, selectedOptionUser, userName,
     idPermission, selectedOptionPerm, permName,
     div, toggleBtn,
-    html,
+    html,idNote,
     tabIn, tabOut;
     
 
     $(function(){
+      idNote = <?= $idnotes ?>;
       $("#btnplus").click(viewShare);
      
         $("#userDropdown").change(function() {
@@ -74,6 +75,7 @@
       html+='</div>'
       
       div.append(html);
+      
 
       $("#optionJS-"+idUser).remove();
       $("#btnErase-"+idUser).on("click",function(){
@@ -86,23 +88,53 @@
         toggleA();
       })
 
-      //AJAX
+      $.ajax({
+        type: "POST",
+        url: "notes/sharedAdd_service",
+        data: {
+          idUser : idUser,
+          idPermission : idPermission,
+          idNote : idNote
+        },
+        success: function(response) {
+                    console.log("Data successfully sent to server.");
+                    // Handle response from server if needed
+                },
+                error: function(response) {
+                    console.error("Error:");
+                }
+      })
     }
 
     function toggleA(){
       if(idPermission == 1){
         idPermission = 0;
-        permName = "Reader";
+        permName = " (Reader)";
         
       }
       else{
         idPermission = 1;
-        permName = "Editor";
+        permName = " (Editor)";
       }
 
       userName = $("#userJS-"+idUser).val().split(" ")[0];
       $("#userJS-"+idUser).attr("value",userName + permName);
 
+      $.ajax({
+        type: "POST",
+        url: "notes/sharedToggle_service",
+        data: {
+          idUser : idUser,
+          idNote : idNote
+        },
+        success: function(response) {
+                    console.log("Data successfully sent to server.");
+                    // Handle response from server if needed
+                },
+                error: function(response) {
+                    console.error("Error:");
+                }
+      })
     }
 
     function erase(){
@@ -120,6 +152,22 @@
 
       var newUser = $("#userDropdown");
       newUser.append(htm);
+
+      $.ajax({
+        type: "POST",
+        url: "notes/sharedDelete_service",
+        data: {
+          idUser : idUser,
+          idNote : idNote
+        },
+        success: function(response) {
+                    console.log("Data successfully sent to server.");
+                    // Handle response from server if needed
+                },
+                error: function(response) {
+                    console.error("Error:");
+                }
+      })
     }
   </script>
 </head>
@@ -150,7 +198,7 @@
           echo '(reader)';
         }
         echo '" readonly></input>
-          <input type="hidden" name="idNote" value="';
+          <input type="hidden" name="idNote" id="idNote" value="';
           echo $idnotes; 
           echo'">
           <input type="hidden" name="idUser" value="';
