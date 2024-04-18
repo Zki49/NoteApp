@@ -493,7 +493,10 @@ class ControllerNotes extends Controller{
   }
 
   public function sharedToggle_service() : void{
-
+    if(isset($_POST["idUser"]) && isset($_POST["idNote"])){
+      $note=Notemixte::get_note_by_id($_POST["idNote"]);
+      $note->change_permission($_POST["idUser"]);
+    }
   }
 
  }
