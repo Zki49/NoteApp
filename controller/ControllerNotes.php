@@ -480,7 +480,7 @@ class ControllerNotes extends Controller{
       $userPerm=$_POST["idPermission"];
       $note=Notemixte::get_note_by_id($_POST["idNote"]);
 
-      $tabShare = array($userShar => $userPerm);
+      $tabShare[$_POST["idUser"]]=$_POST["idPermission"];
       $note->add_shared($tabShare);
     }
   }

@@ -92,7 +92,7 @@
         type: "POST",
         url: "notes/sharedAdd_service",
         data: {
-          idUser : idUser,
+          idUser : idUser, //gauche, nom dans le dico post, droite dans la vue
           idPermission : idPermission,
           idNote : idNote
         },
@@ -100,7 +100,7 @@
                     console.log("Data successfully sent to server.");
                     // Handle response from server if needed
                 },
-                error: function(response) {
+        error: function(response) {
                     console.error("Error:");
                 }
       })
@@ -131,7 +131,7 @@
                     console.log("Data successfully sent to server.");
                     // Handle response from server if needed
                 },
-                error: function(response) {
+        error: function(response) {
                     console.error("Error:");
                 }
       })
