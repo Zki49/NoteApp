@@ -42,7 +42,9 @@
 
     function viewShare(){
       if(idUser != null && idPermission != null){
-        
+        if ($("#viewSharee").children().length != 0) {
+          $("#titleNoShare").hide(); // Afficher le message
+        }
         
       html = '<div id="textPers">';
       html += '<input ';
@@ -145,6 +147,10 @@
       $("#btnToggleJS-"+idUser).remove();
       $("#btnErase-"+idUser).remove();
       $("#userJS-"+idUser).remove();
+
+      if ($("#viewSharee").children().length === 0) {
+          $("#titleNoShare").show(); // Afficher le message
+        }
           
       let htm = '<option id="optionJS-';
       htm += idUser;
