@@ -42,9 +42,6 @@
 
     function viewShare(){
       if(idUser != null && idPermission != null){
-        if ($("#viewSharee").children().length != 0) {
-          $("#titleNoShare").hide(); // Afficher le message
-        }
         
       html = '<div id="textPers">';
       html += '<input ';
@@ -144,13 +141,13 @@
     }
 
     function erase(){
+      userName = $("#userJS-"+idUser).val().split(" ")[0];
+
       $("#btnToggleJS-"+idUser).remove();
       $("#btnErase-"+idUser).remove();
       $("#userJS-"+idUser).remove();
 
-      if ($("#viewSharee").children().length === 0) {
-          $("#titleNoShare").show(); // Afficher le message
-        }
+      console.log(userName);
           
       let htm = '<option id="optionJS-';
       htm += idUser;
@@ -180,6 +177,7 @@
       })
     }
   </script>
+
 </head>
 <body>
 
