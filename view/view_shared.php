@@ -41,7 +41,9 @@
     });
 
     function viewShare(){
-      if(idUser != null){
+      if(idUser != null && idPermission != null){
+        
+        
       html = '<div id="textPers">';
       html += '<input ';
       html+= 'name="user" ';
@@ -185,7 +187,7 @@
   <?php
     
     if(empty($tabUSerAlready)){
-      echo '<h3 class="mt-4"> This note is not shared yet.</h3> ';
+      echo '<h3 class="mt-4" id="titleNoShare"> This note is not shared yet.</h3> ';
     }
     else{
       foreach($tabUSerAlready as $user){
