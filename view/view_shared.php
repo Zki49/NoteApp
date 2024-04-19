@@ -41,6 +41,7 @@
     });
 
     function viewShare(){
+      if(idUser != null){
       html = '<div id="textPers">';
       html += '<input ';
       html+= 'name="user" ';
@@ -104,6 +105,7 @@
                     console.error("Error:");
                 }
       })
+    }
     }
 
     function toggleA(){
