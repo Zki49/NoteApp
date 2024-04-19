@@ -17,10 +17,10 @@
     idPermission, selectedOptionPerm, permName,
     div, toggleBtn,
     html,idNote,
-    tabIn, tabOut;
+    tabIn, tabOut, title;
     
 
-    $(function(){
+    $(document).ready(function(){
       idNote = <?= $idnotes ?>;
       $("#btnplus").click(viewShare);
      
@@ -36,16 +36,18 @@
         permName = selectedOptionPerm.text();
        //id Editor : 1, id Reader : 0
       })
-
+      title = document.querySelector('h3');
       div=$("#viewSharee");
     });
 
     function viewShare(){
-      if(idUser != null && idPermission != null){
-        
-      html = '<div id="textPers">';
+      if(idUser != null && idPermission != null && permName != '' && userName != '' ){
+
+      html = '<div id="textPers-';
+      html += idUser;
+      html += '">';
       html += '<input ';
-      html+= 'name="user" ';
+      html += 'name="user" ';
       html += 'id="' 
       html += 'userJS-';
       html += idUser;
@@ -54,7 +56,7 @@
       html += ' (';
       html += permName;
       html += ')"';
-      html += ' readonly></input>';
+      html += ' ></input>';
       html += '<button type="submit" class="btn btn-primary mb-2" id="btnToggleJS-'; 
       html += idUser;
       html += '" value="';
@@ -76,6 +78,10 @@
       html+= '</button>'
       html+='</div>'
       
+      if(title != null){
+        title.remove();
+      }
+
       div.append(html);
       
 
@@ -105,8 +111,13 @@
         error: function(response) {
                     console.error("Error:");
                 }
-      })
+      });
+
+      userName = '';
+      permName = '';
+
     }
+    
     }
 
     function toggleA(){
@@ -143,12 +154,8 @@
     function erase(){
       userName = $("#userJS-"+idUser).val().split(" ")[0];
 
-      $("#btnToggleJS-"+idUser).remove();
-      $("#btnErase-"+idUser).remove();
-      $("#userJS-"+idUser).remove();
+      $("#textPers-"+idUser).remove();
 
-      console.log(userName);
-          
       let htm = '<option id="optionJS-';
       htm += idUser;
       htm += '"value="';
@@ -156,6 +163,12 @@
       htm += '">';
       htm += userName;
       htm += '</option>';
+
+      if ($("#viewSharee").children().length == 0) {
+        let htmll = '<h3 class="mt-4" id="titleNoShare"> This note is not shared yet.</h3> ';
+        div.append(htmll);
+        title = document.querySelector('h3');
+      }
 
       var newUser = $("#userDropdown");
       newUser.append(htm);
@@ -195,8 +208,7 @@
     }
     else{
       foreach($tabUSerAlready as $user){
-        echo '<form action="notes/deleteShared" method="Post"
-          >';
+        echo '<form action="notes/deleteShared" method="Post">';
         echo '<input id="user" name="user" value="';
         echo $user->getFullnam();
         if($user->editor($idnotes)){
