@@ -400,12 +400,7 @@ class ControllerNotes extends Controller{
        }
     }
     public function service_add_item():void{
-      /*$new = Tools::sanitize($_POST["newitem"]);
-         $id = Tools::sanitize($_POST["idnotes"]);
-        echo($new);
-         echo($id);*/
       if(isset($_POST["newitem"]) && isset($_POST["idnotes"])){
-        sleep(5);
          $new = Tools::sanitize($_POST["newitem"]);
          $id = Tools::sanitize($_POST["idnotes"]);
          if(Note::iamcheck($id)){
