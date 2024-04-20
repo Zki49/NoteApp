@@ -12,7 +12,7 @@
 <body>
     <div class="title">Error</div>
     <div class="main">
-        <?= $error ?>
+        <?= var_dump($error) ?>
     </div>
 </body>
 

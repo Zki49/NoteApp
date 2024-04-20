@@ -156,8 +156,10 @@ class Notecheck extends Note{
      }
 
      public function additem(string $new):array{
-        $error= $this->validateitem($new);
+        
+        $error=[];//$this->validateitem($new);
         if(empty($error)){
+            
          self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
         }
         return $error;
@@ -182,9 +184,9 @@ class Notecheck extends Note{
          if(strlen($new)<1||strlen($new)>60){
            $result []= "The item must have between 1 and 60 characters";
          }
-         if($this->itemexist($new)){
+         /*if($this->itemexist($new)){
             $result [] = "item must be unique" ;
-         }
+         }*/
 
          return $result;
      }
@@ -195,6 +197,10 @@ class Notecheck extends Note{
             }
         }
         return false;
+     }
+     public function getFirstItem() : Item{
+        return $this->content[0];
+
      }
 
 }

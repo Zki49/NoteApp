@@ -51,6 +51,7 @@
 			$("#goBack").click(function(){
                 event.preventDefault();
                 isModified();
+            
 			});
             
             
@@ -65,7 +66,8 @@
                 addNewItem(item);
             });
 
-            const items = document.querySelectorAll(".supItem");
+            const items = document.querySelectorAll(".form-check-input");
+            console.log(items);
             $('.input-group-mb3').find('button').map(function() {
                 this.click(function(){
                     console.log('marche');
@@ -346,7 +348,7 @@
             for(let item of valeursInputs){
                 html += "<div class='input-group mb-3'>";
                 html += "<div class='input-group-text'>";
-                html += "<a href='notes/check/"+item.content+"'>";
+                html += "<a href='notes/check/"+item.id+"'>";
                 if (item.checked){
                     html += "<input class='form-check-input mt-0' type='checkbox' checked>";
                 }else{
@@ -354,8 +356,12 @@
                 }
                 html += " </a>";
                 html += "</div>";
-                html += "<input id='"+cpt+"' type='text' class='form-control items' aria-label='Text input with checkbox ' name='item' value='"+item.content+"' >";
-                html += "<button  class='btn btn-danger' onclick='"+"deleteItem("+item.id+")' type='submit'>";
+                if (item.checked){
+                    html += "<input id='"+cpt+"' type='text' class='form-control throughline' aria-label='Text input with checkbox ' name='item' value='"+item.content+" / display' >";
+                }else{
+                    html += "<input id='"+cpt+"' type='text' class='form-control' aria-label='Text input with checkbox ' name='item' value='"+item.content+" / display' >";
+                }
+                html += "<button  class='btn btn-danger supItem' onclick='"+"deleteItem("+item.id+")' type='submit'>";
                 html += "<div class='invalid-feedback' id = 'errorInput"+cpt+"'>";
                 html += "</div>";
                 html += "<td class='is-invalid'></td>";
@@ -388,7 +394,10 @@
            if(hasBeenModified){
             console.log("test");
             test.modal("show");
-            
+            $("#cancel").click(function(){
+                event.preventDefault();
+                test.modal("hide");   
+            })
            }
            else{
                 window.history.back();
@@ -465,7 +474,7 @@
                             Changes you made will not be saved.
                         </div>
                         <div class='footer' style='text-align: right;'>
-                            <button class='btn btn-secondary' id='btnClose'>Cancel</button>
+                            <button class='btn btn-secondary' id='cancel'>Cancel</button>
                             <button class='btn btn-danger' id='leave'>Leave Page</button>
                         </div>
                     </div>

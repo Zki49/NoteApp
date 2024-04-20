@@ -287,19 +287,25 @@ class ControllerNotes extends Controller{
     }
     public function save():void{
        if(isset($_POST['title']) && isset($_POST['idnotes'])){
+
         $id = Tools::sanitize($_POST['idnotes']);
         $title= Tools::sanitize($_POST['title']);
         
         if( Note::iamcheck($id)){
           if(isset($_POST['items'])){
             $items = $_POST['items'];
-            
+            $note = Notecheck::get_note_by_id($id);
+            $note->getFirstItem()->delete_all_by_note($id);
+            (new View("error"))->show(["error"=> $items]);
               foreach($items as $item){
-                 $error = $item->valideItem($item->get_content());
-                 if(empty($error)){
-                    $item->persit();
-                 }
+                //(new View('error'))->show(["error"=>"this item not exist"]);
+
+                //(new View("error"))->show(["error"=> $items]);
+                 $error = $note->additem($item);
+                 var_dump($error);
+                 
               }
+              
           }
           $note= Notemixte::get_note_by_id($id);
           $error=$note->set_title($title);
@@ -307,7 +313,7 @@ class ControllerNotes extends Controller{
             $note->update_title($title); 
             
           }
-           $this->redirect("notes"); 
+          // $this->redirect("notes"); 
         }
       if( isset($_POST['text'])){    
         $text= Tools::sanitize($_POST['text']);
@@ -332,11 +338,11 @@ class ControllerNotes extends Controller{
               $note->persist();
             }
 
-          $this->redirect("notes");
+          //$this->redirect("notes");
         }
       }
       }
-      $this->redirect("notes");
+      //$this->redirect("notes");
     }
    
     public function addcheck() : void{
@@ -410,13 +416,28 @@ class ControllerNotes extends Controller{
          
       }
    }
-    public function check():void{
+    /*public function check():void{
       $item = Item::get_un_item($_GET['param1']);
       $item->unchecked_checked();
       $item->persit();
       $idNote= $item->get_id_my_note();
       $this->redirect("notes","open",$idNote);
+    }*/
+
+
+    public function check():void{
+      $item = Item::get_un_item($_GET['param1']);
+      if($item){
+        $item->unchecked_checked();
+        $item->persit();
+        $idNote= $item->get_id_my_note();
+        $this->redirect("notes","open",$idNote);
+      }else{
+        (new View('error'))->show(["error"=>"this item not exist"]);
+      }
+     
     }
+
     public function deleteitem():void {
       if(isset($_POST["item"])&& isset($_POST['id'])){
         $id= $_POST["id"];
