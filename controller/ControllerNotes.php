@@ -589,5 +589,30 @@ class ControllerNotes extends Controller{
       }
   }
 
+  public function sharedAdd_service() : void{
+    if(isset($_POST["idUser"]) && isset($_POST["idPermission"]) && isset($_POST["idNote"])){
+      $userShar=User::get_user_by_id($_POST["idUser"]);
+      $userPerm=$_POST["idPermission"];
+      $note=Notemixte::get_note_by_id($_POST["idNote"]);
+
+      $tabShare[$_POST["idUser"]]=$_POST["idPermission"];
+      $note->add_shared($tabShare);
+    }
+  }
+
+  public function sharedDelete_service() : void{
+    if(isset($_POST["idUser"]) && isset($_POST["idNote"])){
+      $note=Notemixte::get_note_by_id($_POST["idNote"]);
+      $note->delete_shared($_POST["idUser"]);
+    }
+  }
+
+  public function sharedToggle_service() : void{
+    if(isset($_POST["idUser"]) && isset($_POST["idNote"])){
+      $note=Notemixte::get_note_by_id($_POST["idNote"]);
+      $note->change_permission($_POST["idUser"]);
+    }
+  }
+
  }
 ?>
