@@ -9,9 +9,24 @@ class Notetext extends Note{
     public function get_description():string |null{
         return $this->description;
     }
-    public function set_description(string $description):void{
-         $this->description=$description;
+
+    public function set_description($description):array{
+        $errors = $this->validate_description($description);
+        if(empty($errors)){
+            $this->description= $description;
+        }
+        return $errors;
     }
+    private  function validate_description($description):array{
+        $errors=[];
+        
+        if(strlen($description)<3||strlen($description)>100){
+            if(strlen(trim($description))!=0){
+          $errors []="The description must have between 3 and 100 characters OR nothing";
+        }}
+        return $errors;
+    }
+
 
 
     public static function get_note_by_id(int $id): Notetext |false{
@@ -27,6 +42,7 @@ class Notetext extends Note{
     }
     
     public function persist(){
+        try{
         if(self::get_note_by_id($this->get_id($this->get_id())) ){
             self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ;
                            UPDATE text_notes set content = :description where id=:id", 
@@ -40,6 +56,10 @@ class Notetext extends Note{
             $id= $this->lastInsertId();
             self::execute("insert into text_notes(id,content) values($id,:description)",["description"=>$this->description]);
         }
+    }
+    catch(Exception $e){
+        
+    }
     }
     
     public static function get_notes_by_user(User $user): array |false {

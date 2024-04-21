@@ -344,6 +344,34 @@ class ControllerNotes extends Controller{
       }
     }
 
+    public function delete_service(){
+      $res = 'false';
+     if(isset($_GET['param1'])){
+       $id = Tools::sanitize($_GET['param1']);
+       var_dump($id);
+       if(Note::iamcheck($id)){
+         $note = Notecheck::get_note_by_id($id);
+       }else{
+         $note = Notetext::get_note_by_id($id);
+       }
+       if($note===false){
+         (new View("error"))->show(["errors"=>"cette note n'existe pas"]);
+       }
+       
+       if(($this->get_user_or_redirect())==$note->owner()){
+           $note->delete();
+           $note=null;
+           //$this->redirect("notes/archive");
+           $res = 'true';
+       }else{
+        
+         (new View("error"))->show(["error"=>"your are not owner  "]);
+       }
+       
+     }
+     echo($res);
+  }
+
     public function addtext():void{
       $mode="edit";
       $user=$this->get_user_or_redirect();
@@ -362,37 +390,33 @@ class ControllerNotes extends Controller{
           }
            $this->redirect("notes"); 
         }
-      if( isset( $_POST['text'])){    
-        $text= Tools::sanitize($_POST['text']);
+
         
+        if (isset($_POST['text'])) {
+          $text = Tools::sanitize($_POST['text']);
           $note = Notetext::get_note_by_id($id);
-          if($note==false){
-           $user= $this->get_user_or_redirect();
-            $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
-            $weight= $note->max_weight();
-            $note->set_weight($weight+1);
-            $error=$note->set_title($title);
-            $note->set_description($text);
-            if(empty($error)){
+          $errors=[];
+          if ($note == false) {
+              $user = $this->get_user_or_redirect();
+              $note = new Notetext(" ", $user, new DateTime("now"), null, false, false, 0, null, 0);
+              $weight = $note->max_weight();
+              $note->set_weight($weight + 1);
+          }
+          $errorTitle = $note->set_title($title);
+          if (!empty($errorTitle)) {
+              $errors[] = $errorTitle; // Ajouter l'erreur du titre au tableau d'erreurs
+          }
+          $errorDescription = $note->set_description($text);
+          if (!empty($errorDescription)) {
+              $errors[] = $errorDescription; // Ajouter l'erreur de la description au tableau d'erreurs
+          }
+          if (empty($errors)) {
               $note->persist();
               $this->redirect("notes");
-            }else{
-              (new View("editnote"))->show(["notes"=>$note,"mode"=>"edit","errors"=>$error]);
-            }
-          }else{
-            //remetre les ereur dans les vue si il y en a 
-            $error=$note->set_title($title);
-            $note->set_description($text);
-            if(empty($error)){
-              $note->persist();
-              $this->redirect("notes");
-            }else{
-              (new View("editnote"))->show(["notes"=>$note,"mode"=>"edit","errors"=>$error]);
-            }
-            
-          
-         
-        }
+          } else {
+              (new View("editnote"))->show(["notes" => $note, "mode" => "edit", "errors" => $errors]);
+          }
+      
       }
      // $this->redirect("notes");
       }
@@ -482,6 +506,17 @@ class ControllerNotes extends Controller{
         (new View("editnote"))->show(["notes"=>$note,"mode"=>'edit']);
         }else{
          
+        }
+      }
+    }
+
+    public function service_delete_item():void {
+      if(isset($_POST["idItem"])&& isset($_POST['idNote'])){
+        $id= $_POST["idNote"];
+        $item=$_POST["idItem"];
+        if(Note::iamcheck($id)){
+          $note= Notecheck::get_note_by_id($id);
+          $note->service_delete_item($item);
         }
       }
     }
@@ -612,6 +647,33 @@ class ControllerNotes extends Controller{
       $note=Notemixte::get_note_by_id($_POST["idNote"]);
       $note->change_permission($_POST["idUser"]);
     }
+  }
+
+  public function note_exists_service(){
+    $res = "false";
+    $user = $this->get_user_or_redirect();
+    $title=$_POST["title"];
+    var_dump($title);
+    if(isset($title)){
+        $note = Notecheck::note_already_exist($title,$user->get_id());
+        if($note)
+            $res = "true";
+    } 
+    echo($res);
+  }
+  public function has_been_deleted() :void{
+    $res = "false";
+    $note = Notemixte::get_note_by_id($_GET['param1']);
+    //$is_deleted = $note->has_been_deleted();
+    if($note === false){
+      $res = "true";
+    }
+    echo($res);
+  }
+  public function get_all_items_service() : void{
+    $note = Notecheck::get_note_by_id($_GET['param1']);
+    $noteJson = $note->get_all_items_service_as_json($note);
+    echo($noteJson);
   }
 
  }

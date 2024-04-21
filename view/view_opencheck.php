@@ -23,7 +23,7 @@
         echo $notes->get_id();
         echo"'>
         <label for='title' class='form-label''>Title</label>
-        <input type='text'  name='title' class='form-control'  aria-describedby='button-addon2'  ' value = '"; echo($notes->get_title());    
+        <input type='text' id='title' name='title' class='form-control'  aria-describedby='button-addon2'  ' value = '"; echo($notes->get_title());    
         if(empty($mode)){
             echo"'  readonly";
         }else{

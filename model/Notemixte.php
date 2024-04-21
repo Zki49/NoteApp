@@ -63,7 +63,12 @@ return $results;
      } 
 
      public function update_title(string $title):void{
+        try{
         self::execute("update notes set title=:title where id=:id",["title"=>$title,"id"=>$this->get_id()]);
+        }
+        catch(Exception $e){
+
+        }
      }
      public function get_weight_notes_by_user() : void {
         $query = self::execute("SELECT * ,n.id idnote
