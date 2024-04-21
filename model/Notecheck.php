@@ -22,9 +22,36 @@ class Notecheck extends Note{
         }
         
     }
+
+    public static function note_already_exist(string $title , int $id) : bool {
+        $query = self::execute("SELECT * FROM notes n where n.title = :title and n.owner = :id ", ["title"=>$title , "id"=>$id] );
+        //var_dump($query);
+        //sleep(5);
+        if ($query->rowCount() == 0) { 
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
+
     public  function get_items():array{
         return $this->content;
     }
+
+    public static function get_all_items_service_as_json(Notecheck $note) : string{
+        $items = $note->get_items();
+        $table = [];
+        foreach($items as $item){
+            $row = [];
+            $row["id"] = $item->get_id();
+            $row["content"] = $item->get_content();
+            $row["checked"] = $item->item_checked();
+            $table[] = $row;
+        }
+        return json_encode($table);
+    }
+
     /*private static function get_item(int $id) : array  {
         $query = self::execute("SELECT * 
                                 FROM checklist_note_items cl 
@@ -132,17 +159,29 @@ class Notecheck extends Note{
           return $array_error;
      }
 
-     public function additem(string $new):array{
-        $error= $this->validateitem($new);
+     public function additem(string $new):array | int{
+        
+        $error=[];//$this->validateitem($new);
         if(empty($error)){
+            
          self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
+         return $this->lastInsertId();
         }
         return $error;
+     }
+     public function service_add_item(string $new):void{
+        self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
      }
      public function deleteitem(string $item){
        self::execute("delete from checklist_note_items where checklist_note = :id and content = :item ",
                       ["id"=>$this->get_id(),"item"=>$item]);
      }
+     
+     public function service_delete_item(string $iditem){
+        $iditem = intval($iditem);
+        self::execute("delete from checklist_note_items where checklist_note = :id and id = :idItem ",
+                       ["id"=>$this->get_id(),"idItem"=>$iditem]);
+      }
     
      private function validateitem(string $new):array{
         $result = [];
@@ -162,6 +201,14 @@ class Notecheck extends Note{
             }
         }
         return false;
+     }
+
+     public function getFirstItem() : Item{
+        return $this->content[0];
+     }
+
+     public function update_title(string $title):void{
+        self::execute("update notes set title=:title where id=:id",["title"=>$title,"id"=>$this->get_id()]);
      }
 
 }
