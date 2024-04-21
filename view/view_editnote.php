@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-  let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem,titleAtFirst,test,newItem,buttonGeneral,btnAddItem;
+  let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem,titleAtFirst,descrAtFirst,test,newItem,buttonGeneral,btnAddItem;
         let tableItems;
         let description, errDescr, inputDescr;
         
@@ -46,9 +46,10 @@
             inputTitle = $("#title");
             inputDescr = $("#textArea");
             titleAtFirst = inputTitle.val();
+            descrAtFirst = inputDescr.val();
+
             var modificationAlertModal = $('#modificationAlertModal');
-            inputTitle = $("#title");
-            titleAtFirst = inputTitle.val();
+            
             idNote = $("#idnotes");
             idnote = idNote.val();
             errTitle = $("#errTitle");
@@ -376,7 +377,7 @@
 
         function isModified(){
            var hasBeenModified = false;
-           if(inputTitle.val() !== titleAtFirst){
+           if(inputTitle.val() !== titleAtFirst || descrAtFirst !== inputDescr.val()){
                hasBeenModified = true;
            }
            console.log(hasBeenModified);
