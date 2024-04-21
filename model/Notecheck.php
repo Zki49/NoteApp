@@ -169,14 +169,19 @@ class Notecheck extends Note{
         }
         return $error;
      }
+
+
      public function service_add_item(string $new):void{
         self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
+
      }
+
+
      public function deleteitem(string $item){
        self::execute("delete from checklist_note_items where checklist_note = :id and content = :item ",
                       ["id"=>$this->get_id(),"item"=>$item]);
      }
-     
+
      public function service_delete_item(string $iditem){
         $iditem = intval($iditem);
         self::execute("delete from checklist_note_items where checklist_note = :id and id = :idItem ",
@@ -188,9 +193,9 @@ class Notecheck extends Note{
          if(strlen($new)<1||strlen($new)>60){
            $result []= "The item must have between 1 and 60 characters";
          }
-         if($this->itemexist($new)){
+         /*if($this->itemexist($new)){
             $result [] = "item must be unique" ;
-         }
+         }*/
 
          return $result;
      }
@@ -206,7 +211,6 @@ class Notecheck extends Note{
      public function getFirstItem() : Item{
         return $this->content[0];
      }
-
      public function update_title(string $title):void{
         self::execute("update notes set title=:title where id=:id",["title"=>$title,"id"=>$this->get_id()]);
      }

@@ -38,18 +38,20 @@
                 } 
                echo '>';
                echo $description;
-               echo'</textarea>
-              <input type="hidden" id ="id"name="id" value="<?= $id?>">';
-              echo"
+               echo"</textarea>
+              <input type='hidden' name='idnotes' value='" ;
+               echo $id ;
+               echo"'>
               <div id='errDescr'><div  class='invalid-feedback'>
               <td></td>
                 </div></div>
                     
-                  
+                </form>
+                </div>
                   ";
-                echo'
-    </form>
-          </div>';
+                
+
+
         
     
   ?>

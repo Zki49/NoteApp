@@ -40,6 +40,15 @@ class Notetext extends Note{
         }
         
     }
+    public static function note_already_exist(string $title , int $id): bool {
+        $query = self::execute("SELECT * FROM notes n where n.title = :title and n.owner = :id ", ["title"=>$title , "id"=>$id] );
+        if ($query->rowCount() == 0) { 
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
     
     public function persist(){
         try{
@@ -62,7 +71,7 @@ class Notetext extends Note{
     }
     }
     
-    public static function get_notes_by_user(User $user): array |false {
+   /* public static function get_notes_by_user(User $user): array |false {
         $query = self::execute("select * ,n.id idnote
                                FROM text_notes nt 
                                join notes n  on nt.id=n.id 
@@ -80,6 +89,26 @@ class Notetext extends Note{
             return $results;
             
         
+    }*/
+
+    public static function get_notes_by_user(User $user): array |false {
+        $query = self::execute("select * ,n.id idnote
+                               FROM text_notes nt 
+                               join notes n  on nt.id=n.id 
+                               join users u on u.id=n.owner
+                               WHERE u.mail =:mail
+                               order by n.weight desc", ["mail"=>$user->get_mail()] );
+
+        $data = $query->fetchAll(); 
+
+            $results = [];
+            foreach ($data as $row) {
+                $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
+                $row["archived"]===1?true : false,$row["weight"],$row["content"],$row["idnote"]);
+            }
+            return $results;
+
+
     }
     public function are_you_check(): bool{
         return false ;

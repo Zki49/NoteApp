@@ -15,8 +15,10 @@
 <body>
     <div class="title">Error</div>
     <div class="main">
+
        <h4> <?= $error ?> </h4>
         <a href="notes">retour My Notes</a>
+
     </div>
 </body>
 
