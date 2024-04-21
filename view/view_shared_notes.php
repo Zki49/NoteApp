@@ -25,7 +25,7 @@
     <h3> <label class="form-label text-light float-end">Shared by <?= $userShared->get_fullnam() ?></label></h3>
 
 
-<br></br>
+<br>
   <?php 
     if (!empty($array_shared_notes_editor)){
       echo"<label class='form-label text-light fw-bold' > Notes shared to you by  ";?><?php echo $userShared->get_fullnam() ?><?php echo" as editor</label>";
@@ -97,7 +97,6 @@
   </li>
 </ul>
   </div>
-</div>
 </div>
 </body>
 </html>
