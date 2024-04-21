@@ -96,7 +96,7 @@
                         ?>
                         <!-- Ajoutez ici vos propres icônes -->
                         <form class="form-container"   action=" notes/shared" method="post">
-                            <input type="hidden" id="idnotes" value="<?= $notes->get_id()?>">
+                            <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
 
                             <input type="hidden" name="check" value="<?= $notes->are_you_check()?>">
                             <button type="submit" class="styled-link-button">

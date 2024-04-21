@@ -711,27 +711,29 @@ public function save():void{
       }
     }
 
-    public function shared():void{
+    
+ public function shared():void{
+
       $user=$this->get_user_or_redirect();
-      
+     var_dump($_POST);
       if(isset($_POST["idnotes"])){
         if($user->owner($_POST["idnotes"])){
         $userShare="";
         $id=$_POST["idnotes"];
-
+ 
         if(isset($_POST["idUser"]) && isset($_POST["editor"])){
           $useer=User::get_user_by_id($_POST["idUser"]);
          
             $tabAddShare[$_POST["idUser"]]=$_POST["editor"];
           $note=Notemixte::get_note_by_id($id);
           $note->add_shared($tabAddShare);
-          
-          
-          
+         
+         
+         
         }
-
+ 
         $tabUsers=User::not_into_shared($id);
-
+ 
         $tabUSersAlready=User::tab_user_in_share($id);
         (new View("shared"))->show(["tabUsers"=>$tabUsers, "idnotes"=>$id, "tabUSerAlready"=>$tabUSersAlready]);
       }else{
@@ -741,14 +743,7 @@ public function save():void{
       else{
         (new View("shared"))->show([]);
       }
-
-    }
-    public function confirm():void{
-      if(isset($_GET['param1'])){
-         $cofirm =true;
-         $this->redirect("notes","open",$_GET['param1'],$cofirm);
-      }
-
+ 
     }
 
     public function deleteShared(): void{
