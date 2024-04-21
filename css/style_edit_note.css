@@ -20,3 +20,11 @@ body {
     align-items: center;
     margin-bottom: 20px;
 }
+.is-invalid {
+    border-color: red;
+    background-color: transparent;
+}
+.is-valid {
+    border: green;
+    background-color: transparent;
+}

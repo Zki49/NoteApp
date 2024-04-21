@@ -24,7 +24,7 @@ body {
 }
 
 .navbar {
-    background-color: black;
+    background-color: #323232;
 }
 .red{
     color: red;
@@ -57,4 +57,11 @@ textarea{
 .form-container {
     display: inline-block;
     margin-right: 10px; /* Espace entre les formulaires, ajustez selon vos besoins */
+}
+.modal-content {
+    background-color: #212528;
+    color: white;
+}
+.btn-primary {
+    background-color: red;
 }
