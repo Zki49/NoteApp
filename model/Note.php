@@ -68,8 +68,6 @@ abstract class Note  extends Model{
         $errors = $this->validate_title($title);
         if(empty($errors)){
             $this->title= $title;
-        }else{
-            $this->title=$title;
         }
         return $errors;
     }
