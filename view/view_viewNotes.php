@@ -158,7 +158,7 @@ margin:10px;
  
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header bg-dark">
-    <h5 class="offcanvas-title" id="offcanvasScrollingLabel"><p class="text-warning">NoteApp</p></h5>
+    <h5 class="offcanvas-title text-warning" id="offcanvasScrollingLabel"> NoteApp</h5>
     <button type="button" class="btn-close"  data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-heart"></i></button>
   </div>
   <div class="offcanvas-body bg-dark">
@@ -193,7 +193,7 @@ margin:10px;
 </div>
 </div>
 
-</div>
+
 <footer class="right-yellow-container">
   <a class="right-yellow" href="notes/addtext">
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16">
