@@ -76,7 +76,7 @@
         ";
     }else{
         echo"
-        <noscript><form action='notes/deleteitem' method='post'></noscript>
+        <noscript></noscript>
         <div id='removable"; echo $items[$i]->get_id(); echo"'>
         <div id = '";echo $items[$i]->get_id();echo" ' class='input-group mb-3 deletedItem'>
             <div class='input-group-text'>
@@ -92,14 +92,14 @@
             </div>";
             if($items[$i]->item_checked()){
                 echo"
-            <input id='";echo  $items[$i]->get_id(); echo"' type='text' class='form-control throughline itemclass' aria-label='Text input with checkbox ' name='";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
+            <input id='";echo  $items[$i]->get_id(); echo"' type='text' class='form-control throughline itemclass' aria-label='Text input with checkbox ' name='item";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
             }else{
                 echo"
-            <input id='"; echo  $items[$i]->get_id(); echo"' type='text' class='form-control itemclass ' aria-label='Text input with checkbox ' name='";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
+            <input id='"; echo  $items[$i]->get_id(); echo"' type='text' class='form-control itemclass ' aria-label='Text input with checkbox ' name='item";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
             }
             
             echo"
-            <button id= '"; echo $items[$i]->get_id(); echo"' class='btn btn-danger supItem' data-id='sup"; echo $items[$i]->get_id(); echo"' type='submit'>
+            <button form='form-";echo $items[$i]->get_id(); echo"' id= '"; echo $items[$i]->get_id(); echo"' class='btn btn-danger supItem' data-id='sup"; echo $items[$i]->get_id(); echo"' type='submit'>
                 
             
             <td class='is-invalid'></td>
@@ -115,8 +115,8 @@
        </div>
        </div>
        </div>
-       <noscript></form></noscript>
-        </form>
+       <noscript></noscript>
+        
         ";
     }
     /*echo "
@@ -165,7 +165,13 @@
             </form>
             </form></noscript>" ;*/
        }
-      
+       echo"</form>";
+       foreach ($items as $item) {
+        echo"<form id='form-".$item->get_id()."' action='notes/deleteitem' method='post'>
+                <input type='hidden' name='item' value='" . $item->get_content() . "'>
+                <input type='hidden' name='id' value='" . $notes->get_id() . "'>
+            </form>";
+    }
        echo"<div class='listItems' id = 'listItems'></div>";
        if(!empty($mode)){ 
         echo"

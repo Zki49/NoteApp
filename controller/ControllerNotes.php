@@ -369,12 +369,16 @@ class ControllerNotes extends Controller{
       }
       }
       $this->redirect("notes");
-    }*/
-
+    }
     
+    
+    
+    */
+
+  
 public function save():void{
-  var_dump($_POST['idnotes']);
        if(isset($_POST['title']) && isset($_POST['idnotes'])){
+        var_dump($_POST);
         $id = Tools::sanitize($_POST['idnotes']);
         $title= Tools::sanitize($_POST['title']);
         if( Note::iamcheck($id)){
@@ -382,15 +386,16 @@ public function save():void{
           $note= Notecheck::get_note_by_id($id);
           $error=$note->update_title($title);
           $itemsInDB = $note->get_items();
-          (new View("error"))->show(["error"=> sizeof($itemsInDB)]);
+         // (new View("error"))->show(["error"=> sizeof($itemsInDB)]);
           if(!empty($itemsInDB)){
             $firstItem = $note->getFirstItem();
             $firstItem->delete_all_by_note($id);
-            (new View("error"))->show(["error"=> sizeof($itemsInDB)]);
+            var_dump($itemsInDB);
+           // (new View("error"))->show(["error"=> sizeof($itemsInDB)]);
             for($i = 0 ; $i < sizeof($itemsInDB); $i++){
-              if(isset($_POST[$itemsInDB[$i]->get_id()])){
+              if(isset($_POST["item".$itemsInDB[$i]->get_id()])){
                 //(new View("error"))->show(["error"=> $note]);
-                $note->additem($_POST[$itemsInDB[$i]->get_id()]);
+                $note->additem($_POST["item".$itemsInDB[$i]->get_id()]);
                 //$itemsInDB[$i]->set_content($_POST[$itemsInDB[$i]->get_id()]);
               }
             }
@@ -436,7 +441,10 @@ public function save():void{
       }
       $this->redirect("notes");
       }
-  }
+ }
+ 
+
+ 
 
    
     public function addcheck() : void{
