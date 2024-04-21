@@ -39,7 +39,7 @@
     
     ";
     echo"
-    <div id='errTitle'><div  class='invalid-feedback'>
+    <div id='errTitle' style='color: red;' ><div  class='invalid-feedback'>
         
       </div></div>
           <td></td>
@@ -92,17 +92,16 @@
             </div>";
             if($items[$i]->item_checked()){
                 echo"
-            <input id='";echo $i ; echo"' type='text' class='form-control throughline' aria-label='Text input with checkbox ' name='items[]' value='";echo $items[$i]->get_content(); echo"'   >";
+            <input id='";echo $i ; echo"' type='text' class='form-control throughline itemclass' aria-label='Text input with checkbox ' name='";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
             }else{
                 echo"
-            <input id='";echo $i ; echo"' type='text' class='form-control ' aria-label='Text input with checkbox ' name='items[]' value='";echo $items[$i]->get_content(); echo"'   >";
+            <input id='"; echo $i; echo"' type='text' class='form-control itemclass ' aria-label='Text input with checkbox ' name='";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
             }
             
             echo"
             <button id= '"; echo $items[$i]->get_id(); echo"' class='btn btn-danger supItem' data-id='sup"; echo $items[$i]->get_id(); echo"' type='submit'>
-            <div class='invalid-feedback' id = 'errorInput"; echo $i ;echo"'>
                 
-            </div>
+            
             <td class='is-invalid'></td>
             
             <svg id='suppItem"; echo $items[$i]->get_id(); echo"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
@@ -110,7 +109,10 @@
             
           </svg>
           <input type='hidden' id='idItem' value=''>
-       </button> 
+          </button> 
+          </div>
+       <div id='errorInput"; echo $items[$i]->get_id(); echo"' style='color: red;'  ><div  class='invalid-feedback'>
+       </div>
        </div>
        </div>
        <noscript></form></noscript>

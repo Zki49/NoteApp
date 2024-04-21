@@ -200,11 +200,12 @@ class Notecheck extends Note{
         }
         return false;
      }
-     /*public function getFirstItem() : Item{
+     public function getFirstItem() : Item{
         return $this->content[0];
-
-     }*/
-
+     }
+     public function update_title(string $title):void{
+        self::execute("update notes set title=:title where id=:id",["title"=>$title,"id"=>$this->get_id()]);
+     }
 }
 
 ?>

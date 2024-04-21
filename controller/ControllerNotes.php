@@ -147,7 +147,7 @@ class ControllerNotes extends Controller{
     }
      }
 
-     public function edit():void{
+     /*public function edit():void{
       $user= $this->get_user_or_redirect();
       
 
@@ -156,11 +156,11 @@ class ControllerNotes extends Controller{
         $id=Tools::sanitize($_POST["idnotes"]);
         if($user->editor($_POST["idnotes"])){
            if(Note::iamcheck($id)){
-             $notes= Notecheck::get_note_by_id($id);
-             $itemsJson = Notecheck::get_all_items_service_as_json($notes);
+             //$notes= Notecheck::get_note_by_id($id);
+             //$itemsJson = Notecheck::get_all_items_service_as_json($notes);
              (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode,"itemsJson"=>$itemsJson]);
             }else{
-              $notes= Notetext::get_note_by_id($id);
+              //$notes= Notetext::get_note_by_id($id);
               (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
             }
              //(new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
@@ -168,9 +168,33 @@ class ControllerNotes extends Controller{
           (new View("error"))->show(["error"=>"bien essayer"]);
         }
       }
+      
 
       
+    }*/
+
+    public function edit():void{
+      $user= $this->get_user_or_redirect();
+     
+ 
+       $mode="edit";
+       if(isset($_POST["idnotes"])){
+        $id=Tools::sanitize($_POST["idnotes"]);
+        if($user->editor($_POST["idnotes"])){
+           if(Note::iamcheck($id)){
+             $notes= Notecheck::get_note_by_id($id);
+            }else{
+              $notes= Notetext::get_note_by_id($id);
+            }
+             (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
+        }else{
+          (new View("error"))->show(["error"=>"bien essayer"]);
+        }
+      }
+ 
+     
     }
+
     public function note_is_first_or_last(int $id) : void {
       $last = "last";
       $first = "first";
@@ -285,7 +309,7 @@ class ControllerNotes extends Controller{
       $notes= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
       (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
     }
-    public function save():void{
+   /* public function save():void{
        if(isset($_POST['title']) && isset($_POST['idnotes'])){
 
         $id = Tools::sanitize($_POST['idnotes']);
@@ -298,7 +322,7 @@ class ControllerNotes extends Controller{
             $note = Notecheck::get_note_by_id($id);
             //$note->getFirstItem()->delete_all_by_note($id);
             $note = Notecheck::get_note_by_id($id);
-            (new View("error"))->show(["error"=> "test"]);
+            //(new View("error"))->show(["error"=> "test"]);
               foreach($items as $item){
                 //(new View('error'))->show(["error"=>"this item not exist"]);
 
@@ -315,7 +339,7 @@ class ControllerNotes extends Controller{
             $note->update_title($title); 
             
           }
-          // $this->redirect("notes"); 
+           $this->redirect("notes"); 
         }
       if( isset($_POST['text'])){    
         $text= Tools::sanitize($_POST['text']);
@@ -340,12 +364,80 @@ class ControllerNotes extends Controller{
               $note->persist();
             }
 
-          //$this->redirect("notes");
+          $this->redirect("notes");
         }
       }
       }
-      //$this->redirect("notes");
-    }
+      $this->redirect("notes");
+    }*/
+
+    
+public function save():void{
+  var_dump($_POST['idnotes']);
+       if(isset($_POST['title']) && isset($_POST['idnotes'])){
+        $id = Tools::sanitize($_POST['idnotes']);
+        $title= Tools::sanitize($_POST['title']);
+        if( Note::iamcheck($id)){
+          //(new View("error"))->show(["error"=> "itemsInDB"]);
+          $note= Notecheck::get_note_by_id($id);
+          $error=$note->update_title($title);
+          $itemsInDB = $note->get_items();
+          (new View("error"))->show(["error"=> sizeof($itemsInDB)]);
+          if(!empty($itemsInDB)){
+            $firstItem = $note->getFirstItem();
+            $firstItem->delete_all_by_note($id);
+            (new View("error"))->show(["error"=> sizeof($itemsInDB)]);
+            for($i = 0 ; $i < sizeof($itemsInDB); $i++){
+              if(isset($_POST[$itemsInDB[$i]->get_id()])){
+                //(new View("error"))->show(["error"=> $note]);
+                $note->additem($_POST[$itemsInDB[$i]->get_id()]);
+                //$itemsInDB[$i]->set_content($_POST[$itemsInDB[$i]->get_id()]);
+              }
+            }
+          }
+          //(new View("error"))->show(["error"=> "test"]);
+          //(new View("error"))->show(["error"=> $note->get_items()]);
+          if(empty($error)){
+            $note->update_title($title);
+          }
+           $this->redirect("notes");
+        }
+      if( isset( $_POST['text'])){    
+        $text= Tools::sanitize($_POST['text']);
+       
+          $note = Notetext::get_note_by_id($id);
+          if($note==false){
+           $user= $this->get_user_or_redirect();
+            $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
+            $weight= $note->max_weight();
+            $note->set_weight($weight+1);
+            $error=$note->set_title($title);
+            $note->set_description($text);
+            if(empty($error)){
+              $note->persist();
+              $this->redirect("notes");
+            }else{
+              (new View("editnote"))->show(["notes"=>$note,"mode"=>"edit","errors"=>$error]);
+            }
+          }else{
+            //remetre les ereur dans les vue si il y en a
+            $error=$note->set_title($title);
+            $note->set_description($text);
+            if(empty($error)){
+              $note->persist();
+              $this->redirect("notes");
+            }else{
+              (new View("editnote"))->show(["notes"=>$note,"mode"=>"edit","errors"=>$error]);
+            }
+           
+         
+         
+        }
+      }
+      $this->redirect("notes");
+      }
+  }
+
    
     public function addcheck() : void{
       $userOwner = $this->get_user_or_redirect();

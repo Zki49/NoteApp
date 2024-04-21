@@ -41,6 +41,7 @@
             titleAtFirst = inputTitle.val();
             idNote = $("#idnotes");
             idnote = idNote.val();
+            console.log(idnote);
             errTitle = $("#errTitle");
             buttonGeneral = $("#buttonSave");
             inputItem = $("#addItem");
@@ -81,6 +82,14 @@
                 addNewItem(item);
                 
             });
+            var AllItems = document.querySelectorAll('.itemclass');
+            console.log(AllItems);
+            $(AllItems).each(function(){
+                $(this).click(function(){
+                    validateItems(this);
+                    uniqueItems(AllItems);
+                })
+            })
 
           /*  const items = document.querySelector("#form-check-input");
             console.log(items);
@@ -130,14 +139,7 @@
         }
 // Colruyt tartiflette
 
-    function attachDeleteHandlers() {
-            $('.supItem').on('click', function(event) {
-                const itemId = $(this).data('id');
-                console.log(itemId);
-                //event.preventDefault();
-                //delete_item(itemId); // Appel de la fonction de suppression
-            });
-        }
+ 
         async function uniqueNoteByOwner(){
             const dataTitle=  inputTitle.val();
             const postData = {
@@ -154,17 +156,14 @@
                     var finTrue = response.lastIndexOf('true');
                     var trueString = response.substring(debutTrue, finTrue + 4); // Ajoutez 4 pour inclure "true"
 
-                    console.log(trueString);
 
                    if(trueString === "true"){
                     
                     $(inputTitle).addClass('is-invalid');
                         errTitle.html("<p></p>");
-                        errTitle.append("Title already exists.");
+                        errTitle.append("Note already exists.");
                         console.log(buttonGeneral.html);
                         buttonGeneral.prop("disabled", true);
-                        console.log("success");
-                        console.log(errTitle.html);
                    }
                 },
                 error: function(xhr, status, error) {
@@ -173,45 +172,60 @@
                 }
                 
 });
-            /*
-            var title = inputTitle.val();
-            errTitle = $("#errTitle");
-            var URL = "&title=" + title;
-            console.log(title);
-            errTitle.html("");
-          
-                const res = await fetch("Notes/note_exists_service/", {
-                                        method: 'POST',
-                                        headers: {"Content-type": "application/x-www-form-urlencoded"},
-                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL
-                                        });
-                const data = await res.text();
-                
-
-                await console.log( data);
-                if(data === "true"){
-                    //console.log(data);
-                    console.log("test");
-                    $("#title").addClass('is-invalid');
-                    errTitle.append("Note already exists.");
-                    $("#buttonSave").prop('disabled',true);
-                }else{
-
-                    //console.log(data);
-                    console.log("test2");
-                    $("#title").removeClass('is-invalid');
-                    $("#title").addClass('is-valid');
-                    errTitle.append("");
-                    $("#buttonSave").prop('disabled',false);   
-                }
-            */
+            
             
         }
-        /*function uniqueItems(arrayContent){
-            var inputs = document.querySelectorAll('.item');
+        function uniqueItems(AllItems){
+            console.log($(AllItems).length);
+            var ok = false;
+            var arrayError = [];
 
-            inputs.forEach(function(input) {
-                input.addEventListener('focus', function() {
+            /*for (var i = 0; i < $(AllItems).length; i++) {
+                    var elementI = $(AllItems[i]).val();
+                    for (var j = 0; j < $(AllItems).length; j++) {
+                        console.log(elementI);
+                        if (i !== j) {
+                            console.log(elementj);
+                            var elementJ = $(AllItems[i]).val();
+                            if (elementI === elementJ) {
+                                console.log("2 meme")
+                                arrayError[i] = ["Items must be unique"];
+                                arrayError[j] = ["Items must be unique"];
+                            }
+                        }
+                    }
+                }*/
+                $(AllItems).each(function(){
+                $(this).click(function(){
+                    console.log($(this).id())
+                })
+            })
+
+            AllItems.forEach(item=> {
+                console.log(item);
+                item.
+            });
+                /*
+                
+                
+                
+                var arrayError = [];
+                for (var i = 0; i < arrayContent.length; i++) {
+                    var elementI = arrayContent[i];
+                    for (var j = 0; j < arrayContent.length; j++) {
+                        if (i !== j) {
+                            var elementJ = arrayContent[j];
+                            if (elementI === elementJ) {
+                                arrayError[i] = ["Items must be unique"];
+                                arrayError[j] = ["Items must be unique"];
+                            }
+                        }
+                    }
+                }
+                return arrayError;
+                
+                
+                addEventListener('on', function() {
                     $('#'+input.id).on('input', function() {
                     //console.log("L'utilisateur écrit dans l'input avec l'ID : " + input.id);
                     for (var i = 0; i < arrayContent.length; i++) {
@@ -224,7 +238,7 @@
                                     console.log(elementj);
                                     $(this).addClass('is-invalid');
                                     $("#buttonSave").prop('disabled',true);
-                               /* }else{
+                                }else{
                                     $(this).removeClass('is-invalid');
                                     $(this).addClass('is-valid');
                                     $("#buttonSave").prop('disabled',false);
@@ -232,29 +246,32 @@
                                 }
                             }
                         }
-                    }
+                    })
+                });*/
                 });
-                });
-            });
-            return arrayError;
-        }*/
+                return arrayError;
+            };
+        
 
-        function validateItems(){
-            $(this).on('input', function() {
-                var item = $(this).val();
-                console.log(item);
-                errorInput.html("");
-                if (item.value.trim == ""  || item.length > 60) {
-                    $(this).addClass('is-invalid');
-                    errorInput = document.getElementById("errorInput"+i);
-                    errorInput.append("Item lenght must be between 1 and 60");
+        function validateItems(item){
+            $(item).on('input', function() {
+                var itemval = $(this).val();
+                //errorInput.html("");
+                var error = $("#errorInput"+this.id);
+                error.html("");
+                if (itemval.length < 1  || itemval.length > 60) {
+                    $(item).addClass('is-invalid');
+                    error.append("Item lenght must be between 1 and 60");
                     $("#buttonSave").prop('disabled',true);
                 } else {
-                    $(this).removeClass('is-invalid');
-                    $(this).addClass('is-valid');
+                    error.append("");
+
+                    $(item).removeClass('is-invalid');
+                    $(item).addClass('is-valid');
+                    error.append("");
+
                     $("#buttonSave").prop('disabled',false);
                 }
-                uniqueItems(valeursInputs);
             });
         }
 
@@ -300,27 +317,7 @@
                 $(inputItem).addClass('is-valid');
             }
 
-            /*$(inputItem).on('input', function() {
-                var newItem = $(this).val();
-                //console.log(newItem);
-                errorAddItem.html("");
-                if (newItem.length < 1 || newItem.length > 60) {
-                    $(this).addClass('is-invalid');
-                    errorAddItem.append("Item lenght must be between 1 and 60");
-                    $("#buttonSave").prop('disabled',true);
-                } if (newItem == "test "){
-                    $(this).addClass('is-invalid');
-                    errorAddItem.append("Item must be unique ");
-                    $("#buttonSave").prop('disabled',true);
-                    console.log("error");
-                }
-                else{
-                    $(this).removeClass('is-invalid');
-                    $(this).addClass('is-valid');
-                    $("#buttonSave").prop('disabled',false);
-                }
-                
-            });   */
+            
         }
         function ItemAlreadyExist(arrayContent){
             let trouve = false;
@@ -350,25 +347,8 @@
                 
                 }
             });
-           /* const res = await fetch("Notes/service_delete_item/", {
-                                        method: 'POST',
-                                        headers: {"Content-type": "application/x-www-form-urlencoded"},
-                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL,
-                                        success: function(response){
-                                            console.log("id");
-
-                                            var elementToremove = $('removable'+idNewItem);
-                                            console.log(elementToremove);
-                                            elementToremove.remove();
-                                        }
-                                        });*/
-            var itemdeleted = $(id);
-            itemdeleted.remove();
-            //getItems();
-            //displayItems();
-            const data = await res.text(); 
-
-            console.log(data);
+           
+            
         }
         async function addNewItem(newItem){
             var newItemText = $("#addItem").val();
@@ -381,10 +361,23 @@
                     idnotes: idnote    
                 },
                 success: function(response){
-                    testItem = document.querySelectorAll(".supItem");
-                    console.log(testItem);
                     var newInputItem = displayItems(response,newItemText);
                     tableItems.prepend(newInputItem);
+                    testItem = document.querySelectorAll(".supItem");
+                    console.log(testItem);
+
+                    $(".supItem").each(function(){
+                        $(this).click(function(){
+                            deleteItem(this.id);
+                        })
+                    })
+
+                    $(".itemclass").each(function(){
+                        $(this).click(function(){
+                            validateItems(this);
+                        })
+                    })
+                    console.log($(".itemclass"));
                 }
             });
 
@@ -414,7 +407,7 @@
                 html += "<input class='form-check-input mt-0' type='checkbox'>";
                 html += " </a>";
                 html += "</div>";
-                html += "<input id='id"+idNewItem+"' type='text' class='form-control' aria-label='Text input with checkbox ' name='item' value='"+newItemText+"' >";
+                html += "<input id='id"+idNewItem+"' type='text' class='form-control itemclass' aria-label='Text input with checkbox ' name='item' value='"+newItemText+"' >";
                 html += "<button id = '"+idNewItem+"' class='btn btn-danger supItem' data-id='"+idNewItem+"' type='submit'>";
                 html += "<div class='invalid-feedback' id = 'errorInput"+idNewItem+"'>";
                 html += "</div>";
@@ -426,6 +419,9 @@
                 html += "</div>";
                 html += "<input type='hidden' id='idItem' value=''>";
                 html += "</button>";
+                html += "</div>";
+                html += "<div id='errorInput"+idNewItem+"' style='color: red;'><div  class='invalid-feedback'>";
+                html += "<p>errorInput"+idNewItem+"</p>";
                 html += "</div>";
                 html += "</div>";
                 
@@ -454,7 +450,11 @@
             $("#cancel").click(function(){
                 event.preventDefault();
                 test.modal("hide");   
-            })
+            });
+            $("#leave").click(function(){
+                window.history.back();
+                window.history.back(); 
+            });
            }
            else{
                 window.history.back();
@@ -479,7 +479,7 @@
                        
                        
                         <form action="notes/save" method="post">
-                        <input type="hidden" id="idnotes" value="<?= $notes->get_id()?>">
+                        <input type="hidden" id="idnotes" name="idnotes" value="<?= $notes->get_id()?>">
                         <button id='buttonSave' type="submit" class="styled-link-button">
                         <svg ' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
                         <path d="M11 2H9v3h2z"/>
@@ -521,7 +521,6 @@
         ?>
 
         <?php echo"
-           <button id='xxxx'>xxx</button>
             <div id='modificationAlertModal' class='modal hide fade' role='dialog'>
                 <div class='modal-dialog'>
                     <div class='modal-content bg-dark text-white' style='margin-top:240px;'>

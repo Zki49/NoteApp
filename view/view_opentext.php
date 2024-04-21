@@ -18,9 +18,11 @@
                echo '>';
                echo $description;
                echo'</textarea>
-              <input type="hidden" id ="id"name="id" value="<?= $id?>">
-    </form>
-          </div>';
+               <input type="hidden" name="idnotes" value="' ;
+               echo $id ;
+               echo'"
+                        </form>
+                  </div>';
         
     
   ?>
