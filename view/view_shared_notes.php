@@ -65,7 +65,7 @@
   </div>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header bg-dark">
-    <h5 class="offcanvas-title" id="offcanvasScrollingLabel"><p class="text-warning">NoteApp</p></h5>
+    <h5 class="offcanvas-title  text-warning" id="offcanvasScrollingLabel">NoteApp</h5>
     <button type="button" class="btn-close"  data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-heart"></i></button>
   </div>
   <div class="offcanvas-body bg-dark">
