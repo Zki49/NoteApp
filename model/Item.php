@@ -17,6 +17,11 @@ class Item  extends Model{
         return $result;
         
     }
+    public function set_content(string $newContent){
+        
+        $this->content = $newContent;
+        $this->persit();
+    }
     public function get_id_my_note():int{
         $query = self::execute("SELECT * 
         FROM checklist_note_items cl 
@@ -53,9 +58,20 @@ class Item  extends Model{
         self::execute("DELETE FROM checklist_note_items WHERE checklist_note= :id;",["id"=>$idnote]);
     }
      public function persit(){
+        
         self::execute("UPDATE checklist_note_items SET content = :content, checked= :check WHERE id = :id",
         ["id"=>$this->id,"content"=>$this->content,"check"=>$this->check]);
-     }
+       
+        
+    }
+    public function valideItem(string $item):array{
+        $errors=[];
+        
+        if(strlen($item)<1||strlen($item)>60){
+          $errors []="The title must have between 3 and 25 characters";
+        }
+        return $errors;
+    }
 
 }
 

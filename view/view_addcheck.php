@@ -12,6 +12,7 @@ $errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme u
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
     <link href="css/style_addCheck.css" rel="stylesheet">
 
+
   <!--  <style>
     /* Style pour le fond de la page */
     body {
@@ -97,7 +98,6 @@ $errors = isset($errors) ? $errors : array(); // Déclaration de $errors comme u
         </div>
         <?php
             if(!empty($errors)){ 
-                
                 foreach ($errors as $error): ?>
                     <li><?= $error ?></li>
         <?php endforeach;}?>

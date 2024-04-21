@@ -14,7 +14,7 @@ abstract class Note  extends Model{
     }
 
     abstract public static function get_note_by_id(int $id):Note |false;
-
+    abstract public static function note_already_exist(String $title , int $id): bool;
     abstract public static function get_notes_by_user(User $user):array |false ;
     abstract public function are_you_check(): bool;
     abstract public function delete():void;
@@ -70,6 +70,12 @@ abstract class Note  extends Model{
             $this->title= $title;
         }
         return $errors;
+    }
+    public function is_shared():bool{
+        $query = self::execute("SELECT * 
+                                FROM note_shares ns 
+                                WHERE ns.note = :id ",["id" => $this->get_id()]);
+        return $query->rowCount() == 0 ? false : true;
     }
     
     public function persist(){
@@ -147,6 +153,18 @@ abstract class Note  extends Model{
 
     public function delete_shared(int $idUser): void{
         self::execute("Delete From note_shares where note=:idNote and user=:idUser", ["idUser"=>$idUser, "idNote"=>$this->get_id()]);
+    }
+    public function has_been_deleted() : bool {
+        sleep(5);
+        $query = self::execute("SELECT * 
+                                FROM notes n 
+                                WHERE n.id = :idNote", ["idNote"=>$this->get_id()]);
+
+        if($query->rowCount() == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 

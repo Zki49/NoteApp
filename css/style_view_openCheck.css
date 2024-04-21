@@ -5,7 +5,7 @@ body {
 }
 
 .navbar {
-    background-color: black;
+    background-color: #323232;
 }
 .styled-link-button {
     background: #323232;
@@ -51,7 +51,10 @@ opacity: 1;
 
 
 #monBouton {
-color: blue;
+color: red;
 text-decoration: underline;
 transition: opacity 0.3s; 
+}
+.mt-4{
+    background: #323232;
 }

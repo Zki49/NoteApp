@@ -18,6 +18,15 @@ require_once "framework/Model.php";
                             $data["archived"]===1?true:false,$data["weight"],$id);
     }
  }
+ public static function note_already_exist(string $title , int $id): bool {
+    $query = self::execute("SELECT * FROM notes n where n.title = :title and n.owner = :id ", ["title"=>$title , "id"=>$id] );
+    if ($query->rowCount() == 0) { 
+        return false;
+    } else {
+        return true;
+    }
+    
+}
 
      public static function get_notes_by_user(User $user):array |false {
         $query = self::execute("select * ,n.id idnote
