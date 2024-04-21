@@ -87,7 +87,7 @@
             $(AllItems).each(function(){
                 $(this).click(function(){
                     validateItems(this);
-                    uniqueItems(AllItems);
+                    uniqueItems();
                 })
             })
 
@@ -112,8 +112,7 @@
 
             getNumberOfItems();
             getAllValueInputs4Items(numberOfItems);
-            //uniqueItems(valeursInputs);
-            validateItems();
+            //validateItems();
             
 
         });
@@ -162,7 +161,6 @@
                     $(inputTitle).addClass('is-invalid');
                         errTitle.html("<p></p>");
                         errTitle.append("Note already exists.");
-                        console.log(buttonGeneral.html);
                         buttonGeneral.prop("disabled", true);
                    }
                 },
@@ -175,10 +173,37 @@
             
             
         }
-        function uniqueItems(AllItems){
-            console.log($(AllItems).length);
+        function uniqueItems(){
             var ok = false;
             var arrayError = [];
+            var allItems = document.querySelectorAll('.itemclass') ;
+            console.log(allItems);
+            allItems.forEach(function(input) {
+                input.addEventListener('input',function(){
+                    var firstElem = input;
+                    allItems.forEach(function(otherInput){
+                        var otherElem = otherInput;
+                        if(firstElem.id !== otherElem.id){
+                            if(firstElem.value === otherElem.value){
+                                var error = $("#errorInput"+firstElem.id);
+                                //var otherError = $("#errorInput"+otherElem.id);
+                                error.html("");
+                                //otherError.html("");
+                                error.append("Items must be unique");
+                               // otherError.append("Items must be unique");
+                               //$(firstElem.id).removeClass('is-valid');
+                                //$(firstElem.id).addClass('is-invalid');
+                                ok = true;
+                                console.log(ok);
+                                buttonGeneral.prop("disabled", ok);
+                            }
+                        }
+                    })
+            })
+            }
+            
+            );
+            
 
             /*for (var i = 0; i < $(AllItems).length; i++) {
                     var elementI = $(AllItems[i]).val();
@@ -195,16 +220,11 @@
                         }
                     }
                 }*/
-                $(AllItems).each(function(){
-                $(this).click(function(){
-                    console.log($(this).id())
-                })
-            })
+                
 
-            AllItems.forEach(item=> {
-                console.log(item);
-                item.
-            });
+            
+
+        }
                 /*
                 
                 
@@ -248,9 +268,7 @@
                         }
                     })
                 });*/
-                });
-                return arrayError;
-            };
+               
         
 
         function validateItems(item){
@@ -260,14 +278,14 @@
                 var error = $("#errorInput"+this.id);
                 error.html("");
                 if (itemval.length < 1  || itemval.length > 60) {
-                    $(item).addClass('is-invalid');
+                    //$(item).addClass('is-invalid');
                     error.append("Item lenght must be between 1 and 60");
                     $("#buttonSave").prop('disabled',true);
                 } else {
                     error.append("");
 
-                    $(item).removeClass('is-invalid');
-                    $(item).addClass('is-valid');
+                   // $(item).removeClass('is-invalid');
+                    //$(item).addClass('is-valid');
                     error.append("");
 
                     $("#buttonSave").prop('disabled',false);
@@ -371,13 +389,14 @@
                             deleteItem(this.id);
                         })
                     })
-
+                    
                     $(".itemclass").each(function(){
                         $(this).click(function(){
-                            validateItems(this);
+                            console.log(this);
+                            validateItems();
                         })
                     })
-                    console.log($(".itemclass"));
+                    
                 }
             });
 

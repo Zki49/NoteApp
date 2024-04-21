@@ -92,10 +92,10 @@
             </div>";
             if($items[$i]->item_checked()){
                 echo"
-            <input id='";echo $i ; echo"' type='text' class='form-control throughline itemclass' aria-label='Text input with checkbox ' name='";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
+            <input id='";echo  $items[$i]->get_id(); echo"' type='text' class='form-control throughline itemclass' aria-label='Text input with checkbox ' name='";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
             }else{
                 echo"
-            <input id='"; echo $i; echo"' type='text' class='form-control itemclass ' aria-label='Text input with checkbox ' name='";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
+            <input id='"; echo  $items[$i]->get_id(); echo"' type='text' class='form-control itemclass ' aria-label='Text input with checkbox ' name='";echo $items[$i]->get_id();echo"' value='";echo $items[$i]->get_content(); echo"'   >";
             }
             
             echo"
