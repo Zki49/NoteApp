@@ -155,18 +155,20 @@ class Notecheck extends Note{
           return $array_error;
      }
 
-     public function additem(string $new):array{
+     public function additem(string $new):array | int{
         
         $error=[];//$this->validateitem($new);
         if(empty($error)){
             
          self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
+         return $this->lastInsertId();
         }
         return $error;
      }
 
      public function service_add_item(string $new):void{
         self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
+
      }
 
      public function deleteitem(string $item){
@@ -198,10 +200,10 @@ class Notecheck extends Note{
         }
         return false;
      }
-     public function getFirstItem() : Item{
+     /*public function getFirstItem() : Item{
         return $this->content[0];
 
-     }
+     }*/
 
 }
 

@@ -76,9 +76,9 @@
         ";
     }else{
         echo"
-        <noscript><form action='notes/deleteitem' method='post'>
-
-        <div class='input-group mb-3'>
+        <noscript><form action='notes/deleteitem' method='post'></noscript>
+        <div id='removable"; echo $items[$i]->get_id(); echo"'>
+        <div id = '";echo $items[$i]->get_id();echo" ' class='input-group mb-3 deletedItem'>
             <div class='input-group-text'>
                 <a href='notes/check/";echo $items[$i]->get_id(); echo"'>";
                 if($items[$i]->item_checked()){
@@ -99,20 +99,22 @@
             }
             
             echo"
-            <button class='btn btn-danger sup' type='submit'>
+            <button id= '"; echo $items[$i]->get_id(); echo"' class='btn btn-danger supItem' data-id='sup"; echo $items[$i]->get_id(); echo"' type='submit'>
             <div class='invalid-feedback' id = 'errorInput"; echo $i ;echo"'>
                 
             </div>
             <td class='is-invalid'></td>
-            <div id='"; echo $items[$i]->get_id(); echo"' class='supItem'>
+            
             <svg id='suppItem"; echo $items[$i]->get_id(); echo"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
             <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>
-            </div>
+            
           </svg>
           <input type='hidden' id='idItem' value=''>
-       </button> </div>
+       </button> 
+       </div>
+       </div>
+       <noscript></form></noscript>
         </form>
-        </form></noscript>
         ";
     }
     /*echo "

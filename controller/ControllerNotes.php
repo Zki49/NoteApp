@@ -292,11 +292,13 @@ class ControllerNotes extends Controller{
         $title= Tools::sanitize($_POST['title']);
         
         if( Note::iamcheck($id)){
+          
           if(isset($_POST['items'])){
             $items = $_POST['items'];
             $note = Notecheck::get_note_by_id($id);
-            $note->getFirstItem()->delete_all_by_note($id);
-            (new View("error"))->show(["error"=> $items]);
+            //$note->getFirstItem()->delete_all_by_note($id);
+            $note = Notecheck::get_note_by_id($id);
+            (new View("error"))->show(["error"=> "test"]);
               foreach($items as $item){
                 //(new View('error'))->show(["error"=>"this item not exist"]);
 
@@ -411,10 +413,12 @@ class ControllerNotes extends Controller{
          $id = Tools::sanitize($_POST["idnotes"]);
          if(Note::iamcheck($id)){
              $note = Notecheck::get_note_by_id($id);
-             $note->additem($new);
+             $res = $note->additem($new);
+             echo $res;
          }
          
       }
+     
    }
     /*public function check():void{
       $item = Item::get_un_item($_GET['param1']);
@@ -460,6 +464,8 @@ class ControllerNotes extends Controller{
         if(Note::iamcheck($id)){
           $note= Notecheck::get_note_by_id($id);
           $note->service_delete_item($item);
+          
+          echo($item);
         }
       }
     }

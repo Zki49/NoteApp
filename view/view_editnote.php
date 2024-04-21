@@ -9,6 +9,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-MQwA9UQGx909+8zz3bV5P1/zPr27R2aFWsUZt5Xz5a9Tq2XUn/6Zl3DSd0ZUEwC" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style_view_openCheck.css" rel="stylesheet">
         <link href="css/style_edit_note.css" rel="stylesheet">
         
     <title>edit note</title>
@@ -53,20 +55,34 @@
                 isModified();
             
 			});
+
+            /*var momo =$('#227'); 
+            console.log(momo);*/
             
             
             var modificationAlertModal = $('#modificationAlertModal');
 
-            
+            var testItem = document.querySelectorAll(".supItem");
+            console.log(testItem);
+            $(".supItem").each(function(){
+
+                $(this).click(function(){
+                    console.log(this.id);
+                    deleteItem(this.id);
+                })
+            })
             getItems();
+        
 
             $(btnAddItem).click(function(){
+                
                 event.preventDefault();
                 const item = $(inputItem).val();
                 addNewItem(item);
+                
             });
 
-            const items = document.querySelectorAll(".form-check-input");
+          /*  const items = document.querySelector("#form-check-input");
             console.log(items);
             $('.input-group-mb3').find('button').map(function() {
                 this.click(function(){
@@ -75,11 +91,11 @@
             })
            
             console.log(items);
-            [...items].forEach(item => {
+            items.forEach(item => {
                 item.addEventListener('click' , () => {
                     console.log(item.id);
                 });
-            });
+            });*/
 
             inputTitle.bind("input",valideTitle);
             inputTitle.bind("input" , uniqueNoteByOwner);
@@ -319,70 +335,112 @@
         }
         async function deleteItem(id){
             var URL = "&idItem=" + id +"/&idNote=" + idnote;
-            const res = await fetch("Notes/service_delete_item/", {
+            $.ajax({
+                type: "POST",
+                url: "Notes/service_delete_item/", 
+                data: {
+                    idItem: id,
+                    idNote: idnote    
+                },
+                success: function(response){
+                    console.log('removable'+response);
+                    var moha = document.getElementById('removable'+response);
+                    console.log(moha);
+                    moha.remove();
+                
+                }
+            });
+           /* const res = await fetch("Notes/service_delete_item/", {
                                         method: 'POST',
                                         headers: {"Content-type": "application/x-www-form-urlencoded"},
-                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL
-                                        });
-            getItems();
-            displayItems();
+                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL,
+                                        success: function(response){
+                                            console.log("id");
+
+                                            var elementToremove = $('removable'+idNewItem);
+                                            console.log(elementToremove);
+                                            elementToremove.remove();
+                                        }
+                                        });*/
+            var itemdeleted = $(id);
+            itemdeleted.remove();
+            //getItems();
+            //displayItems();
             const data = await res.text(); 
 
             console.log(data);
         }
         async function addNewItem(newItem){
-            var URL = "&newitem=" + newItem +"&idnotes=" + idnote;
+            var newItemText = $("#addItem").val();
+
+            $.ajax({
+                type: "POST",
+                url: "Notes/service_add_item/", 
+                data: {
+                    newitem: newItemText,
+                    idnotes: idnote    
+                },
+                success: function(response){
+                    testItem = document.querySelectorAll(".supItem");
+                    console.log(testItem);
+                    var newInputItem = displayItems(response,newItemText);
+                    tableItems.prepend(newInputItem);
+                }
+            });
+
+            /* = "&newitem=" + newItem +"&idnotes=" + idnote;
             const res = await fetch("Notes/service_add_item/", {
                                         method: 'POST',
                                         headers: {"Content-type": "application/x-www-form-urlencoded"},
                                         body: "name=" + encodeURIComponent("A & B = ? / :") + URL
+                                        
+                                        },
+                                        success : function(response){
+
                                         });
             getItems();
-            displayItems();
-            const data = await res.text();
+            //displayItems();
+            const data = await res.text();*/
             
         }
-        function displayItems(){
+        function displayItems(idNewItem,newItemText){
+            
             let html = "";
-            let cpt = 0;
-            for(let item of valeursInputs){
+            
+                html += "<div id='removable"+idNewItem+"'>";
                 html += "<div class='input-group mb-3'>";
                 html += "<div class='input-group-text'>";
-                html += "<a href='notes/check/"+item.id+"'>";
-                if (item.checked){
-                    html += "<input class='form-check-input mt-0' type='checkbox' checked>";
-                }else{
-                    html += "<input class='form-check-input mt-0' type='checkbox'>";
-                }
+                html += "<a href='notes/check/"+idNewItem+"'>";
+                html += "<input class='form-check-input mt-0' type='checkbox'>";
                 html += " </a>";
                 html += "</div>";
-                if (item.checked){
-                    html += "<input id='"+cpt+"' type='text' class='form-control throughline' aria-label='Text input with checkbox ' name='item' value='"+item.content+" / display' >";
-                }else{
-                    html += "<input id='"+cpt+"' type='text' class='form-control' aria-label='Text input with checkbox ' name='item' value='"+item.content+" / display' >";
-                }
-                html += "<button  class='btn btn-danger supItem' onclick='"+"deleteItem("+item.id+")' type='submit'>";
-                html += "<div class='invalid-feedback' id = 'errorInput"+cpt+"'>";
+                html += "<input id='id"+idNewItem+"' type='text' class='form-control' aria-label='Text input with checkbox ' name='item' value='"+newItemText+"' >";
+                html += "<button id = '"+idNewItem+"' class='btn btn-danger supItem' data-id='"+idNewItem+"' type='submit'>";
+                html += "<div class='invalid-feedback' id = 'errorInput"+idNewItem+"'>";
                 html += "</div>";
                 html += "<td class='is-invalid'></td>";
-                html += "<div id='"+item.id+"' >";
-                html += "<svg id='supItem"+item.id+"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>";
+                html += "<div id='"+idNewItem+"' >";
+                html += "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>";
                 html += "<path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>";
                 html += "</svg>";
                 html += "</div>";
                 html += "<input type='hidden' id='idItem' value=''>";
                 html += "</button>";
                 html += "</div>";
+                html += "</div>";
                 
-                cpt++;
-            }
-            tableItems.html(html);
+               
+            return html;
+            //tableItems.append(html);
             
             
         }
         async function getItems(){
             valeursInputs = await $.getJSON("Notes/get_all_items_service/" + idnote);
-            displayItems();
+           // displayItems();
+        }
+        function updateItem(){
+
         }
 
         function isModified(){
@@ -392,7 +450,6 @@
            }
            console.log(hasBeenModified);
            if(hasBeenModified){
-            console.log("test");
             test.modal("show");
             $("#cancel").click(function(){
                 event.preventDefault();
@@ -436,6 +493,7 @@
                      <div class="col-12">
                      <?php
                      if($notes->are_you_check()){
+                       // echo"<div class='listItems' id = 'listItems'></div>";
                         //include 'view_opencheck.php';
                         (new View("opencheck"))->show(["notes"=>$notes,"mode"=>$mode ]);
                       }else{
@@ -463,7 +521,7 @@
         ?>
 
         <?php echo"
-           
+           <button id='xxxx'>xxx</button>
             <div id='modificationAlertModal' class='modal hide fade' role='dialog'>
                 <div class='modal-dialog'>
                     <div class='modal-content bg-dark text-white' style='margin-top:240px;'>
