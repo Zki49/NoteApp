@@ -130,7 +130,7 @@ class Notecheck extends Note{
      
      public function add():void{
         self::execute("INSERT INTO notes (title,pinned,weight,archived,owner) VALUES (:title,:pinned,:weight,:archived,:owner)",
-        ["title"=>$this->get_title(),"pinned"=>$this->pinned(), "weight"=>$this->get_weight(), "archived"=>$this->archived(),"owner"=>$this->get_idowner()]);
+        ["title"=>$this->get_title(),"pinned"=>$this->pinned()?1:0, "weight"=>$this->get_weight(), "archived"=>$this->archived()?1:0,"owner"=>$this->get_idowner()]);
 
         $idLastInsert = $this->lastInsertId();
         self::execute("insert into checklist_notes (id) values (:id)",["id"=>$idLastInsert]);
@@ -165,6 +165,16 @@ class Notecheck extends Note{
         if(empty($error)){
             
          self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
+         return $this->lastInsertId();
+        }
+        return $error;
+     }
+     public function additemWithCheck(string $new,bool $check):array | int{
+        
+        $error=[];//$this->validateitem($new);
+        if(empty($error)){
+            
+         self::execute("insert into checklist_note_items (checklist_note ,content,checked) VALUES( :id,:content,:check) ",["id"=>$this->get_id(),"content"=>$new,"check"=>$check]);
          return $this->lastInsertId();
         }
         return $error;
