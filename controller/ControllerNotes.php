@@ -371,6 +371,13 @@ class ControllerNotes extends Controller{
         
       }
     }
+    public function confirm():void{
+      if(isset($_GET['param1'])){
+         $cofirm =true;
+         $this->redirect("notes","open",$_GET['param1'],$cofirm);
+      }
+
+    }
    /* public function delete_service(){
 
         $res = 'false';
