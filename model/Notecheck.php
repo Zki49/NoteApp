@@ -10,6 +10,9 @@ class Notecheck extends Note{
     public function set_content(array $items):void{
         $this->content = $items;
     }
+    public function check():bool{
+        return $this->check();
+    }
 
     public static function get_note_by_id(int $id): Notecheck |false{
         $query = self::execute("SELECT * FROM checklist_notes nt ,notes n where n.id= :id and nt.id = n.id", ["id"=>$id] );
@@ -169,12 +172,12 @@ class Notecheck extends Note{
         }
         return $error;
      }
-     public function additemWithCheck(string $new,bool $check):array | int{
+     public function additemWithCheck(string $new, $check):array | int{
         
         $error=[];//$this->validateitem($new);
         if(empty($error)){
             
-         self::execute("insert into checklist_note_items (checklist_note ,content,checked) VALUES( :id,:content,:check) ",["id"=>$this->get_id(),"content"=>$new,"check"=>$check]);
+         self::execute("insert into checklist_note_items (checklist_note ,content,checked) VALUES( :id,:content,:check) ",["id"=>$this->get_id(),"content"=>$new,"check"=>$check?1:0]);
          return $this->lastInsertId();
         }
         return $error;
