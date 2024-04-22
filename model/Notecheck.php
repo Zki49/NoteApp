@@ -169,6 +169,16 @@ class Notecheck extends Note{
         }
         return $error;
      }
+     public function additemWithCheck(string $new,bool $check):array | int{
+        
+        $error=[];//$this->validateitem($new);
+        if(empty($error)){
+            
+         self::execute("insert into checklist_note_items (checklist_note ,content,checked) VALUES( :id,:content,:check) ",["id"=>$this->get_id(),"content"=>$new,"check"=>$check]);
+         return $this->lastInsertId();
+        }
+        return $error;
+     }
 
 
      public function service_add_item(string $new):void{
