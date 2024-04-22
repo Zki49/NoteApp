@@ -130,7 +130,7 @@ class Notecheck extends Note{
      
      public function add():void{
         self::execute("INSERT INTO notes (title,pinned,weight,archived,owner) VALUES (:title,:pinned,:weight,:archived,:owner)",
-        ["title"=>$this->get_title(),"pinned"=>$this->pinned(), "weight"=>$this->get_weight(), "archived"=>$this->archived(),"owner"=>$this->get_idowner()]);
+        ["title"=>$this->get_title(),"pinned"=>$this->pinned()?1:0, "weight"=>$this->get_weight(), "archived"=>$this->archived()?1:0,"owner"=>$this->get_idowner()]);
 
         $idLastInsert = $this->lastInsertId();
         self::execute("insert into checklist_notes (id) values (:id)",["id"=>$idLastInsert]);
