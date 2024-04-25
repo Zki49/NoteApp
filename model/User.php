@@ -164,10 +164,11 @@ class User extends Model{
     }
     private static function check_fullname(string $fullname):array{
         $errors=[];
+        $min =Configuration::get("full_name_min_lenght");
         if(strlen($fullname)<=0){
             $errors []="Name is riquired";
         }
-        if(strlen($fullname)<3){
+        if(strlen($fullname)<$min){
             $errors []="Fullname lenght must be 3.";
         }
         return$errors;

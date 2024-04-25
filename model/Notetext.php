@@ -19,8 +19,9 @@ class Notetext extends Note{
     }
     private  function validate_description($description):array{
         $errors=[];
-        
-        if(strlen($description)<3||strlen($description)>100){
+        $min =Configuration::get("min_length_description");
+        $max =Configuration::get("max_length_description");
+        if(strlen($description)<$min||strlen($description)>$max){
             if(strlen(trim($description))!=0){
           $errors []="The description must have between 3 and 100 characters OR nothing";
         }}

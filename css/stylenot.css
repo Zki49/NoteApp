@@ -23,3 +23,23 @@ display: flex;
 flex-direction: row;
 margin:10px;
 }
+.styled-link-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+}
+.checkboxes {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  
+  display: flex;
+  align-items: center;
+}
+.checkbox  {
+  padding-right: 5em;
+  display: inline-block;
+  cursor: pointer;
+}

@@ -43,7 +43,11 @@ class ControllerNotes extends Controller{
       
       ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
+     public function search():void{
+      (new View("search"))->show([]);
 
+
+     }
     
     /*
     public function notes():void{

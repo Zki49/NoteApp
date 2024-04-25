@@ -57,8 +57,10 @@ abstract class Note  extends Model{
     
     private  function validate_title($title):array{
         $errors=[];
+        $min= Configuration::get("title_min_length ");
+        $max = Configuration::get("title_max_length");
         
-        if(strlen($title)<3||strlen($title)>25){
+        if(strlen($title)<$min||strlen($title)>$max){
           $errors []="The title must have between 3 and 25 characters";
         }
         return $errors;
