@@ -532,8 +532,9 @@ public function save():void{
             for($i = 0 ; $i < sizeof($itemsInDB); $i++){
               if(isset($_POST["item".$itemsInDB[$i]->get_id()])){
                 //(new View("error"))->show(["error"=> $note]);
-                $note->additemWithCheck($_POST["item".$itemsInDB[$i]->get_id()] ,$itemsInDB[$i]->item_checked() );
-                
+               // $note->additemWithCheck($_POST["item".$itemsInDB[$i]->get_id()] ,$itemsInDB[$i]->item_checked() );
+                $note->additem($_POST["item".$itemsInDB[$i]->get_id()]  );
+
                 //$itemsInDB[$i]->set_content($_POST[$itemsInDB[$i]->get_id()]);
               }
             }
