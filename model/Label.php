@@ -8,10 +8,22 @@
         
      }
 
-     public function  get_labels_by_note(int $idnote):array{
+
+     public static function  get_labels_by_note(int $idnote):array|bool{
         $query = self::execute("SELECT * from note_labels where note = :idnote",["idnote"=>$idnote]);
 
-        $data = $query->fetchAll();
+          $data = $query->fetchAll();
+          if ($query->rowCount() == 0) { 
+            return false;
+        } else {
+            $results = [];
+            foreach ($data as $row) {
+                $results[] = new Label($row["note"],$row["label"]);
+            }
+            return $results;
+        }
+
+
      }
 }
 

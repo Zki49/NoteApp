@@ -21,7 +21,7 @@ class Notecheck extends Note{
             return false;
         } else {
             return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"],
-                                $data["archived"],$data["weight"],Item::get_item($id),$id,);
+                                $data["archived"],$data["weight"],Item::get_item($id),$id,Label::get_labels_by_note($id));
         }
         
     }
@@ -111,7 +111,7 @@ class Notecheck extends Note{
             $results = [];
             foreach ($data as $row) {
                 $results[] = new Notecheck($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],Item::get_item($row["idnote"]),$row["idnote"]);
+                $row["archived"]===1?true : false,$row["weight"],Item::get_item($row["idnote"]),$row["idnote"],Label::get_labels_by_note($row["idnote"]));
             }
             return $results;
         }

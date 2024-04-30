@@ -3,12 +3,14 @@ require_once "framework/Model.php";
 require_once "model/Notecheck.php";
 require_once "model/Notetext.php";
 require_once "model/User.php";
+require_once "model/Label.php";
+
 
 abstract class Note  extends Model{
 
      public function __construct(private String $title,private User $owner,private DateTime $createat,
 
-                                 private DateTime | null $editedat,private bool $pinned,private bool $archived, private int $weight, private int $id,private array $labels) {
+                                 private DateTime | null $editedat,private bool $pinned,private bool $archived, private int $weight, private int $id,private array | bool $labels) {
                                   
 
     }
