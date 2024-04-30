@@ -28,20 +28,42 @@
 <div class="container">
     <h5>search notes by tag :</h5>
     <div class="checkboxes">
-        <div class="checkbox">
+        <?php
+         if($labels){
+            foreach($labels as $label){
+            echo'  <div class="checkbox">
             <input type="checkbox" id="checkbox1">
-            <label for="checkbox1">Option 1</label>
-        </div>
-        <div class="checkbox">
-            <input type="checkbox" id="checkbox2">
-            <label for="checkbox2">Option 2</label>
-        </div>
-        <div class="checkbox">
-            <input type="checkbox" id="checkbox3">
-            <label for="checkbox3">Option 3</label>
-        </div>
+            <label for="checkbox1">'; 
+            echo $label-> get_label_name();
+            echo'</label>
+                 </div>';
+            }
+         }
+         echo"<div  id='pined' class='row , connectedSortable'>";
+         foreach($array_notes as $notes){
+           if(!$notes-> archived()){
+           if($notes->are_you_check()){
+             
+             echo ' <div  class="col-6 col-md-6 col-lg-3">';
+             (new View("notecheck"))->show(["notes"=>$notes]);
+           }else{
+             echo '<div  class="col-6 col-md-6 col-lg-3">';
+             (new View("note"))->show(["notes"=>$notes]);
+           }
+           echo"</div>"; 
+
+          }
+        }
+        echo'</div>';
+
+        ?>
+      
+        
     
     </div>
+
+
+
 </div>
 
 

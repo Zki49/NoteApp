@@ -24,7 +24,7 @@ abstract class Note  extends Model{
     public function pinned(): bool{
         return $this->pinned;
     }
-    public function get_labels():array{
+    public function get_labels():array|bool{
         return $this->labels;
     }
 

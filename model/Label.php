@@ -7,10 +7,23 @@
      {
         
      }
+     public static function  get_all_labels():array|bool{
+        $query = self::execute("SELECT  DISTINCT label from note_labels  ORDER BY label ASC",[]);
 
+          $data = $query->fetchAll();
+          if ($query->rowCount() == 0) { 
+            return false;
+        } else {
+            $results = [];
+            foreach ($data as $row) {
+                $results[] = new Label(0,$row["label"]);
+            }
+            return $results;
+        }
+    }
 
      public static function  get_labels_by_note(int $idnote):array|bool{
-        $query = self::execute("SELECT * from note_labels where note = :idnote",["idnote"=>$idnote]);
+        $query = self::execute("SELECT * from note_labels where note = :idnote ORDER BY label ASC",["idnote"=>$idnote]);
 
           $data = $query->fetchAll();
           if ($query->rowCount() == 0) { 
@@ -26,6 +39,10 @@
 
      public function get_content():string{
           return $this->label;
+     }
+     public function get_label_name():string{
+        return $this->label;
+
      }
 }
 
