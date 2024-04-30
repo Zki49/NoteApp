@@ -295,6 +295,22 @@ class ControllerNotes extends Controller{
  
      
     }
+    public function editLabel():void{
+      $user = $this->get_user_or_redirect();
+      if(isset($_POST["idnotes"])){
+        $id=Tools::sanitize($_POST["idnotes"]);
+        if($user->editor($_POST["idnotes"])){
+          if(Note::iamcheck($id)){
+            $notes= Notecheck::get_note_by_id($id);
+           }else{
+             $notes= Notetext::get_note_by_id($id);
+           }
+            (new View("editLabel"))->show(["notes"=>$notes]);
+       }else{
+         (new View("error"))->show(["error"=>"bien essayer"]);
+       }
+      }
+    }
 
     public function note_is_first_or_last(int $id) : void {
       $last = "last";
