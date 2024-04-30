@@ -10,7 +10,7 @@
 
 
      public static function  get_labels_by_note(int $idnote):array|bool{
-        $query = self::execute("SELECT * from note_labels where note = :idnote",["idnote"=>$idnote]);
+        $query = self::execute("SELECT * from note_labels where note = :idnote ORDER BY label ASC",["idnote"=>$idnote]);
 
           $data = $query->fetchAll();
           if ($query->rowCount() == 0) { 
