@@ -28,3 +28,9 @@ body {
     border: green;
     background-color: transparent;
 }
+.italic-label {
+    font-style: italic;
+}
+body {
+    margin: 10px;
+}
