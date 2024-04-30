@@ -28,3 +28,9 @@
      cursor: pointer;
      text-decoration: none;
  }
+ span{
+    background-color:  #666; /* Couleur de fond grise */
+    color: #fff; /* Couleur du texte */
+    padding: 5px 10px; /* Espacement interne */
+    border-radius: 5px; /* Bordures arrondies */
+}

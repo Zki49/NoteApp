@@ -23,6 +23,10 @@
         }
 
      }
+     public function get_label_name():string{
+        return $this->label;
+
+     }
 }
 
 ?>

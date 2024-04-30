@@ -52,6 +52,15 @@
                             ?>
                         </div>
                         </a>
+                        <?php
+                if($notes->get_labels() ){
+                   foreach($notes->get_labels() as $lablel){
+                         echo' <span class="badge badge-secondary">';
+                         echo $lablel->get_label_name()." ";
+                         echo'</span>';
+                   }
+                }
+                ?>
                 <noscript>
                  <?php if(!$notes->archived()&&!isset($share)){?>
                 <div class="d-flex justify-content-between">
