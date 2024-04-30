@@ -43,7 +43,11 @@ class ControllerNotes extends Controller{
       
       ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
+     public function search():void{
+      (new View("search"))->show([]);
 
+
+     }
     
     /*
     public function notes():void{
@@ -371,12 +375,19 @@ class ControllerNotes extends Controller{
         
       }
     }
+    public function confirm():void{
+      if(isset($_GET['param1'])){
+         $cofirm =true;
+         $this->redirect("notes","open",$_GET['param1'],$cofirm);
+      }
+
+    }
    /* public function delete_service(){
 
         $res = 'false';
        if(isset($_GET['param1'])){
          $id = Tools::sanitize($_GET['param1']);
-         var_dump($id);
+          ($id);
          if(Note::iamcheck($id)){
            $note = Notecheck::get_note_by_id($id);
          }else{
@@ -404,7 +415,7 @@ class ControllerNotes extends Controller{
       $res = 'false';
      if(isset($_GET['param1'])){
        $id = Tools::sanitize($_GET['param1']);
-       var_dump($id);
+        ($id);
        if(Note::iamcheck($id)){
          $note = Notecheck::get_note_by_id($id);
        }else{
@@ -453,7 +464,7 @@ class ControllerNotes extends Controller{
 
                 //(new View("error"))->show(["error"=> $items]);
                  $error = $note->additem($item);
-                 var_dump($error);
+                  ($error);
                  
               }
               
@@ -515,7 +526,7 @@ class ControllerNotes extends Controller{
   
 public function save():void{
        if(isset($_POST['title']) && isset($_POST['idnotes'])){
-        var_dump($_POST);
+         ($_POST);
         $id = Tools::sanitize($_POST['idnotes']);
         $title= Tools::sanitize($_POST['title']);
         if( Note::iamcheck($id)){
@@ -527,14 +538,12 @@ public function save():void{
           if(!empty($itemsInDB)){
             $firstItem = $note->getFirstItem();
             $firstItem->delete_all_by_note($id);
-            var_dump($itemsInDB);
            // (new View("error"))->show(["error"=> sizeof($itemsInDB)]);
             for($i = 0 ; $i < sizeof($itemsInDB); $i++){
               if(isset($_POST["item".$itemsInDB[$i]->get_id()])){
                 //(new View("error"))->show(["error"=> $note]);
-               // $note->additemWithCheck($_POST["item".$itemsInDB[$i]->get_id()] ,$itemsInDB[$i]->item_checked() );
-                $note->additem($_POST["item".$itemsInDB[$i]->get_id()]  );
 
+                $note->additemWithCheck($_POST["item".$itemsInDB[$i]->get_id()],$itemsInDB[$i]->item_checked());
                 //$itemsInDB[$i]->set_content($_POST[$itemsInDB[$i]->get_id()]);
               }
             }
@@ -717,7 +726,6 @@ public function save():void{
  public function shared():void{
 
       $user=$this->get_user_or_redirect();
-     var_dump($_POST);
       if(isset($_POST["idnotes"])){
         if($user->owner($_POST["idnotes"])){
         $userShare="";
@@ -730,9 +738,7 @@ public function save():void{
           $note=Notemixte::get_note_by_id($id);
           $note->add_shared($tabAddShare);
          
-         
-         
-        }
+ }
  
         $tabUsers=User::not_into_shared($id);
  
@@ -852,7 +858,7 @@ public function save():void{
     $res = "false";
     $user = $this->get_user_or_redirect();
     $title=$_POST["title"];
-    var_dump($title);
+     ($title);
     if(isset($title)){
         $note = Notecheck::note_already_exist($title,$user->get_id());
         if($note)
@@ -880,7 +886,7 @@ public function save():void{
       $res = "false";
       $user = $this->get_user_or_redirect();
       $title=$_POST["title"];
-      var_dump($title);
+       ($title);
       if(isset($title)){
           $note = Notecheck::note_already_exist($title,$user->get_id());
           if($note)

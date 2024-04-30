@@ -19,8 +19,9 @@ class Notetext extends Note{
     }
     private  function validate_description($description):array{
         $errors=[];
-        
-        if(strlen($description)<3||strlen($description)>100){
+        $min =Configuration::get("min_length_description");
+        $max =Configuration::get("max_length_description");
+        if(strlen($description)<$min||strlen($description)>$max){
             if(strlen(trim($description))!=0){
           $errors []="The description must have between 3 and 100 characters OR nothing";
         }}
@@ -55,7 +56,7 @@ class Notetext extends Note{
         if(self::get_note_by_id($this->get_id($this->get_id())) ){
             self::execute("UPDATE notes SET title =:title ,pinned=:pinned ,weight =:weight ,archived =:archived WHERE id = :id ;
                            UPDATE text_notes set content = :description where id=:id", 
-            [ "title"=>$this->get_title(), "pinned"=>$this->pinned(),"weight"=>$this->get_weight(),"archived"=>$this->archived(),
+            [ "title"=>$this->get_title(), "pinned"=>$this->pinned()?1:0,"weight"=>$this->get_weight(),"archived"=>$this->archived()?1:0,
                "description"=>$this->get_description(),  "id"=>$this->get_id()]);
         }else{
          
