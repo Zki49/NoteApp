@@ -8,6 +8,7 @@
         
      }
 
+
      public static function  get_labels_by_note(int $idnote):array|bool{
         $query = self::execute("SELECT * from note_labels where note = :idnote",["idnote"=>$idnote]);
 
@@ -21,6 +22,7 @@
             }
             return $results;
         }
+
 
      }
      public function get_label_name():string{
