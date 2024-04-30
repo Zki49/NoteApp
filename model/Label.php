@@ -65,13 +65,34 @@
         }
      }
 
-     public function get_content():string{
-          return $this->label;
-     }
+     
      public function get_label_name():string{
         return $this->label;
-
      }
+
+     public function is_valide_label(int $idnote,string $label):bool | array{
+          return $this->is_unique_label($idnote , $label) && $this->is_valide_label_lenght($label);
+     }
+
+     public function is_unique_label(int $idnote,string $label):array{
+          $query = self::execute("SELECT * from note_labels where note = :idnote AND label = :label ORDER BY label ASC",
+          ["idnote"=>$idnote,"label"=>$label]);
+          $error = [];
+          if($query->rowCount() == 0){
+               $errors []="A note canot contain the same label twice.";
+          }
+          return $error;
+     }
+
+     public function is_valide_label_lenght(string $label):array{
+          $longueur = strlen($label);
+          $error = [];
+          if ($longueur >= 2 && $longueur <= 10){
+               $errors []="Label lenght must be between 2 and 10.";
+          }
+          return $error;
+     }
+
 }
 
 ?>
