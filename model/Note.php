@@ -8,7 +8,7 @@ abstract class Note  extends Model{
 
      public function __construct(private String $title,private User $owner,private DateTime $createat,
 
-                                 private DateTime | null $editedat,private bool $pinned,private bool $archived, private int $weight, private int $id) {
+                                 private DateTime | null $editedat,private bool $pinned,private bool $archived, private int $weight, private int $id,private array $labels) {
                                   
 
     }
@@ -21,6 +21,9 @@ abstract class Note  extends Model{
 
     public function pinned(): bool{
         return $this->pinned;
+    }
+    public function get_labels():array{
+        return $this->labels;
     }
 
     public function get_title():string{

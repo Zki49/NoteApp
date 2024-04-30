@@ -3,8 +3,8 @@ require_once "model/Item.php";
 class Notecheck extends Note{
 
     // a complete demain 
-    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private array $content ,$id ) {
-        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
+    public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private array $content ,$id ,$labels) {
+        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id,$labels);
     }
 
     public function set_content(array $items):void{
@@ -21,7 +21,7 @@ class Notecheck extends Note{
             return false;
         } else {
             return new Notecheck($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"],
-                                $data["archived"],$data["weight"],Item::get_item($id),$id);
+                                $data["archived"],$data["weight"],Item::get_item($id),$id,);
         }
         
     }
