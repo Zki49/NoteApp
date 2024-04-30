@@ -61,6 +61,20 @@ class ControllerNotes extends Controller{
 
 
      }
+     public function search_by_labels():void{
+      if(isset($_GET['param1'])){
+       $labels= $_GET['param1'];
+      }
+      $user =$this->get_user_or_redirect();
+      $array_note= Note::get_all_by_users_label($labels ,$user);
+      if(!$array_note){
+        (new View("error"))->show(["error"=>"this labal not exist"]);
+      }else{
+      $labels= Label::get_all_labels();
+      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note]);
+      }
+
+     }
     
     /*
     public function notes():void{
