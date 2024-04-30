@@ -22,8 +22,10 @@
             }
             return $results;
         }
+     }
 
-
+     public function get_content():string{
+          return $this->label;
      }
 }
 
