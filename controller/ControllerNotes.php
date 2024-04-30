@@ -44,7 +44,20 @@ class ControllerNotes extends Controller{
       ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
      public function search():void{
-      (new View("search"))->show([]);
+      $array_note= [];
+      $user =$this->get_user_or_redirect();
+      $array_notes = Notetext::get_notes_by_user($user);
+       $array_notesCheck = Notecheck::get_notes_by_user($user);
+       if($array_notes && $array_notesCheck){
+            $array_note = array_merge($array_notes,$array_notesCheck);
+            usort($array_note, array($this, "comparenote"));
+        }elseif($array_notes){
+          $array_note = $array_notes;
+        }elseif($array_notesCheck){
+          $array_note = $array_notesCheck;
+        }
+       $labels= Label::get_all_labels();
+      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note]);
 
 
      }
