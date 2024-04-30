@@ -3,8 +3,8 @@ require_once "framework/Model.php";
 
  class Notemixte  extends Note{
 
-    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,$id) {
-        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
+    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,$id,$labels) {
+        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id,$labels);
 
     }
 
@@ -15,7 +15,7 @@ require_once "framework/Model.php";
         return false;
     } else {
         return new Notemixte($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"]===1?true:false,
-                            $data["archived"]===1?true:false,$data["weight"],$id);
+                            $data["archived"]===1?true:false,$data["weight"],$id,Label::get_labels_by_note($id));
     }
  }
  public static function note_already_exist(string $title , int $id): bool {
@@ -40,7 +40,7 @@ $data = $query->fetchAll();
 $results = [];
 foreach ($data as $row) {
 $results[] = new Notemixte($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-$row["archived"]===1?true : false,$row["weight"],$row["idnote"]);
+$row["archived"]===1?true : false,$row["weight"],$row["idnote"],Label::get_labels_by_note($row["idnote"]));
 }
 return $results;
      }
@@ -92,7 +92,7 @@ return $results;
                 if(!$ok){
                 if(!$this->pinned()){
                    if ($row['pinned'] === 0){
-                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
+                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote'],Label::get_labels_by_note($row['idnote']));
                     $tmp = $note_tmp->get_weight();
                     $note_tmp->set_weight(0);
                     $note_tmp->persist();
@@ -106,7 +106,7 @@ return $results;
                   }
                }else{
                 if ($row['pinned'] === 1){
-                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
+                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote'],Label::get_labels_by_note($row['idnote']));
                     $tmp = $note_tmp->get_weight();
                     $note_tmp->set_weight(0);
                     $note_tmp->persist();
@@ -135,7 +135,7 @@ return $results;
                 if(!$ok){
                 if(!$this->pinned()){
                 if ($row['pinned'] === 0){
-                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
+                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote'],Label::get_labels_by_note($row['idnote']));
                     $tmp = $note_tmp->get_weight();
                     $note_tmp->set_weight(0);
                     $note_tmp->persist();
@@ -147,7 +147,7 @@ return $results;
                 }
             }else{
                 if ($row['pinned'] === 1){
-                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote']);
+                    $note_tmp = new Notemixte($row['title'],User::get_user_by_id($row["owner"]),new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row['pinned'],$row['archived'],$row['weight'],$row['idnote'],Label::get_labels_by_note($row['idnote']));
                     $tmp = $note_tmp->get_weight();
                     $note_tmp->set_weight(0);
                     $note_tmp->persist();

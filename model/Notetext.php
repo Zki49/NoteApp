@@ -2,8 +2,8 @@
 
 class Notetext extends Note{
      
-    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string|null $description,$id) {
-        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id);
+    public function __construct( $title,$owner, $createat,DateTime |null $editedat, bool $pinned, bool $archived,int $weight,private string|null $description,$id,$labels) {
+        parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id,$labels);
 
     }
     public function get_description():string |null{
@@ -37,7 +37,7 @@ class Notetext extends Note{
             return false;
         } else {
             return new Notetext($data["title"],User::get_user_by_id($data["owner"]),new DateTime( $data["created_at"],null),$data["edited_at"]!==null?new DateTime($data["edited_at"],null):null,$data["pinned"]===1?true:false,
-                                $data["archived"]===1?true:false,$data["weight"],$data["content"],$id);
+                                $data["archived"]===1?true:false,$data["weight"],$data["content"],$id,Label::get_labels_by_note($id));
         }
         
     }
@@ -105,7 +105,7 @@ class Notetext extends Note{
             $results = [];
             foreach ($data as $row) {
                 $results[] = new Notetext($row["title"],$user,new DateTime($row["created_at"]),$row["edited_at"]===null? null: new DateTime($row["edited_at"]),$row["pinned"]===1?true:false,
-                $row["archived"]===1?true : false,$row["weight"],$row["content"],$row["idnote"]);
+                $row["archived"]===1?true : false,$row["weight"],$row["content"],$row["idnote"],Label::get_labels_by_note($row['idnote']));
             }
             return $results;
 

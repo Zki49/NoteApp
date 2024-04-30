@@ -458,7 +458,7 @@ class ControllerNotes extends Controller{
     public function addtext():void{
       $mode="edit";
       $user=$this->get_user_or_redirect();
-      $notes= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
+      $notes= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0,[]);
       (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
     }
    /* public function save():void{
@@ -577,7 +577,7 @@ public function save():void{
           $note = Notetext::get_note_by_id($id);
           if($note==false){
            $user= $this->get_user_or_redirect();
-            $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0);
+            $note= new Notetext(" ",$user,new DateTime("now"),null,false,false,0,null,0,[]);
             $weight= $note->max_weight();
             $note->set_weight($weight+1);
             $error=$note->set_title($title);
@@ -621,7 +621,7 @@ public function save():void{
      
       if(isset($_POST['title'])){
         $title = Tools::sanitize($_POST['title']);
-        $notes = new Notecheck($title,$userOwner,new DateTime("now"),null,false,false,0,[],0);
+        $notes = new Notecheck($title,$userOwner,new DateTime("now"),null,false,false,0,[],0,[]);
         $user=$this->get_user_or_redirect();
         $error = $notes->set_title($title);
         $weight= $notes->max_weight();
