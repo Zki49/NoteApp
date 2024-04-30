@@ -39,6 +39,7 @@
                  </div>';
             }
          }
+         echo' </div>';
          echo"<div  id='pined' class='row , connectedSortable'>";
          foreach($array_notes as $notes){
            if(!$notes-> archived()){
@@ -60,7 +61,7 @@
       
         
     
-    </div>
+   
 
 
 

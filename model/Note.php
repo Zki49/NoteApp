@@ -162,7 +162,6 @@ abstract class Note  extends Model{
         self::execute("Delete From note_shares where note=:idNote and user=:idUser", ["idUser"=>$idUser, "idNote"=>$this->get_id()]);
     }
     public function has_been_deleted() : bool {
-        sleep(5);
         $query = self::execute("SELECT * 
                                 FROM notes n 
                                 WHERE n.id = :idNote", ["idNote"=>$this->get_id()]);
@@ -172,6 +171,31 @@ abstract class Note  extends Model{
         }else{
             return false;
         }
+    }
+
+
+    public static function get_all_by_users_label(string $label ,User $user): array|false {
+        $query = self::execute("SELECT * FROM notes WHERE id in (SELECT note 
+        from note_labels
+          WHERE label= :label)
+      and owner = :ownerid",["label"=>$label,"ownerid"=>$user->get_id()]);
+
+      $data =$query->fetchAll();
+      if($query->rowCount()==0){
+        return false;
+      }else{
+        $results = [];
+        foreach ($data as $row) {
+            if(self::iamcheck($row['id'])){
+                $results[] = Notecheck::get_note_by_id($row['id']);
+            }else{
+                $results[] = Notetext::get_note_by_id($row['id']);
+            }
+           
+        }
+        return $results;
+      }
+
     }
 }
 
