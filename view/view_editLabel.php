@@ -30,7 +30,7 @@
             foreach($labels as $label){
                 echo"
                 <div class='input-group mb-3'>
-                    <input type='text' class='form-control'  aria-describedby='basic-addon2' value='";echo($label->get_label_name());echo"' readonly>
+                    <input type='text' class='form-control'  aria-describedby='basic-addon2' value='";echo($label->get_label_name());echo"' style=' background-color: #323232; color : white;' readonly>
                     <button class='btn btn-danger' type='button'>-</button>
                 </div>
                 ";
@@ -39,7 +39,7 @@
     ?>
     <label>Add new label</label>
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Type to search or create..." aria-label="New label" aria-describedby="basic-addon2" >
+        <input type="text" class="form-control" placeholder="Type to search or create..." aria-label="New label" aria-describedby="basic-addon2" style=" background-color: #323232; color : white;" >
         <button class="btn btn-primary" type="button">+</button>
     </div>
 

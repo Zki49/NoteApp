@@ -70,27 +70,29 @@
         return $this->label;
      }
 
-     public function is_valide_label(int $idnote,string $label):bool | array{
-          return $this->is_unique_label($idnote , $label) && $this->is_valide_label_lenght($label);
+     public function is_valide_label(int $idnote,string $label):array{
+          $error = [];
+          if($this->is_unique_label($idnote , $label)){
+               $error []= "A note cannot contain the same label twice.";  
+          }
+          if ($this->is_valide_label_lenght($label)){
+               $error []= "Label lenght must be between 2 and 10.";
+          }
+          return $error;
      }
 
-     public function is_unique_label(int $idnote,string $label):array{
+     public function is_unique_label(int $idnote,string $label):bool{
           $query = self::execute("SELECT * from note_labels where note = :idnote AND label = :label ORDER BY label ASC",
           ["idnote"=>$idnote,"label"=>$label]);
-          $error = [];
           if($query->rowCount() == 0){
-               $errors []="A note canot contain the same label twice.";
+               return true;
           }
-          return $error;
+          return false;
      }
 
-     public function is_valide_label_lenght(string $label):array{
+     public function is_valide_label_lenght(string $label):bool{
           $longueur = strlen($label);
-          $error = [];
-          if ($longueur >= 2 && $longueur <= 10){
-               $errors []="Label lenght must be between 2 and 10.";
-          }
-          return $error;
+          return ($longueur >= 2 && $longueur <= 10);
      }
 
 }
