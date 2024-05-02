@@ -197,6 +197,43 @@ abstract class Note  extends Model{
       }
 
     }
+    public function add_label(int $idnote,string $label):array{
+        $error[] = $this->is_valide_label($idnote,$label);
+        if(empty($error[0])){
+            self::execute("INSERT INTO note_labels (note,label) VALUES(:idnote,:label)",["idnote"=>$idnote,"label"=>$label]);
+            return $error;
+        }
+        return $error;
+    }
+    public function delete_label(int $idnote,string $label):void{
+        self::execute("DELETE FROM note_labels WHERE note = :idnote and label = :label",["idnote" => $idnote,"label" => $label]);
+    }
+    
+
+    public function is_valide_label(int $idnote,string $label):array{
+        $error = [];
+        if(!$this->is_unique_label($idnote , $label)){
+             $error []= "A note cannot contain the same label twice.";  
+        }
+        if (!$this->is_valide_label_lenght($label)){
+             $error []= "Label lenght must be between 2 and 10.";
+        }
+        return $error;
+   }
+
+   public function is_unique_label(int $idnote,string $label):bool{
+        $query = self::execute("SELECT * from note_labels where note = :idnote AND label = :label ORDER BY label ASC",
+        ["idnote"=>$idnote,"label"=>$label]);
+        if($query->rowCount() == 0){
+             return true;
+        }
+        return false;
+   }
+
+   public function is_valide_label_lenght(string $label):bool{
+        $longueur = strlen($label);
+        return ($longueur >= 2 && $longueur <= 10);
+   }
 }
 
 ?>

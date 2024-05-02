@@ -29,19 +29,31 @@
         }else{
             foreach($labels as $label){
                 echo"
-                <div class='input-group mb-3'>
-                    <input type='text' class='form-control'  aria-describedby='basic-addon2' value='";echo($label->get_label_name());echo"' style=' background-color: #323232; color : white;' readonly>
-                    <button class='btn btn-danger' type='button'>-</button>
-                </div>
+                <form action='notes/delete_label' method='post'>
+                    <div class='input-group mb-3'>
+                        <input type='hidden' name='idnotes' value='";echo($notes->get_id());echo"'>
+                        <input type='text'  name='label' class='form-control'  aria-describedby='basic-addon2' value='";echo($label->get_label_name());echo"' style=' background-color: #323232; color : white;' readonly>
+                        <button class='btn btn-danger' type='submit'>-</button>
+                    </div>
+                </form>
                 ";
             }
         }
     ?>
+    
     <label>Add new label</label>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Type to search or create..." aria-label="New label" aria-describedby="basic-addon2" style=" background-color: #323232; color : white;" >
-        <button class="btn btn-primary" type="button">+</button>
-    </div>
-
+    <form action='notes/add_label' method='post'>
+        <div class="input-group mb-3">
+        <input type='hidden' name='idnotes' value='<?= $notes->get_id()?>'>
+            <input type="text" name='label' class="form-control" placeholder="Type to search or create..." aria-label="New label" aria-describedby="basic-addon2" style=" background-color: #323232; color : white;" >
+            <button class="btn btn-primary" type='submit'>+</button>
+        </div>
+    </form>
+    <?php
+    if(!empty($errors[0][0])){
+        echo"<li style='color : red;' >"; echo($errors[0][0]); echo"</li>";
+    }
+    
+    ?>
 </body>
 </html>
