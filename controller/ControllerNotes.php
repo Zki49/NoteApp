@@ -7,6 +7,7 @@ require_once "model/Notetext.php";
 require_once "model/Notecheck.php";
 require_once "model/Notemixte.php";
 require_once  "model/Sharenote.php";
+require_once  "model/Label.php";
 
 
 class ControllerNotes extends Controller{ 
@@ -687,6 +688,32 @@ public function save():void{
       
       (new View("addcheck"))->show(["errors" => $errors , "title"=>$title]);
     }
+
+
+    public function add_label():void{
+      
+      if(isset($_POST["idnotes"]) && isset($_POST["label"])){
+        $id = Tools::sanitize($_POST["idnotes"]);
+        $label = Tools::sanitize($_POST["label"]);
+        $note = Notemixte::get_note_by_id($id);
+        $error = $note->add_label($id,$label);
+        $labels = Label::get_labels_by_note($id);
+        (new View("editLabel"))->show(["notes"=>$note ,"labels"=>$labels,"errors"=>$error]);
+   
+      }
+    }
+    public function delete_label():void{
+      if(isset($_POST["idnotes"]) && isset($_POST["label"])){
+        $id = Tools::sanitize($_POST["idnotes"]);
+        $label = Tools::sanitize($_POST["label"]);
+        $note = Notemixte::get_note_by_id($id);
+        $note->delete_label($id,$label);
+        $labels = Label::get_labels_by_note($id);
+        (new View("editLabel"))->show(["notes"=>$note ,"labels"=>$labels,"errors"=>[]]);
+      }
+    }
+
+
 
     public function additem():void{
        $mode="edit";
