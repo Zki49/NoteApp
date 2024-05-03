@@ -25,19 +25,24 @@
             <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
         </svg>
     </button>
+
 <div class="container">
     <h5>search notes by tag :</h5>
     <div class="checkboxes">
         <?php
          if($labels){
+            $cpt=0;
+            echo '<form   action="notes/search_by_labels " methode="post" >  <button class="btn btn-primary btn-transparent" type="submit" >';
             foreach($labels as $label){
-            echo'  <div class="checkbox">
-            <input type="checkbox" id="checkbox1">
+                $cpt++;
+            echo'<div class="checkbox">
+            <input type="checkbox" id=';echo$label-> get_label_name();echo'name= ';echo$label-> get_label_name();echo'value=';echo$label-> get_label_name();echo'">
             <label for="checkbox1">'; 
             echo $label-> get_label_name();
             echo'</label>
                  </div>';
             }
+            echo'   </button> </form>';
          }
          echo' </div>';
          echo"<div  id='pined' class='row , connectedSortable'>";

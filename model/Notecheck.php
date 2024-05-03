@@ -164,7 +164,7 @@ class Notecheck extends Note{
 
      public function additem(string $new):array | int{
         
-        $error=[];//$this->validateitem($new);
+        $error=$this->validateitem($new);
         if(empty($error)){
             
          self::execute("insert into checklist_note_items (checklist_note ,content) VALUES( :id,:content) ",["id"=>$this->get_id(),"content"=>$new]);
@@ -174,7 +174,7 @@ class Notecheck extends Note{
      }
      public function additemWithCheck(string $new, $check):array | int{
         
-        $error=[];//$this->validateitem($new);
+        $error=$this->validateitem($new);
         if(empty($error)){
             
          self::execute("insert into checklist_note_items (checklist_note ,content,checked) VALUES( :id,:content,:check) ",["id"=>$this->get_id(),"content"=>$new,"check"=>$check?1:0]);

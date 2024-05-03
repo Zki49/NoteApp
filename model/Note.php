@@ -174,11 +174,18 @@ abstract class Note  extends Model{
     }
 
 
-    public static function get_all_by_users_label(string $label ,User $user): array|false {
-        $query = self::execute("SELECT * FROM notes WHERE id in (SELECT note 
-        from note_labels
-          WHERE label= :label)
-      and owner = :ownerid",["label"=>$label,"ownerid"=>$user->get_id()]);
+    public static function get_all_by_users_label( array $labels ,User $user): array|false {
+        $conditions = implode(" AND ", array_map(function($label) {
+            return "EXISTS (SELECT 1 FROM note_labels WHERE note = n.id AND label = '$label')";
+        }, $labels));
+        
+        $sql = "SELECT n.*
+                FROM notes n
+                WHERE $conditions
+                and owner = :ownerid";
+
+
+        $query = self::execute($sql,["ownerid"=>$user->get_id()]);
 
       $data =$query->fetchAll();
       if($query->rowCount()==0){

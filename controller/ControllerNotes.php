@@ -62,8 +62,13 @@ class ControllerNotes extends Controller{
 
      }
      public function search_by_labels():void{
+      var_dump($_POST);
+      /*
       if(isset($_GET['param1'])){
-       $labels= $_GET['param1'];
+       $labels[]= $_GET['param1'];
+      }
+      if(isset($_GET['param2'])){
+        $labels[]= $_GET['param2'];
       }
       $user =$this->get_user_or_redirect();
       $array_note= Note::get_all_by_users_label($labels ,$user);
@@ -72,7 +77,7 @@ class ControllerNotes extends Controller{
       }else{
       $labels= Label::get_all_labels();
       (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note]);
-      }
+      }*/
 
      }
     
