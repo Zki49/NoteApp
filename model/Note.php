@@ -212,8 +212,15 @@ abstract class Note  extends Model{
         }
         return $error;
     }
-    public function delete_label(int $idnote,string $label):void{
+    public function delete_label(int $idnote,string $label):bool{
         self::execute("DELETE FROM note_labels WHERE note = :idnote and label = :label",["idnote" => $idnote,"label" => $label]);
+        $query = self::execute("SELECT * FROM note_labels WHERE note = :idnote and label = :label",["idnote" => $idnote,"label" => $label]);
+        $data = $query->fetchAll();
+        if(count($data) == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
     
 

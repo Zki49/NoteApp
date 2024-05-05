@@ -702,6 +702,23 @@ public function save():void{
    
       }
     }
+
+    public function add_label_service(){
+      //sleep(5);
+      if(isset($_POST["idnotes"]) && isset($_POST["label"])){
+        $id = Tools::sanitize($_POST["idnotes"]);
+        $label = Tools::sanitize($_POST["label"]);
+        $note = Notemixte::get_note_by_id($id);
+        $error = $note->add_label($id,$label);
+        if(empty($error[0])){
+          echo"true";
+        }else{
+          echo"false";
+        }
+   
+      }
+    }
+
     public function delete_label():void{
       if(isset($_POST["idnotes"]) && isset($_POST["label"])){
         $id = Tools::sanitize($_POST["idnotes"]);
@@ -710,6 +727,21 @@ public function save():void{
         $note->delete_label($id,$label);
         $labels = Label::get_labels_by_note($id);
         (new View("editLabel"))->show(["notes"=>$note ,"labels"=>$labels,"errors"=>[]]);
+      }
+    }
+    public function delete_label_service(){
+      if(isset($_POST["idnotes"]) && isset($_POST["label"])){
+        $id = Tools::sanitize($_POST["idnotes"]);
+        $label = Tools::sanitize($_POST["label"]);
+        $note = Notemixte::get_note_by_id($id);
+        $res = $note->delete_label($id,$label);
+        if($res){
+          echo"true";
+        }else{
+          echo"false";
+        }
+        //$labels = Label::get_labels_by_note($id);
+        //(new View("editLabel"))->show(["notes"=>$note ,"labels"=>$labels,"errors"=>[]]);
       }
     }
 
