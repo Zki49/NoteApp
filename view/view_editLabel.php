@@ -19,6 +19,11 @@
             tableAllLabels = $("#table-all-labels");
             
             
+            $(inputNewLabel).on('input',function(){
+                var length = $(this).val().length;
+                valideLabelLenght(length);
+            })
+
             $(btnAddLabel).click(function(event){
                 event.preventDefault();
                 addLabel(inputNewLabel.val());
@@ -33,6 +38,20 @@
             })
             
         })
+
+        function valideLabelLenght(length){
+            
+            $("#errorLabel").html("");
+            if(length < 2 || length > 10){
+                $("#errorLabel").html("<p>Label length must be between 2 and 10.</p>");
+                $(btnAddLabel).prop('disabled',true);
+            }
+            else{
+                $("#errorLabel").html("");
+                $(btnAddLabel).prop('disabled',false);
+            }
+        }
+
         async function addLabel(newLabel){
             
             const postdata = {
@@ -104,6 +123,12 @@
      
 
     </script>
+    <style>
+    /* CSS pour le placeholder en blanc */
+    ::placeholder {
+        color: white;
+    }
+</style>
 
 </head>
 <body>
@@ -148,6 +173,10 @@
             <input id="newlabel" type="text" name='label' class="form-control" placeholder="Type to search or create..." aria-label="New label" aria-describedby="basic-addon2" style=" background-color: #323232; color : white;" >
             <button id="btn-add-label" class="btn btn-primary" type='submit'>+</button>
         </div>
+        <!--<div class='invalid-feedback' id='errorLabel'></div>-->
+        <div id='errorLabel' style='color: red;' ><div  class='invalid-feedback'>
+        
+      </div></div>
     <noscript></form></noscript>
     <?php
     if(!empty($errors[0][0])){
