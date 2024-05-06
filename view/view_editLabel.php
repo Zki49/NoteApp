@@ -12,16 +12,28 @@
     <link href="css/style_edit_note.css" rel="stylesheet">
     <script>
         let btnAddLabel,idnote,inputNewLabel,tableAllLabels;
+        var labels = [];
         $(document).ready(function(){
             btnAddLabel = $("#btn-add-label");
             idnote = $("#idnotes").val();
             inputNewLabel = $("#newlabel");
             tableAllLabels = $("#table-all-labels");
-            
+
+            $('.label').each(function(){
+                var value = $(this).val();
+                labels.push(value);
+            });
+            console.log(labels);
             
             $(inputNewLabel).on('input',function(){
                 var length = $(this).val().length;
                 valideLabelLenght(length);
+               
+            })
+            $(inputNewLabel).on('input',function(){
+               
+                var valueLabel = $(this).val();
+                uniqueLabel(valueLabel);
             })
 
             $(btnAddLabel).click(function(event){
@@ -43,11 +55,20 @@
             
             $("#errorLabel").html("");
             if(length < 2 || length > 10){
+                console.log("rentre");
                 $("#errorLabel").html("<p>Label length must be between 2 and 10.</p>");
                 $(btnAddLabel).prop('disabled',true);
             }
             else{
-                $("#errorLabel").html("");
+                $(btnAddLabel).prop('disabled',false);
+            }
+        }
+        function uniqueLabel(label){
+            if(labels.includes(label)){
+                $("#errorLabel").append("<p>A note cannot contain the same label twice.</p>");
+                $(btnAddLabel).prop('disabled',true);
+            }
+            else{
                 $(btnAddLabel).prop('disabled',false);
             }
         }
@@ -72,6 +93,7 @@
                         
                         })
                         })
+                        labels.push(newLabel);
                     }
                 }
             })
@@ -92,6 +114,8 @@
                     if(response == "true"){
                         var elemToRemove = $("#removable"+labelToDelete);
                         elemToRemove.remove();
+                        var index = labels.indexOf(labelToDelete); 
+                        labels.splice(index, 1);
                     }
                 }
             })
@@ -103,7 +127,7 @@
             html += "<noscript><form action='notes/delete_label' method='post'></noscript>";
             html += "<div class='input-group mb-3'>";
             html += "<input type='hidden' name='idnotes' value='"+idnote+"'>";
-            html += "<input type='text'  name='label' class='form-control'  aria-describedby='basic-addon2' value='"+newlabel+"' style=' background-color: #323232; color : white;' readonly>";
+            html += "<input type='text'  name='label' class='form-control label'  aria-describedby='basic-addon2' value='"+newlabel+"' style=' background-color: #323232; color : white;' readonly>";
             html += "<button id='"+newlabel+"' class='btn btn-danger delete' type='submit'>-</button>";
             html += "</div>";
             html += "<noscript></form></noscript>";
@@ -155,7 +179,7 @@
                 <noscript><form action='notes/delete_label' method='post'></noscript>
                     <div class='input-group mb-3'>
                         <input type='hidden' name='idnotes' value='";echo($notes->get_id());echo"'>
-                        <input type='text'  name='label' class='form-control'  aria-describedby='basic-addon2' value='";echo($label->get_label_name());echo"' style=' background-color: #323232; color : white;' readonly>
+                        <input type='text'  name='label' class='form-control label'  aria-describedby='basic-addon2' value='";echo($label->get_label_name());echo"' style=' background-color: #323232; color : white;' readonly>
                         <button id='";echo($label->get_label_name());echo"'class='btn btn-danger delete' type='submit'>-</button>
                     </div>
                 <noscript></form></noscript>
