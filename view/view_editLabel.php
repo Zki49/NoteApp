@@ -28,13 +28,11 @@
             $(inputNewLabel).on('input',function(){
                 var length = $(this).val().length;
                 valideLabelLenght(length);
-               
-            })
-            $(inputNewLabel).on('input',function(){
-               
                 var valueLabel = $(this).val();
                 uniqueLabel(valueLabel);
+               
             })
+            
 
             $(btnAddLabel).click(function(event){
                 event.preventDefault();
