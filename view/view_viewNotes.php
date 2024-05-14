@@ -134,11 +134,13 @@ margin:10px;
       echo"<h4>your Notes are empty</h4> ";
     }
   }else{
+      $ariche=false;
     if(!empty($array_notes)){
-     
+         
     echo"<div class=row>";
      foreach($array_notes as $notes){
           if($notes-> archived()){
+            $ariche=true;
           if($notes->are_you_check()){
             echo '<div class="col-6 col-md-6 col-lg-3">';
             (new View("notecheck"))->show(["notes"=>$notes]);
@@ -151,6 +153,9 @@ margin:10px;
     
   }
     echo"</div>";
+    if(!$ariche){
+      echo"<div><h4>your archive is empty</h4></div> ";
+    }
 }else{
   echo"<h4>your archive is empty</h4> ";
 }
