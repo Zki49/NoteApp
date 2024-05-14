@@ -250,13 +250,18 @@ class ControllerNotes extends Controller{
           (new View("error"))->show(["error"=>"cette note nexiste pas"]);
         }
         $user= $this->get_user_or_redirect();
-        $is_editor = $user->editor($notes->get_id());
+        if($user->acces($notes->get_id())){
+          $is_editor = $user->editor($notes->get_id());
         if(isset($_GET['param2'])){
         (new View("opennote"))->show(["notes"=>$notes ,"is_editor"=>$is_editor,"deleted"=>$_GET['param2']]);
         }
         else{
         (new View("opennote"))->show(["notes"=>$notes,"is_editor"=>$is_editor]);
         }
+        }else{
+          (new View("error"))->show(["error"=>"vous n'avez pas dacces a cette notes"]);
+        }
+        
       }else {
         $this->redirect("notes");
       }
