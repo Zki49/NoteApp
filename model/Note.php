@@ -65,7 +65,7 @@ abstract class Note  extends Model{
         $min= Configuration::get("title_min_length ");
         $max = Configuration::get("title_max_length");
         
-        if(strlen($title)<$min||strlen($title)>$max){
+        if(mb_strlen($title)<$min||mb_strlen($title)>$max){
           $errors []="The title must have between 3 and 25 characters";
         }
         return $errors;
@@ -205,7 +205,10 @@ abstract class Note  extends Model{
 
     }
     public function add_label(int $idnote,string $label):array{
+        
         $error[] = $this->is_valide_label($idnote,$label);
+        $longueur = mb_strlen($label);
+        var_dump($longueur);
         if(empty($error[0])){
             self::execute("INSERT INTO note_labels (note,label) VALUES(:idnote,:label)",["idnote"=>$idnote,"label"=>$label]);
             return $error;
@@ -229,7 +232,7 @@ abstract class Note  extends Model{
         if(!$this->is_unique_label($idnote , $label)){
              $error []= "A note cannot contain the same label twice.";  
         }
-        if (!$this->is_valide_label_lenght($label)){
+        if(!$this->is_valide_label_lenght($label)){
              $error []= "Label lenght must be between 2 and 10.";
         }
         return $error;
@@ -245,7 +248,7 @@ abstract class Note  extends Model{
    }
 
    public function is_valide_label_lenght(string $label):bool{
-        $longueur = strlen($label);
+        $longueur = mb_strlen($label,'UTF-8');
         return ($longueur >= 2 && $longueur <= 10);
    }
 }

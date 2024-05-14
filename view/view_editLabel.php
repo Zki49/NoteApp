@@ -53,7 +53,6 @@
             
             $("#errorLabel").html("");
             if(length < 2 || length > 10){
-                console.log("rentre");
                 $("#errorLabel").html("<p>Label length must be between 2 and 10.</p>");
                 $(btnAddLabel).prop('disabled',true);
             }

@@ -704,8 +704,9 @@ public function save():void{
     }
 
     public function add_label_service(){
-      //sleep(5);
+      
       if(isset($_POST["idnotes"]) && isset($_POST["label"])){
+        
         $id = Tools::sanitize($_POST["idnotes"]);
         $label = Tools::sanitize($_POST["label"]);
         $note = Notemixte::get_note_by_id($id);
