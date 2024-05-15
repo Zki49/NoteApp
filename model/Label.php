@@ -42,6 +42,26 @@
           }
      }
 
+     public static function  get_all_labels_for_dataList(int $idnote,int $idUser):array|bool{
+          $query = self::execute("SELECT DISTINCT nl.label 
+                                  FROM note_labels nl   
+                                  WHERE nl.note in (SELECT n.id
+                                                    FROM notes n
+                                                    WHERE n.owner = :idUser
+                                                    AND n.id != :idNote )",["idUser"=>$idUser,"idNote"=>$idnote]);
+     
+            $data = $query->fetchAll();
+            if ($query->rowCount() == 0) { 
+              return false;
+               } else {
+               $results = [];
+               foreach ($data as $row) {
+                    $results[] = $row["label"];
+               }
+               return $results;
+               }
+          }
+
      public function delete_label(int $idnote, string $label){
           self::execute("DELETE FROM note_labels WHERE note = :idnote and label = :label",["idnote" => $idnote,"label" => $label]);
      }

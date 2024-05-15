@@ -344,7 +344,8 @@ class ControllerNotes extends Controller{
              $notes= Notetext::get_note_by_id($id);
            }
            $labels = Label::get_labels_by_note($id);
-            (new View("editLabel"))->show(["notes"=>$notes ,"labels"=>$labels]);
+           $dataList = Label::get_all_labels_for_dataList($id,$user->get_id());
+            (new View("editLabel"))->show(["notes"=>$notes ,"labels"=>$labels , "datalist"=>$dataList]);
        }else{
          (new View("error"))->show(["error"=>"bien essayer"]);
        }

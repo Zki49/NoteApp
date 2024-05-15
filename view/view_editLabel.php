@@ -191,7 +191,15 @@
     <noscript><form action='notes/add_label' method='post'></noscript>
         <div class="input-group mb-3">
         <input type='hidden' name='idnotes' value='<?= $notes->get_id()?>'>
-            <input id="newlabel" type="text" name='label' class="form-control" placeholder="Type to search or create..." aria-label="New label" aria-describedby="basic-addon2" style=" background-color: #323232; color : white;" >
+            <input id="newlabel" list="datalistOptions" type="text" name='label' class="form-control" placeholder="Type to search or create..." aria-label="New label" aria-describedby="basic-addon2" style=" background-color: #323232; color : white;" >
+            <?php 
+            echo"<datalist id='datalistOptions'>";
+            foreach($datalist as $data){
+                echo"<option value='";echo($data);echo"'>";
+            }
+            echo"</datalist>";
+            ?>
+            
             <button id="btn-add-label" class="btn btn-primary" type='submit'>+</button>
         </div>
         <!--<div class='invalid-feedback' id='errorLabel'></div>-->

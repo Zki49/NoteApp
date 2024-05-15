@@ -11,8 +11,8 @@ class Tools
         //echo "trim : " . trim(filter_var($var, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         //echo "strlen : " . strlen($var);
         //echo "mb strlen : " . mb_strlen($var);
-        //return trim(filter_var($var, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-        return $var;
+        return trim(filter_var($var, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+       // return $var;
     }
 
     //dirige vers la page d'erreur
