@@ -14,389 +14,619 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-  let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem,titleAtFirst,descrAtFirst,test,newItem,buttonGeneral,btnAddItem;
-        let tableItems;
-        let description, errDescr, inputDescr;
-        
-        var inputs = $('input[id^="[0-9]"]');
-        
-        var valeursInputs;
-        var arrayError = [];
-        var val4input = [];
-        var numberOfItems = 0;
+ let inputTitle,idNote,errTitle,errorInput,errorAddItem,inputItem,titleAtFirst,descrAtFirst,test,newItem,buttonGeneral,btnAddItem;
+  
+  let tableItems;
+  let description, errDescr, inputDescr;
+  
+  var inputs = $('input[id^="[0-9]"]');
+  
+  var valeursInputs;
+  var arrayError = [];
+  var val4input = [];
+  var numberOfItems = 0;
 
-        
-        $(document).ready(function(){
-        
-            $('.form-check-input').each(function() {
-        $(this).click( function() {
-            console.log(this.id);
-            //throughline
-            $("#text-"+this.id).toggleClass("throughline");
-            $.ajax({
-                type: "get",
-                url: "notes/check_uncheck_service/"+this.id,
-               
-            });
 
-           
-        });
-    });
-
-            inputTitle = $("#title");
-            inputDescr = $("#textArea");
-            titleAtFirst = inputTitle.val();
-            descrAtFirst = inputDescr.val();
-
-            var modificationAlertModal = $('#modificationAlertModal');
-            
-            idNote = $("#idnotes");
-            idnote = idNote.val();
-            errTitle = $("#errTitle");
-            buttonGeneral = $("#buttonSave");
-            inputItem = $("#addItem");
-            btnAddItem = $("#btn-add-item");
-            $(btnAddItem).prop('disabled' ,true);
-            errorAddItem = $("#errorAddItem");
-            tableItems = $("#listItems");
-            errDescr= $("#errDescr");
+  
+  $(document).ready(function(){
+  
+      $('.form-check-input').each(function() {
+  $(this).click( function() {
+      console.log(this.id);
+      //throughline
+      var idCheck = this.id.split("-")[1];
       
-             test = $("#modificationAlertModal");
+      $($("#"+idCheck)).toggleClass("throughline");
+      console.log($("#"+idCheck));
+      $.ajax({
+          type: "get",
+          url: "notes/check_uncheck_service/"+idCheck,
+         
+      });
 
-			$("#goBack").click(function(){
-                event.preventDefault();
-                isModified();
-            
-			});
-            
-            
-            var modificationAlertModal = $('#modificationAlertModal');
+     
+  });
+});
 
-            
-            getItems();
+      inputTitle = $("#title");
+      inputDescr = $("#textArea");
+      titleAtFirst = inputTitle.val();
+      descrAtFirst = inputDescr.val();
 
-            $(btnAddItem).click(function(){
-                event.preventDefault();
-                const item = $(inputItem).val();
-                addNewItem(item);
-            });
+      var modificationAlertModal = $('#modificationAlertModal');
+      
+      idNote = $("#idnotes");
+      idnote = idNote.val();
 
-            const items = document.querySelectorAll(".form-check-input");
-            $('.input-group-mb3').find('button').map(function() {
-                this.click(function(){
-                    console.log('marche');
-                })
-            })
-           
-            console.log(items);
-            [...items].forEach(item => {
-                item.addEventListener('click' , () => {
-                    console.log(item.id);
-                });
-            });
+  
+      
+      idNote = $("#idnotes");
+      idnote = idNote.val();
+     
 
-            inputTitle.bind("input",valideTitle);
-            inputDescr.bind("input",valideDescr);
-            inputTitle.bind("input" , uniqueNoteByOwner);
-            inputItem.bind("input",addItem);
+      errTitle = $("#errTitle");
+      buttonGeneral = $("#buttonSave");
+      inputItem = $("#addItem");
+      btnAddItem = $("#btn-add-item");
+      $(btnAddItem).prop('disabled' ,true);
+      errorAddItem = $("#errorAddItem");
+      tableItems = $("#listItems");
 
-            getNumberOfItems();
-            getAllValueInputs4Items(numberOfItems);
-            //uniqueItems(valeursInputs);
-            validateItems();
-            
+      errDescr= $("#errDescr");
+      console.log(errDescr);
 
-        });
+       test = $("#modificationAlertModal");
 
-        function valideTitle(){
-           console.log("valide tile ");
-            $(inputTitle).on('input', function() {
-                var title = $(inputTitle).val();
-                errTitle.html("");
-                if (title.length < 3 || title.length > 25) {
-                    $(inputTitle).addClass('is-invalid');
-                    errTitle.html("<p>Title lenght must be between 3 and 25.</p>");
-                    $("#buttonSave").prop('disabled',true);
-                } else {
-                    $(inputTitle).removeClass('is-invalid');
-                    $(inputTitle).addClass('is-valid');
-                    $("#buttonSave").prop('disabled',false);
-                    checkErrors();
-                }
-                
-            });
-        }
 
-        function valideDescr(){
-            console.log("valide description ");
-            console.log($(inputDescr).val());
-            var description = $(inputDescr).val()
-            errDescr.html("");
-            if ((description.length < 3 || description.length > 25)&&description.length!=0) {
-                    $(inputDescr).addClass('is-invalid');
-                    errDescr.html("<p>Text lenght must be between 3 and 25 OR nothing.</p>");
-                    $("#buttonSave").prop('disabled',true);
-                } else {
-                    $(inputDescr).removeClass('is-invalid');
-                    $(inputDescr).addClass('is-valid');
-                    $("#buttonSave").prop('disabled',false);
-                    checkErrors();
-                }
-           /* $(inputDescr).on('textarea', function() {
-                var descr = $(inputDescr).val();
-                errDescr.html("");
-                if (description.length < 3 || description.length > 25) {
-                    $(inputDescr).addClass('is-invalid');
-                    errDescr.html("<p>Text lenght must be between 3 and 25 OR nothing.</p>");
-                    $("#buttonSave").prop('disabled',true);
-                } else {
-                    $(inputDescr).removeClass('is-invalid');
-                    $(inputDescr).addClass('is-valid');
-                    $("#buttonSave").prop('disabled',false);
-                }
-                
-            });*/
-        }
-        
-        function checkErrors() {
-            // Vérifier s'il y a d'autres éléments avec la classe 'is-invalid'
-            if ($('.is-invalid').length > 0 || inputTitle.hasClass('is-invalid')) {
-                $("#buttonSave").prop('disabled', true); // Désactiver le bouton Save s'il y a des erreurs
-            } else {
-                $("#buttonSave").prop('disabled', false); // Activer le bouton Save si aucune erreur n'est présente
-            }
-        }
+      $("#goBack").click(function(){
+          event.preventDefault();
+          isModified();
+      
+      });
+
+      
+      
+      var modificationAlertModal = $('#modificationAlertModal');
+
+
+      var testItem = document.querySelectorAll(".supItem");
+      console.log(testItem);
+      $(".supItem").each(function(){
+
+          $(this).click(function(){
+              console.log(this.id);
+              deleteItem(this.id);
+          })
+      })
+      getItems();
+  
+
+      $(btnAddItem).click(function(){
+          
+          event.preventDefault();
+          const item = $(inputItem).val();
+          addNewItem(item);
+          
+      });
+      var AllItems = document.querySelectorAll('.itemclass');
+      console.log(AllItems);
+      $(AllItems).each(function(){
+          $(this).click(function(){
+              validateItems(this);
+              uniqueItems();
+          })
+      })
+
+    /*  const items = document.querySelector("#form-check-input");
+      console.log(items);
+      $('.input-group-mb3').find('button').map(function() {
+          this.click(function(){
+              console.log('marche');
+          })
+      })
+     
+      console.log(items);
+
+      */
+
+      inputTitle.bind("input",valideTitle);
+      inputDescr.bind("input",valideDescr);
+      inputTitle.bind("input" , uniqueNoteByOwner);
+      inputItem.bind("input",addItem);
+
+      getNumberOfItems();
+      getAllValueInputs4Items(numberOfItems);
+
+      //uniqueItems(valeursInputs);
+      //validateItems();
+
+      
+
+  });
+
+  function valideTitle(){
+
+
+      $(inputTitle).on('input', function() {
+          var title = $(inputTitle).val();
+          console.log(title);
+          errTitle.html("");
+          if (title.length < 3 || title.length > 25) {
+              $(inputTitle).addClass('is-invalid');
+              console.log("<p>Title lenght must be between 3 and 25.</p>")
+              errTitle.html("<p>Title lenght must be between 3 and 25.</p>");
+              $("#buttonSave").prop('disabled',true);
+          } else {
+              $(inputTitle).removeClass('is-invalid');
+              $(inputTitle).addClass('is-valid');
+              $("#buttonSave").prop('disabled',false);
+
+              checkErrors();
+
+          }
+          
+      });
+  }
+
+
+  function valideDescr(){
+      console.log("valide description ");
+      console.log($(inputDescr).val());
+      var description = $(inputDescr).val()
+      errDescr.html("");
+      console.log(errDescr);
+      if ((description.length < 3 || description.length > 25)&&description.length!=0) {
+              $(inputDescr).addClass('is-invalid');
+              errDescr.html("<p>Text lenght must be between 3 and 25 OR nothing.</p>");
+              $("#buttonSave").prop('disabled',true);
+          } else {
+              $(inputDescr).removeClass('is-invalid');
+              $(inputDescr).addClass('is-valid');
+              $("#buttonSave").prop('disabled',false);
+              checkErrors();
+          }
+     /* $(inputDescr).on('textarea', function() {
+          var descr = $(inputDescr).val();
+          errDescr.html("");
+          if (description.length < 3 || description.length > 25) {
+              $(inputDescr).addClass('is-invalid');
+              errDescr.html("<p>Text lenght must be between 3 and 25 OR nothing.</p>");
+              $("#buttonSave").prop('disabled',true);
+          } else {
+              $(inputDescr).removeClass('is-invalid');
+              $(inputDescr).addClass('is-valid');
+              $("#buttonSave").prop('disabled',false);
+          }
+          
+      });*/
+  }
+  
+  function checkErrors() {
+      // Vérifier s'il y a d'autres éléments avec la classe 'is-invalid'
+      if ($('.is-invalid').length > 0 || inputTitle.hasClass('is-invalid')) {
+          $("#buttonSave").prop('disabled', true); // Désactiver le bouton Save s'il y a des erreurs
+      } else {
+          $("#buttonSave").prop('disabled', false); // Activer le bouton Save si aucune erreur n'est présente
+      }
+  }
 
 // Colruyt tartiflette
 
-    function attachDeleteHandlers() {
-            $('.supItem').on('click', function(event) {
-                const itemId = $(this).data('id');
-                console.log(itemId);
-                //event.preventDefault();
-                //delete_item(itemId); // Appel de la fonction de suppression
-            });
-        }
-        async function uniqueNoteByOwner(){
-            const dataTitle=  inputTitle.val();
-            const postData = {
-             title: dataTitle
-            };
+function attachDeleteHandlers() {
+      $('.supItem').on('click', function(event) {
+          const itemId = $(this).data('id');
+          console.log(itemId);
+          //event.preventDefault();
+          //delete_item(itemId); // Appel de la fonction de suppression
+      });
+  }
+
+
+
+  async function uniqueNoteByOwner(){
+      const dataTitle=  inputTitle.val();
+      const postData = {
+       title: dataTitle
+      };
+    
+      $.ajax({
+          type: "POST", // Specify the request method
+          url: "Notes/note_exists_service/", // Specify the URL to which you want to send the request
+          data: postData, 
+          success: function(response) {
+              // Handle the response from the server
+              var debutTrue = response.indexOf('true');
+              var finTrue = response.lastIndexOf('true');
+              var trueString = response.substring(debutTrue, finTrue + 4); // Ajoutez 4 pour inclure "true"
+             if(trueString === "true"){
+              $(inputTitle).removeClass('is-valid');
+              $(inputTitle).addClass('is-invalid');
+                  errTitle.html("<p></p>");
+                  errTitle.append("Title already exists.");
+                  buttonGeneral.prop("disabled", true);
+                  checkErrors();
+
+             }
+          },
+          error: function(xhr, status, error) {
+              // Handle errors
+              console.error("Error:", error);
+          }
           
-            $.ajax({
-                type: "POST", // Specify the request method
-                url: "Notes/note_exists_service/", // Specify the URL to which you want to send the request
-                data: postData, 
-                success: function(response) {
-                    // Handle the response from the server
-                    var debutTrue = response.indexOf('true');
-                    var finTrue = response.lastIndexOf('true');
-                    var trueString = response.substring(debutTrue, finTrue + 4); // Ajoutez 4 pour inclure "true"
 
-                   if(trueString === "true"){
-                    $(inputTitle).removeClass('is-valid');
-                    $(inputTitle).addClass('is-invalid');
-                        errTitle.html("<p></p>");
-                        errTitle.append("Title already exists.");
-                        console.log(buttonGeneral.html);
-                        buttonGeneral.prop("disabled", true);
-                        console.log("success");
-                        console.log(errTitle.html);
-                        checkErrors();
-                   }
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                    console.error("Error:", error);
-                }
-                
-});            
-        }
-        
-        function validateItems(){
-            $(this).on('input', function() {
-                var item = $(this).val();
-                console.log(item);
-                errorInput.html("");
-                if (item.value.trim == ""  || item.length > 60) {
-                    $(this).addClass('is-invalid');
-                    errorInput = document.getElementById("errorInput"+i);
-                    errorInput.append("Item lenght must be between 1 and 60");
-                    $("#buttonSave").prop('disabled',true);
-                } else {
-                    $(this).removeClass('is-invalid');
-                    $(this).addClass('is-valid');
-                    $("#buttonSave").prop('disabled',false);
-                }
-                uniqueItems(valeursInputs);
-            });
-        }
+});
+      
+      
+  }
+  function uniqueItems(){
+      var ok = false;
+      var arrayError = [];
+      var allItems = document.querySelectorAll('.itemclass') ;
+      console.log(allItems);
+      allItems.forEach(function(input) {
+          input.addEventListener('input',function(){
+              var firstElem = input;
+              allItems.forEach(function(otherInput){
+                  var otherElem = otherInput;
+                  if(firstElem.id !== otherElem.id){
+                      if(firstElem.value === otherElem.value){
+                          var error = $("#errorInput"+firstElem.id);
+                          //var otherError = $("#errorInput"+otherElem.id);
+                          error.html("");
+                          //otherError.html("");
+                          error.append("Items must be unique");
+                         // otherError.append("Items must be unique");
+                         //$(firstElem.id).removeClass('is-valid');
+                          //$(firstElem.id).addClass('is-invalid');
+                          ok = true;
+                          console.log(ok);
+                          buttonGeneral.prop("disabled", ok);
+                      }
+                  }
+              })
+      })
+      }
+      
+      );
+      
 
-        function getAllValueInputs4Items(numberOfItems){
-            for(var i = 0 ; i < numberOfItems ; i++) {
-                var valeurInput = document.getElementById(i);
-                val4input.push(valeurInput.value);
-            } 
-        }
-        function getNumberOfItems(){
-                var inputs = document.querySelectorAll('input[type="text"]');
+      /*for (var i = 0; i < $(AllItems).length; i++) {
+              var elementI = $(AllItems[i]).val();
+              for (var j = 0; j < $(AllItems).length; j++) {
+                  console.log(elementI);
+                  if (i !== j) {
+                      console.log(elementj);
+                      var elementJ = $(AllItems[i]).val();
+                      if (elementI === elementJ) {
+                          console.log("2 meme")
+                          arrayError[i] = ["Items must be unique"];
+                          arrayError[j] = ["Items must be unique"];
+                      }
+                  }
+              }
+          }*/
+          
 
-                for (var i = 0; i < inputs.length; i++) {
-                    if (!isNaN(parseInt(inputs[i].id))) {
-                        numberOfItems++;
-                    }
-                }
-        }
-        function addItem(){
-            const allItems = document.querySelectorAll('.items');
-            okAdd = false;
-            errorAddItem.html("");
-            if(!(/^.{1,60}$/).test(inputItem.val()) || inputItem.val() === ''){
-                errorAddItem.append("<p>Item length must be between 1 and 60.</p>");
-                okAdd = true;
-                inputItem.addClass('is-invalid');
-            }else{
-                allItems.forEach(item =>{
-                    if(inputItem.val() === item.value){
-                        errorAddItem.append("<p>Item must be unique.</p>");
-                        inputItem.addClass('is-invalid');
-                        okAdd = true;
-                    }
-                });
-               
-            }
-            $(btnAddItem).prop('disabled' ,okAdd);
-            $("#buttonSave").prop('disabled',okAdd);
-            console.log(okAdd);
-            if(!okAdd){
-                $(inputItem).className = "";
-                console.log("tout est bon");
-                $(inputItem).addClass('is-valid');
-            }
+      
 
-            /*$(inputItem).on('input', function() {
-                var newItem = $(this).val();
-                //console.log(newItem);
-                errorAddItem.html("");
-                if (newItem.length < 1 || newItem.length > 60) {
-                    $(this).addClass('is-invalid');
-                    errorAddItem.append("Item lenght must be between 1 and 60");
-                    $("#buttonSave").prop('disabled',true);
-                } if (newItem == "test "){
-                    $(this).addClass('is-invalid');
-                    errorAddItem.append("Item must be unique ");
-                    $("#buttonSave").prop('disabled',true);
-                    console.log("error");
-                }
-                else{
-                    $(this).removeClass('is-invalid');
-                    $(this).addClass('is-valid');
-                    $("#buttonSave").prop('disabled',false);
-                }
-                
-            });   */
-        }
-        function ItemAlreadyExist(arrayContent){
-            let trouve = false;
-            var newItem = $(this).val; 
-            arrayContent.forEach(function(element) {
-                if (element === newItem) {
-                    trouve = true;
-                }
-            });
-            return trouve;
-            
-        }
-        async function deleteItem(id){
-            var URL = "&idItem=" + id +"/&idNote=" + idnote;
-            const res = await fetch("Notes/service_delete_item/", {
-                                        method: 'POST',
-                                        headers: {"Content-type": "application/x-www-form-urlencoded"},
-                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL
-                                        });
-            getItems();
-            displayItems();
-            const data = await res.text(); 
+  }
+          /*
+          
+          
+          
+          var arrayError = [];
+          for (var i = 0; i < arrayContent.length; i++) {
+              var elementI = arrayContent[i];
+              for (var j = 0; j < arrayContent.length; j++) {
+                  if (i !== j) {
+                      var elementJ = arrayContent[j];
+                      if (elementI === elementJ) {
+                          arrayError[i] = ["Items must be unique"];
+                          arrayError[j] = ["Items must be unique"];
+                      }
+                  }
+              }
+          }
+          return arrayError;
+          
+          
+          addEventListener('on', function() {
+              $('#'+input.id).on('input', function() {
+              //console.log("L'utilisateur écrit dans l'input avec l'ID : " + input.id);
+              for (var i = 0; i < arrayContent.length; i++) {
+                  var elementI = input.value;
+                  for (var j = 0; j < arrayContent.length; j++) {
+                      if (i !== j) {
+                          var elementj = arrayContent[j];
+                          if(elementI === elementj){
+                              console.log(elementI + " : " +input.id);
+                              console.log(elementj);
+                              $(this).addClass('is-invalid');
+                              $("#buttonSave").prop('disabled',true);
+                          }else{
+                              $(this).removeClass('is-invalid');
+                              $(this).addClass('is-valid');
+                              $("#buttonSave").prop('disabled',false);
+                          }
+                          }
+                      }
+                  }
+              })
+          });*/
+         
+  
 
-            console.log(data);
-        }
-        async function addNewItem(newItem){
-            var URL = "&newitem=" + newItem +"&idnotes=" + idnote;
-            const res = await fetch("Notes/service_add_item/", {
-                                        method: 'POST',
-                                        headers: {"Content-type": "application/x-www-form-urlencoded"},
-                                        body: "name=" + encodeURIComponent("A & B = ? / :") + URL
-                                        });
-            getItems();
-            displayItems();
-            const data = await res.text();
-            
-        }
-        function displayItems(){
-            let html = "";
-            let cpt = 0;
-            for(let item of valeursInputs){
-                html += "<div class='input-group mb-3'>";
-                html += "<div class='input-group-text'>";
-                html += "<a href='notes/check/"+item.id+"'>";
-                if (item.checked){
-                    html += "<input class='form-check-input mt-0' type='checkbox' checked>";
-                }else{
-                    html += "<input class='form-check-input mt-0' type='checkbox'>";
-                }
-                html += " </a>";
-                html += "</div>";
-                if (item.checked){
-                    html += "<input id='"+cpt+"' type='text' class='form-control throughline' aria-label='Text input with checkbox ' name='item' value='"+item.content+" / display' >";
-                }else{
-                    html += "<input id='"+cpt+"' type='text' class='form-control' aria-label='Text input with checkbox ' name='item' value='"+item.content+" / display' >";
-                }
-                html += "<button  class='btn btn-danger supItem' onclick='"+"deleteItem("+item.id+")' type='submit'>";
-                html += "<div class='invalid-feedback' id = 'errorInput"+cpt+"'>";
-                html += "</div>";
-                html += "<td class='is-invalid'></td>";
-                html += "<div id='"+item.id+"' >";
-                html += "<svg id='supItem"+item.id+"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>";
-                html += "<path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>";
-                html += "</svg>";
-                html += "</div>";
-                html += "<input type='hidden' id='idItem' value=''>";
-                html += "</button>";
-                html += "</div>";
-                
-                cpt++;
-            }
-            tableItems.html(html);
-            
-            
-        }
-        async function getItems(){
-            valeursInputs = await $.getJSON("Notes/get_all_items_service/" + idnote);
-            displayItems();
-        }
+  function validateItems(item){
+      $(item).on('input', function() {
+          var itemval = $(this).val();
+          //errorInput.html("");
+          var error = $("#errorInput"+this.id);
+          error.html("");
+          if (itemval.length < 1  || itemval.length > 60) {
+              //$(item).addClass('is-invalid');
+              error.append("Item lenght must be between 1 and 60");
+              $("#buttonSave").prop('disabled',true);
+          } else {
+              error.append("");
 
-        function isModified(){
-           var hasBeenModified = false;
-           if(inputTitle.val() !== titleAtFirst || descrAtFirst !== inputDescr.val()){
-               hasBeenModified = true;
-           }
-           console.log(hasBeenModified);
-           if(hasBeenModified){
-            test.modal("show");
-            $("#cancel").click(function(){
-                event.preventDefault();
-                test.modal("hide");
-            });
-            $("#leave").click(function(){
-                window.history.back();
-                window.history.back(); 
-            });
-           }
-           else{
-                window.history.back();
-                window.history.back();  
-           }
-        }
+             // $(item).removeClass('is-invalid');
+              //$(item).addClass('is-valid');
+              error.append("");
+
+              $("#buttonSave").prop('disabled',false);
+          }
+
+      });
+  }
+
+  function getAllValueInputs4Items(numberOfItems){
+      for(var i = 0 ; i < numberOfItems ; i++) {
+          var valeurInput = document.getElementById(i);
+          val4input.push(valeurInput.value);
+      } 
+  }
+  function getNumberOfItems(){
+          var inputs = document.querySelectorAll('input[type="text"]');
+
+          for (var i = 0; i < inputs.length; i++) {
+              if (!isNaN(parseInt(inputs[i].id))) {
+                  numberOfItems++;
+              }
+          }
+  }
+  function addItem(){
+      const allItems = document.querySelectorAll('.items');
+      okAdd = false;
+      errorAddItem.html("");
+      if(!(/^.{1,60}$/).test(inputItem.val()) || inputItem.val() === ''){
+          errorAddItem.append("<p>Item length must be between 1 and 60.</p>");
+          okAdd = true;
+          inputItem.addClass('is-invalid');
+      }else{
+          allItems.forEach(item =>{
+              if(inputItem.val() === item.value){
+                  errorAddItem.append("<p>Item must be unique.</p>");
+                  inputItem.addClass('is-invalid');
+                  okAdd = true;
+              }
+          });
+         
+      }
+      $(btnAddItem).prop('disabled' ,okAdd);
+      $("#buttonSave").prop('disabled',okAdd);
+      console.log(okAdd);
+      if(!okAdd){
+          $(inputItem).className = "";
+          console.log("tout est bon");
+          $(inputItem).addClass('is-valid');
+      }
+
+      /*$(inputItem).on('input', function() {
+          var newItem = $(this).val();
+          //console.log(newItem);
+          errorAddItem.html("");
+          if (newItem.length < 1 || newItem.length > 60) {
+              $(this).addClass('is-invalid');
+              errorAddItem.append("Item lenght must be between 1 and 60");
+              $("#buttonSave").prop('disabled',true);
+          } if (newItem == "test "){
+              $(this).addClass('is-invalid');
+              errorAddItem.append("Item must be unique ");
+              $("#buttonSave").prop('disabled',true);
+              console.log("error");
+          }
+          else{
+              $(this).removeClass('is-invalid');
+              $(this).addClass('is-valid');
+              $("#buttonSave").prop('disabled',false);
+          }
+          
+      });   */
+
+  }
+  function ItemAlreadyExist(arrayContent){
+      let trouve = false;
+      var newItem = $(this).val; 
+      arrayContent.forEach(function(element) {
+          if (element === newItem) {
+              trouve = true;
+          }
+      });
+      return trouve;
+      
+  }
+  async function deleteItem(id){
+      var URL = "&idItem=" + id +"/&idNote=" + idnote;
+
+      $.ajax({
+          type: "POST",
+          url: "Notes/service_delete_item/", 
+          data: {
+              idItem: id,
+              idNote: idnote    
+          },
+          success: function(response){
+              console.log('removable'+response);
+              var moha = document.getElementById('removable'+response);
+              console.log(moha);
+              moha.remove();
+          
+          }
+      });
+     
+      
+  }
+  async function addNewItem(newItem){
+      var newItemText = $("#addItem").val();
+
+      $.ajax({
+          type: "POST",
+          url: "Notes/service_add_item/", 
+          data: {
+              newitem: newItemText,
+              idnotes: idnote    
+          },
+          success: function(response){
+              var newInputItem = displayItems(response,newItemText);
+              tableItems.prepend(newInputItem);
+              testItem = document.querySelectorAll(".supItem");
+              console.log(testItem);
+
+              $(".supItem").each(function(){
+                  $(this).click(function(){
+                      deleteItem(this.id);
+                  })
+              })
+              
+              $(".itemclass").each(function(){
+                  $(this).click(function(){
+                      console.log(this);
+                      validateItems();
+                  })
+              })
+              
+          }
+      });
+
+      /* = "&newitem=" + newItem +"&idnotes=" + idnote;
+
+      const res = await fetch("Notes/service_add_item/", {
+                                  method: 'POST',
+                                  headers: {"Content-type": "application/x-www-form-urlencoded"},
+                                  body: "name=" + encodeURIComponent("A & B = ? / :") + URL
+<<<<<<< HEAD
+                                  });
+      getItems();
+      displayItems();
+      const data = await res.text();
+      
+  }
+  function displayItems(){
+      let html = "";
+      let cpt = 0;
+      for(let item of valeursInputs){
+          html += "<div class='input-group mb-3'>";
+          html += "<div class='input-group-text'>";
+          html += "<a href='notes/check/"+item.id+"'>";
+          if (item.checked){
+              html += "<input class='form-check-input mt-0' type='checkbox' checked>";
+          }else{
+              html += "<input class='form-check-input mt-0' type='checkbox'>";
+          }
+          html += " </a>";
+          html += "</div>";
+          if (item.checked){
+              html += "<input id='"+cpt+"' type='text' class='form-control throughline' aria-label='Text input with checkbox ' name='item' value='"+item.content+" / display' >";
+          }else{
+              html += "<input id='"+cpt+"' type='text' class='form-control' aria-label='Text input with checkbox ' name='item' value='"+item.content+" / display' >";
+          }
+          html += "<button  class='btn btn-danger supItem' onclick='"+"deleteItem("+item.id+")' type='submit'>";
+          html += "<div class='invalid-feedback' id = 'errorInput"+cpt+"'>";
+          html += "</div>";
+          html += "<td class='is-invalid'></td>";
+          html += "<div id='"+item.id+"' >";
+          html += "<svg id='supItem"+item.id+"'xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>";
+
+                                  
+                                 ;*/
+      
+  }
+  function displayItems(idNewItem,newItemText){
+      
+      let html = "";
+      
+          html += "<div id='removable"+idNewItem+"'>";
+          html += "<div class='input-group mb-3'>";
+          html += "<div class='input-group-text'>";
+          html += "<a href='notes/check/"+idNewItem+"'>";
+          html += "<input class='form-check-input mt-0' type='checkbox'>";
+          html += " </a>";
+          html += "</div>";
+          html += "<input id='id"+idNewItem+"' type='text' class='form-control itemclass' aria-label='Text input with checkbox ' name='item' value='"+newItemText+"' >";
+          html += "<button id = '"+idNewItem+"' class='btn btn-danger supItem' data-id='"+idNewItem+"' type='submit'>";
+          html += "<div class='invalid-feedback' id = 'errorInput"+idNewItem+"'>";
+          html += "</div>";
+          html += "<td class='is-invalid'></td>";
+          html += "<div id='"+idNewItem+"' >";
+          html += "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>";
+          html += "<path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8'/>";
+          html += "</svg>";
+          html += "</div>";
+          html += "<input type='hidden' id='idItem' value=''>";
+          html += "</button>";
+          html += "</div>";
+          html += "<div id='errorInput"+idNewItem+"' style='color: red;'><div  class='invalid-feedback'>";
+          html += "<p>errorInput"+idNewItem+"</p>";
+          html += "</div>";
+          html += "</div>";
+          
+         
+      return html;
+      //tableItems.append(html);
+
+      
+      
+  }
+  async function getItems(){
+      valeursInputs = await $.getJSON("Notes/get_all_items_service/" + idnote);
+
+     // displayItems();
+  }
+  function updateItem(){
+
+
+  }
+
+  function isModified(){
+     var hasBeenModified = false;
+     if(inputTitle.val() !== titleAtFirst || descrAtFirst !== inputDescr.val()){
+
+         hasBeenModified = true;
+     }
+     console.log(hasBeenModified);
+     if(hasBeenModified){
+      test.modal("show");
+      $("#cancel").click(function(){
+          event.preventDefault();
+          test.modal("hide");   
+
+      });
+      $("#leave").click(function(){
+          window.history.back();
+          window.history.back(); 
+      });
+     }
+     else{
+          window.history.back();
+          window.history.back();  
+     }
+
+  }
+
+
+  
+
+
 </script>
     
 </head>
