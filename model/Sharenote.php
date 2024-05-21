@@ -39,6 +39,65 @@ class Sharenote extends Model{
             
         }
     }
+    public static function get_all_share_with_me(User $user):array|bool{
+        $sql = "SELECT n.*
+        FROM note_shares ns,notes n 
+        WHERE ns.user = :ownerid
+        and ns.note = n.id
+        ";
+
+
+$query = self::execute($sql,["ownerid"=>$user->get_id()]);
+
+$data =$query->fetchAll();
+if($query->rowCount()==0){
+return false;
+}else{
+$results = [];
+foreach ($data as $row) {
+    if(Note::iamcheck($row['id'])){
+        $results[] = Notecheck::get_note_by_id($row['id']);
+    }else{
+        $results[] = Notetext::get_note_by_id($row['id']);
+    }
+   
+}
+return $results;
+}
+
+    }
+    public static function get_all_by_users_label( array $labels ,User $user): array|false {
+        $conditions = implode(" AND ", array_map(function($label) {
+            return "EXISTS (SELECT 1 FROM note_labels WHERE note = n.id AND label = '$label')";
+        }, $labels));
+        
+        $sql = "SELECT n.*
+                FROM note_shares ns,notes n 
+                WHERE $conditions
+                and ns.user = :ownerid
+                and ns.note = n.id
+                ";
+
+
+        $query = self::execute($sql,["ownerid"=>$user->get_id()]);
+
+      $data =$query->fetchAll();
+      if($query->rowCount()==0){
+        return false;
+      }else{
+        $results = [];
+        foreach ($data as $row) {
+            if(Note::iamcheck($row['id'])){
+                $results[] = Notecheck::get_note_by_id($row['id']);
+            }else{
+                $results[] = Notetext::get_note_by_id($row['id']);
+            }
+           
+        }
+        return $results;
+      }
+    }
+    
     public static function get_shared_notes_editor(User $owner,User $shared_user) : array|false {
         $query = self::execute("SELECT * 
                                 FROM notes n , note_shares ns

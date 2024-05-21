@@ -44,11 +44,14 @@ class ControllerNotes extends Controller{
       
       ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
+
+
      public function search():void{
       $array_note= [];
       $user =$this->get_user_or_redirect();
       $array_notes = Notetext::get_notes_by_user($user);
        $array_notesCheck = Notecheck::get_notes_by_user($user);
+       $array_note_share= Sharenote::get_all_share_with_me($user);
        if($array_notes && $array_notesCheck){
             $array_note = array_merge($array_notes,$array_notesCheck);
             usort($array_note, array($this, "comparenote"));
@@ -58,7 +61,7 @@ class ControllerNotes extends Controller{
           $array_note = $array_notesCheck;
         }
        $labels= Label::get_all_labels();
-      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note]);
+      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note ,"array_note_share"=>$array_note_share]);
 
 
      }
@@ -69,18 +72,18 @@ class ControllerNotes extends Controller{
       ///TOD:faudra encode apres !!!!
       $tab1[]=$_POST['label'];
       $tab2=[];
-      //TODO: remetre le tableux decode dans param1 dans la vue 
       if(isset($_GET['param1'])){
-        var_dump(Tools::url_safe_decode($_GET['param1']));
+       // var_dump(Tools::url_safe_decode($_GET['param1']));
         $tab2 =Tools::url_safe_decode($_GET['param1']);}
       $tab = array_merge($tab1, $tab2);
       $user =$this->get_user_or_redirect();
       $array_note= Note::get_all_by_users_label($tab ,$user);
+      $array_note_share = Sharenote::get_all_by_users_label($tab,$user);
       if(!$array_note){
-        (new View("error"))->show(["error"=>"this labal not exist"]);
+        (new View("error"))->show(["error"=>"this label not exist"]);
       }else{
       $labels= Label::get_all_labels();
-      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"tab"=>Tools::url_safe_encode($tab)]);
+      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"array_note_share"=>$array_note_share,"tab"=>Tools::url_safe_encode($tab)]);
       }
 
       /*

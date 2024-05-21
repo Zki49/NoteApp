@@ -52,6 +52,9 @@
          }
          echo' </div>';
          echo"<div  id='pined' class='row , connectedSortable'>";
+         if(isset($array_note_share)){
+          echo"<h5>your Notes</h5>";
+         }
          foreach($array_notes as $notes){
            if(!$notes-> archived()){
            if($notes->are_you_check()){
@@ -67,6 +70,24 @@
           }
         }
         echo'</div>';
+        if(isset($array_note_share)){
+        echo"<div  id='pined' class='row , connectedSortable'><h5>Notes share</h5>";
+        foreach($array_note_share as $notes){
+          if(!$notes-> archived()){
+          if($notes->are_you_check()){
+            
+            echo ' <div  class="col-6 col-md-6 col-lg-3">';
+            (new View("notecheck"))->show(["notes"=>$notes]);
+          }else{
+            echo '<div  class="col-6 col-md-6 col-lg-3">';
+            (new View("note"))->show(["notes"=>$notes]);
+          }
+          echo"</div>"; 
+
+         }
+       }
+       echo'</div>';
+      }
 
         ?>
       
