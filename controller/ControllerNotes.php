@@ -62,8 +62,20 @@ class ControllerNotes extends Controller{
 
 
      }
+     
      public function search_by_labels():void{
       var_dump($_POST);
+      ///TOD:faudra encode apres !!!!
+      $tab[]=$_POST['label'];
+      $user =$this->get_user_or_redirect();
+      $array_note= Note::get_all_by_users_label($tab ,$user);
+      if(!$array_note){
+        (new View("error"))->show(["error"=>"this labal not exist"]);
+      }else{
+      $labels= Label::get_all_labels();
+      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note]);
+      }
+
       /*
       if(isset($_GET['param1'])){
        $labels[]= $_GET['param1'];
