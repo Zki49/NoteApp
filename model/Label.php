@@ -44,11 +44,14 @@
 
      public static function  get_all_labels_for_dataList(int $idnote,int $idUser):array|bool{
           $query = self::execute("SELECT DISTINCT nl.label 
-                                  FROM note_labels nl   
-                                  WHERE nl.note in (SELECT n.id
-                                                    FROM notes n
-                                                    WHERE n.owner = :idUser
-                                                    AND n.id != :idNote )",["idUser"=>$idUser,"idNote"=>$idnote]);
+                                   FROM note_labels nl   
+                                   WHERE nl.note in (SELECT n.id
+                                                            FROM notes n
+                                                       WHERE n.owner = :idUser
+                                                       AND n.id != :idNote)
+                                   AND nl.label NOT IN(SELECT nl2.label 
+                                                       FROM note_labels nl2
+                                                       WHERE nl2.note = :idNote )",["idUser"=>$idUser,"idNote"=>$idnote]);
      
             $data = $query->fetchAll();
             if ($query->rowCount() == 0) { 

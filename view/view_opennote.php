@@ -167,17 +167,7 @@
  
  
                         }
-                        echo"
-                        <form class='form-container' action='notes/editLabel' method='post'>
-                            <input type='hidden' name='idnotes' value='" . $notes->get_id() . "'>
-                            <button type='submit2' class='styled-link-button'>
-                                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-bookmark' viewBox='0 0 16 16'>
-                                    <path d='M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z'/>
-                                </svg>
-                            </button>
-                         </form>
-
-                         ";
+                      
                  ?>
                 <!-- Lien stylisé comme un bouton de soumission de formulaire -->
                         <a href="notes/archived/<?= $notes->get_id()?>" class="styled-link-button"><?php
@@ -200,7 +190,16 @@
                          
                         if ($is_editor) {
                             if(!$notes->archived()||isset($share)){
-                            echo "<form class='form-container' action='notes/edit' method='post'>
+                            echo "
+                            <form class='form-container' action='notes/editLabel' method='post'>
+                            <input type='hidden' name='idnotes' value='" . $notes->get_id() . "'>
+                            <button type='submit2' class='styled-link-button'>
+                                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-bookmark' viewBox='0 0 16 16'>
+                                    <path d='M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z'/>
+                                </svg>
+                            </button>
+                         </form>
+                            <form class='form-container' action='notes/edit' method='post'>
                                     <input type='hidden' name='idnotes' value='" . $notes->get_id() . "'>
                                     <input type='hidden' name='check' value='" . $notes->are_you_check() . "'>
                                     <button type='submit2' class='styled-link-button'>
