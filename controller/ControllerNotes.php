@@ -68,8 +68,11 @@ class ControllerNotes extends Controller{
       //var_dump($_GET);
       ///TOD:faudra encode apres !!!!
       $tab1[]=$_POST['label'];
+      $tab2=[];
       //TODO: remetre le tableux decode dans param1 dans la vue 
-      $tab2 []=$_GET['param1'];
+      if(isset($_GET['param1'])){
+        var_dump(Tools::url_safe_decode($_GET['param1']));
+        $tab2 =Tools::url_safe_decode($_GET['param1']);}
       $tab = array_merge($tab1, $tab2);
       $user =$this->get_user_or_redirect();
       $array_note= Note::get_all_by_users_label($tab ,$user);
@@ -77,7 +80,7 @@ class ControllerNotes extends Controller{
         (new View("error"))->show(["error"=>"this labal not exist"]);
       }else{
       $labels= Label::get_all_labels();
-      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note]);
+      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"tab"=>Tools::url_safe_encode($tab)]);
       }
 
       /*
