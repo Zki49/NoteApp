@@ -64,9 +64,13 @@ class ControllerNotes extends Controller{
      }
      
      public function search_by_labels():void{
-      var_dump($_POST);
+      //var_dump($_POST);
+      //var_dump($_GET);
       ///TOD:faudra encode apres !!!!
-      $tab[]=$_POST['label'];
+      $tab1[]=$_POST['label'];
+      //TODO: remetre le tableux decode dans param1 dans la vue 
+      $tab2 []=$_GET['param1'];
+      $tab = array_merge($tab1, $tab2);
       $user =$this->get_user_or_redirect();
       $array_note= Note::get_all_by_users_label($tab ,$user);
       if(!$array_note){
