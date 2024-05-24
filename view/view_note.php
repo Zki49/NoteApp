@@ -62,13 +62,18 @@
                     }
                     ?>
                    </form>
+                   <?php
+                   if(($notes->min_weight()- $notes->get_weight())!=0){
+                   ?>
                    <form action="notes/movedown" method="post">
                 <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
                     <button type="submit" class="btn btn-primary" >
                         >>
                     </button>
                    </form>
-
+                 <?php
+                 }
+                 ?>
                 </div>
                 <?php }?>
                 </noscript>

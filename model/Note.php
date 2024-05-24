@@ -59,7 +59,6 @@ abstract class Note  extends Model{
     public function get_idowner():int{
        return $this->owner->get_id();
     }
-    
     private  function validate_title($title):array{
         $errors=[];
         $min= Configuration::get("title_min_length ");
@@ -103,6 +102,18 @@ abstract class Note  extends Model{
         return false;
       }
       return true;
+    }
+    public function min_weight(){ 
+        $query =self::execute("SELECT * from notes n
+                               JOIN users u on n.owner=u.id 
+                               WHERE mail = :mail
+                               ORDER by weight asc ",["mail"=>$this->owner->get_mail()]);//et regarder que la note soit pas archiver 
+        $data = $query->fetch();//on pren que la premiere ligne 
+        if($query->rowCount()==0){
+            return 0;
+        }
+        $min=$data['weight'];
+        return $min;
     }
     public function max_weight(){ 
         $query =self::execute("SELECT * from notes n

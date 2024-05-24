@@ -17,7 +17,24 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-   
+   <script>
+    let tablabel;
+     $(document).ready(function(){
+      $(".styled-link-button").click(function(){
+            //alert(this.id);
+            tablabel+=this.id;
+            searchByLabel(tablabel);
+        });
+
+     })
+
+    function searchByLabel(labels){
+
+      // videz les div 
+      $("#myNote, #noteshare").empty();
+    }
+
+   </script>
 </head>
 <body>
 <button class="btn btn-primary btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
@@ -36,8 +53,8 @@
            //<input type="checkbox" id=';echo$label-> get_label_name();echo'name= ';echo$label-> get_label_name();echo'value=';echo$label-> get_label_name();echo'">
             foreach($labels as $label){
                 $cpt++;
-            echo '<form   action="notes/search_by_labels/'; if(isset($tab)){echo $tab;};echo' " method="post" > ';
-            echo'<div class="checkbox,row"> <button class="styled-link-button">';
+            echo '<noscript><form   action="notes/search_by_labels/'; if(isset($tab)){echo $tab;};echo' " method="post" ></noscript> ';
+            echo'<div class="checkbox,row"> <button  id="';echo $label->get_label_name();echo'" class="styled-link-button">';
             if(!$label->is_check()){
             echo'
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
@@ -54,15 +71,16 @@
             echo $label-> get_label_name();
             echo'<input type="hidden" name="label" value="';echo $label-> get_label_name();echo'">
                  </div>
-                 </form>';
+                 <noscript></form></noscript>';
             }
            // echo'    </form>';
          }
          echo' </div>';
-         echo"<div  id='pined' class='row , connectedSortable'>";
+        
          if(isset($array_note_share)){
-          echo"<h5>your Notes</h5>";
+          echo"<h5 >your Notes</h5>";
          }
+         echo"<div  id='myNote' class='row , connectedSortable'>";
          foreach($array_notes as $notes){
            if(!$notes-> archived()){
            if($notes->are_you_check()){
@@ -79,7 +97,7 @@
         }
         echo'</div>';
         if(isset($array_note_share)){
-        echo"<div  id='pined' class='row , connectedSortable'><h5>Notes share</h5>";
+        echo"<h5>Notes share</h5><div  id='noteshare' class='row , connectedSortable'>";
         foreach($array_note_share as $notes){
           if(!$notes-> archived()){
           if($notes->are_you_check()){
