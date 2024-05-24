@@ -77,12 +77,14 @@ class ControllerNotes extends Controller{
         $tab2 =Tools::url_safe_decode($_GET['param1']);
         $cpt=0;
         foreach($tab2 as $lab){
+          if(!empty($tab1)){
           if($lab==$tab1[0]){
             unset($tab2[$cpt]);
             $tab1=[];
           }
           $cpt++;
         }
+      }
       
       }
       if(empty($tab1)&&empty($tab2)){
