@@ -74,18 +74,28 @@ class ControllerNotes extends Controller{
       $tab2=[];
       if(isset($_GET['param1'])){
        // var_dump(Tools::url_safe_decode($_GET['param1']));
-        $tab2 =Tools::url_safe_decode($_GET['param1']);}
+        $tab2 =Tools::url_safe_decode($_GET['param1']);
+        $cpt=0;
+        foreach($tab2 as $lab){
+          if($lab==$tab1[0]){
+            unset($tab2[$cpt]);
+            $tab1=[];
+          }
+          $cpt++;
+        }
+      
+      }
+      if(empty($tab1)&&empty($tab2)){
+        $this->search();
+      }else{
       $tab = array_merge($tab1, $tab2);
       $user =$this->get_user_or_redirect();
       $labels= Label::get_all_labels();
      
       foreach($labels as $label){
-        $cpt=0;
         foreach($tab as $lab){
-              $cpt++;
               if($label->get_label_name()==$lab){
-                    unset($tab[$cpt]);
-                    $label->check(); 
+                  $label->check(); 
               } 
         }
 
@@ -115,7 +125,7 @@ class ControllerNotes extends Controller{
       $labels= Label::get_all_labels();
       (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note]);
       }*/
-
+    }
      }
     
     /*
