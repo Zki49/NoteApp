@@ -3,9 +3,15 @@
  class Label extends Model{
    
 
-     public function  __construct(private int $idnote,private string $label)
+     public function  __construct(private int $idnote,private string $label,private bool $check)
      {
         
+     }
+     public function is_check():bool{
+          return $this->check;
+     }
+     public function check():void{
+          $this->check= !$this->check;
      }
      public static function  get_all_labels():array|bool{
         $query = self::execute("SELECT  DISTINCT label from note_labels  ORDER BY label ASC",[]);
@@ -16,7 +22,7 @@
         } else {
             $results = [];
             foreach ($data as $row) {
-                $results[] = new Label(0,$row["label"]);
+                $results[] = new Label(0,$row["label"],false);
             }
             return $results;
         }
@@ -36,7 +42,7 @@
           } else {
           $results = [];
           foreach ($data as $row) {
-               $results[] = new Label(0,$row["label"]);
+               $results[] = new Label(0,$row["label"],false);
           }
           return $results;
           }
@@ -82,7 +88,7 @@
         } else {
             $results = [];
             foreach ($data as $row) {
-                $results[] = new Label($row["note"],$row["label"]);
+                $results[] = new Label($row["note"],$row["label"],false);
             }
             return $results;
         }

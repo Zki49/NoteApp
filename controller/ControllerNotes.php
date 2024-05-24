@@ -77,12 +77,26 @@ class ControllerNotes extends Controller{
         $tab2 =Tools::url_safe_decode($_GET['param1']);}
       $tab = array_merge($tab1, $tab2);
       $user =$this->get_user_or_redirect();
+      $labels= Label::get_all_labels();
+     
+      foreach($labels as $label){
+        $cpt=0;
+        foreach($tab as $lab){
+              $cpt++;
+              if($label->get_label_name()==$lab){
+                    unset($tab[$cpt]);
+                    $label->check(); 
+              } 
+        }
+
+      }
+    
       $array_note= Note::get_all_by_users_label($tab ,$user);
       $array_note_share = Sharenote::get_all_by_users_label($tab,$user);
       if(!$array_note){
         (new View("error"))->show(["error"=>"this label not exist"]);
       }else{
-      $labels= Label::get_all_labels();
+    
       (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"array_note_share"=>$array_note_share,"tab"=>Tools::url_safe_encode($tab)]);
       }
 
