@@ -23,15 +23,53 @@
       $(".styled-link-button").click(function(){
             //alert(this.id);
             tablabel+=this.id;
-            searchByLabel(tablabel);
+            searchByLabel();
         });
 
      })
 
-    function searchByLabel(labels){
-
+    function searchByLabel(){
+       search();
+       searchshare();
       // videz les div 
-      $("#myNote, #noteshare").empty();
+      
+    }
+    function search(){
+      $.ajax({
+            url: 'notes/seach',
+            method: 'POST',
+            dataType: 'html',
+            data: {
+            labels: tablabel
+        },
+            success: function(response) {
+                $("#myNote").empty();
+                $('#myNote').html(response);
+               
+            },
+            error: function(xhr, status, error) {
+                
+                console.error('Erreur lors de la récupération des notes : ' + error);
+            }
+        });
+    }
+    function  searchshare(){
+      $.ajax({
+            url: 'notes/seachshare',
+            method: 'POST',
+            dataType: 'html',
+            data: {
+            labels: tablabel
+        },
+            success: function(response) {
+                $(" #noteshare").empty();
+                $('#noteshare').html(response);
+            },
+            error: function(xhr, status, error) {
+                
+                console.error('Erreur lors de la récupération des notes : ' + error);
+            }
+        });
     }
 
    </script>
