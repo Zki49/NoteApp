@@ -107,6 +107,7 @@ abstract class Note  extends Model{
         $query =self::execute("SELECT * from notes n
                                JOIN users u on n.owner=u.id 
                                WHERE mail = :mail
+                               and archived = 0
                                ORDER by weight asc ",["mail"=>$this->owner->get_mail()]);//et regarder que la note soit pas archiver 
         $data = $query->fetch();//on pren que la premiere ligne 
         if($query->rowCount()==0){
@@ -119,6 +120,7 @@ abstract class Note  extends Model{
         $query =self::execute("SELECT * from notes n
                                JOIN users u on n.owner=u.id 
                                WHERE mail = :mail
+                               and archived = 0
                                ORDER by weight DESC ",["mail"=>$this->owner->get_mail()]);
         $data = $query->fetch();//on pren que la premiere ligne 
         if($query->rowCount()==0){
