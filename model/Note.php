@@ -108,6 +108,21 @@ abstract class Note  extends Model{
                                JOIN users u on n.owner=u.id 
                                WHERE mail = :mail
                                and archived = 0
+                               and pinned = 0
+                               ORDER by weight asc ",["mail"=>$this->owner->get_mail()]);//et regarder que la note soit pas archiver 
+        $data = $query->fetch();//on pren que la premiere ligne 
+        if($query->rowCount()==0){
+            return 0;
+        }
+        $min=$data['weight'];
+        return $min;
+    }
+    public function min_weight_pined(){ 
+        $query =self::execute("SELECT * from notes n
+                               JOIN users u on n.owner=u.id 
+                               WHERE mail = :mail
+                               and archived = 0
+                               and pinned = 1
                                ORDER by weight asc ",["mail"=>$this->owner->get_mail()]);//et regarder que la note soit pas archiver 
         $data = $query->fetch();//on pren que la premiere ligne 
         if($query->rowCount()==0){
@@ -121,6 +136,21 @@ abstract class Note  extends Model{
                                JOIN users u on n.owner=u.id 
                                WHERE mail = :mail
                                and archived = 0
+                               and pinned = 0
+                               ORDER by weight DESC ",["mail"=>$this->owner->get_mail()]);
+        $data = $query->fetch();//on pren que la premiere ligne 
+        if($query->rowCount()==0){
+            return 0;
+        }
+        $max=$data['weight'];
+        return $max;
+    }
+    public function max_weight_pined(){ 
+        $query =self::execute("SELECT * from notes n
+                               JOIN users u on n.owner=u.id 
+                               WHERE mail = :mail
+                               and archived = 0
+                               and pinned = 1
                                ORDER by weight DESC ",["mail"=>$this->owner->get_mail()]);
         $data = $query->fetch();//on pren que la premiere ligne 
         if($query->rowCount()==0){

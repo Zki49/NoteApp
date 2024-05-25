@@ -65,9 +65,10 @@
                  <?php if(!$notes->archived()&&!isset($share)){?>
                 <div class="d-flex justify-content-between">
                     <?php
-
-                if(($notes->max_weight() - $notes->get_weight())!=0){
+                    
+                    if((($notes->max_weight() - $notes->get_weight())!=0)&&($notes->max_weight_pined()-$notes->get_weight())!=0){
                     ?>
+                    
                     <form action="notes/moveup" method="post">
                 <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
                     <button type="submit" class="btn btn-primary" >
@@ -77,7 +78,9 @@
                     echo "</form>";
                     }
                     ?>
-                   
+                    <?php
+                   if(((($notes->min_weight()- $notes->get_weight())!=0)&&($notes->min_weight_pined()-$notes->get_weight())!=0)){
+                   ?>
                    <form action="notes/movedown" method="post">
                 <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
                     <button type="submit" class="btn btn-primary" >
@@ -85,7 +88,7 @@
                     </button>
                    </form>
                 </div>
-                <?php } ?>
+                <?php }} ?>
                 </noscript>
             </div>
         </div>
