@@ -175,6 +175,9 @@
   <a class="nav-link link-secondary" href="Notes">My Notes</a>
   </li>
   <li class="nav-item">
+  <a class="nav-link link-secondary" href="Notes/search">Search</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link link-secondary" href="Notes/archive">My archives</a>
   </li>
 
