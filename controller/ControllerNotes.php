@@ -69,7 +69,6 @@ class ControllerNotes extends Controller{
      public function search_by_labels():void{
       //var_dump($_POST);
       //var_dump($_GET);
-      ///TOD:faudra encode apres !!!!
       $tab1[]=$_POST['label'];
       $tab2=[];
       if(isset($_GET['param1'])){
@@ -105,7 +104,7 @@ class ControllerNotes extends Controller{
     
       $array_note= Note::get_all_by_users_label($tab ,$user);
       $array_note_share = Sharenote::get_all_by_users_label($tab,$user);
-      if(!$array_note){
+      if(!$array_note && !$array_note_share ){
         (new View("error"))->show(["error"=>"this label not exist"]);
       }else{
     
@@ -177,6 +176,13 @@ class ControllerNotes extends Controller{
           (new view("error"))->show(["error"=>"notes with id $id not exist"]);
         }
       }
+    }
+
+    public function seach_service():void{
+
+    }
+    public function seachshare_service():void{
+      
     }
 
     public function archived():void{

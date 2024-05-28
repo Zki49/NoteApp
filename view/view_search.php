@@ -21,8 +21,28 @@
     let tablabel;
      $(document).ready(function(){
       $(".styled-link-button").click(function(){
-            //alert(this.id);
+      /*  if(this.getAttribute('data-checked')== true){
+         $res="true";
+        }else{
+          $res="false"
+        }
+         
+            alert($res);*/
             tablabel+=this.id;
+            if(this.getAttribute('data-checked') == 'true'){
+               this.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                </svg>`;
+            this.setAttribute('data-checked', 'false');
+            }else{
+              this.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+              <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+            </svg>`;
+            this.setAttribute('data-checked', 'true');
+            }
+
             searchByLabel();
         });
 
@@ -36,7 +56,7 @@
     }
     function search(){
       $.ajax({
-            url: 'notes/seach',
+            url: 'notes/seach_service',
             method: 'POST',
             dataType: 'html',
             data: {
@@ -55,7 +75,7 @@
     }
     function  searchshare(){
       $.ajax({
-            url: 'notes/seachshare',
+            url: 'notes/seachshare_service',
             method: 'POST',
             dataType: 'html',
             data: {
@@ -92,7 +112,7 @@
             foreach($labels as $label){
                 $cpt++;
             echo '<noscript><form   action="notes/search_by_labels/'; if(isset($tab)){echo $tab;};echo' " method="post" ></noscript> ';
-            echo'<div class="checkbox,row"> <button  id="';echo $label->get_label_name();echo'" class="styled-link-button">';
+            echo'<div class="checkbox,row"> <button  id="';echo $label->get_label_name();echo'" class="styled-link-button" data-checked="'; echo $label->is_check() ;echo' ">';
             if(!$label->is_check()){
             echo'
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
@@ -115,9 +135,10 @@
          }
          echo' </div>';
         
-         if(isset($array_note_share)){
+         if($array_notes){
+          
           echo"<h5 >your Notes</h5>";
-         }
+         
          echo"<div  id='myNote' class='row , connectedSortable'>";
          foreach($array_notes as $notes){
            if(!$notes-> archived()){
@@ -133,6 +154,7 @@
 
           }
         }
+      }
         echo'</div>';
         if(isset($array_note_share)){
         echo"<h5>Notes share</h5><div  id='noteshare' class='row , connectedSortable'>";
