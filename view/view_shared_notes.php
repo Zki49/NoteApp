@@ -79,6 +79,9 @@
     <a class="nav-link link-secondary" href="Notes/archive">My archives</a>
   </li>
 
+  <li class="nav-item">
+  <a class="nav-link link-secondary" href="Notes/search">Search</a>
+  </li>
   <?php 
     if(!empty($tab_shared)){
       foreach($tab_shared as $user): ?>
