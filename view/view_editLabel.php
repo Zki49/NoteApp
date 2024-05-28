@@ -35,6 +35,7 @@
             
 
             $(btnAddLabel).click(function(event){
+                
                 event.preventDefault();
                 addLabel(inputNewLabel.val());
             })
@@ -71,7 +72,6 @@
         }
 
         async function addLabel(newLabel){
-            
             const postdata = {
                 idnotes: idnote,
                 label : newLabel
@@ -81,7 +81,7 @@
                 url: "Notes/add_label_service/",
                 data: postdata,
                 success: function(response){
-                    if(response == "true"){
+                    if(response == "true"){   
                         let label = displayLabel(idnote,newLabel);
                         tableAllLabels.prepend(label);
                         $(".delete").each(function(){
@@ -119,6 +119,7 @@
 
         }
         function displayLabel(idnote,newlabel){
+            
             let html = "";
             html += "<div id='removable"+newlabel+"'>";
             html += "<noscript><form action='notes/delete_label' method='post'></noscript>";

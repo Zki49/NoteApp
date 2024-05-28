@@ -251,7 +251,6 @@ abstract class Note  extends Model{
         
         $error[] = $this->is_valide_label($idnote,$label);
         $longueur = mb_strlen( $label);
-        var_dump($longueur);
         if(empty($error[0])){
             self::execute("INSERT INTO note_labels (note,label) VALUES(:idnote,:label)",["idnote"=>$idnote,"label"=>$label]);
             return $error;
