@@ -56,14 +56,16 @@
     }
     function search(){
       $.ajax({
-            url: 'notes/seach_service',
+            url: 'notes/search_service',
             method: 'POST',
-            dataType: 'html',
-            data: {
+            dataType: 'json', // Indique que la réponse attendue est en JSON
+        contentType: 'application/json', // Indique que les données envoyées sont en JSON
+        data: JSON.stringify({
             labels: tablabel
-        },
+        }), 
             success: function(response) {
                 $("#myNote").empty();
+                console.log(response);
                 $('#myNote').html(response);
                
             },
@@ -75,12 +77,13 @@
     }
     function  searchshare(){
       $.ajax({
-            url: 'notes/seachshare_service',
+            url: 'notes/searchshare_service',
             method: 'POST',
-            dataType: 'html',
-            data: {
+            dataType: 'json', // Indique que la réponse attendue est en JSON
+        contentType: 'application/json', // Indique que les données envoyées sont en JSON
+        data: JSON.stringify({
             labels: tablabel
-        },
+        }), 
             success: function(response) {
                 $(" #noteshare").empty();
                 $('#noteshare').html(response);

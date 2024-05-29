@@ -90,33 +90,13 @@ class ControllerNotes extends Controller{
         $this->redirect("Notes","search"); 
       }else{
       $tab = array_merge($tab1, $tab2);
-      $user =$this->get_user_or_redirect();
-      $labels= Label::get_all_labels();
+   
      
-      foreach($labels as $label){
-        foreach($tab as $lab){
-              if($label->get_label_name()==$lab){
-                  $label->check(); 
-              } 
-        }
+        $string_array_labels=Tools::url_safe_encode($tab);
 
-      }
-    
-      $array_note= Note::get_all_by_users_label($tab ,$user);
-      $array_note_share = Sharenote::get_all_by_users_label($tab,$user);
-      if(!$array_note && !$array_note_share ){
-        (new View("error"))->show(["error"=>"this label not exist"]);
-      }else{
-        //arrayTo strig == implode
-        $string_array_note=implode(",",$array_note);
-        $string_array_note_share=implode(",",$array_note_share);
-        $string_array_labels=implode(",",$label);
-
-       // $this->redirect("Notes","resarch",$string_array_labels,$string_array_note, $string_array_note_share);
-       // trover une solution pour le prg 
+        $this->redirect("Notes","research",$string_array_labels);
        
-          (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"array_note_share"=>$array_note_share,"tab"=>Tools::url_safe_encode($tab)]);
-      }
+      
 
      
 
@@ -137,14 +117,33 @@ class ControllerNotes extends Controller{
       }*/
     }
      }
-     private function research():void{
-      $labels= explode(",",$_GET['param1']);
-      $array_note= explode(",",$_GET['param2']);
-      $array_note_share= explode(",",$_GET['param3']);
-      $tab = array_merge($array_note, $array_note_share);
+     public function research():void{
+      $tab= Tools::url_safe_decode($_GET['param1']);
+      $user =$this->get_user_or_redirect();
+      //faire la recherche ici 
+      ///$array_note= Tools::url_safe_decode($_GET['param2']);
+      //$array_note_share= Tools::url_safe_decode($_GET['param3']);
+     // var_dump($labels);
+      //$tab = array_merge($array_note, $array_note_share);
+      $labels= Label::get_all_labels();
+     
+      foreach($labels as $label){
+        foreach($tab as $lab){
+              if($label->get_label_name()==$lab){
+                  $label->check(); 
+              } 
+        }
+
+      }
+    
+      $array_note= Note::get_all_by_users_label($tab ,$user);
+      $array_note_share = Sharenote::get_all_by_users_label($tab,$user);
+      if(!$array_note && !$array_note_share ){
+        (new View("error"))->show(["error"=>"this label not exist"]);
+      }else{
       (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"array_note_share"=>$array_note_share,"tab"=>Tools::url_safe_encode($tab)]);
 
-
+      }
     }
     
     /*
@@ -196,10 +195,22 @@ class ControllerNotes extends Controller{
       }
     }
 
-    public function seach_service():void{
+    public function search_service():void{
+      $user= $this->get_user_or_redirect();
+      $tab = isset($_POST['labels']) ? json_decode($_POST['labels'], true) : [];
+      
+      $array_note= Note::get_all_by_users_label($tab ,$user);
+      //var_dump($array_note);
+     echo json_encode($array_note);
+      
+
 
     }
-    public function seachshare_service():void{
+    public function searchshare_service():void{
+      $user= $this->get_user_or_redirect();
+      $tab = isset($_POST['labels']) ? json_decode($_POST['labels'], true) : [];
+      $array_note_share = Sharenote::get_all_by_users_label($tab,$user);
+      echo json_encode($array_note_share);
 
     }
 
