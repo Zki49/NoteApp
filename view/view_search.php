@@ -111,7 +111,7 @@
            //<input type="checkbox" id=';echo$label-> get_label_name();echo'name= ';echo$label-> get_label_name();echo'value=';echo$label-> get_label_name();echo'">
             foreach($labels as $label){
                 $cpt++;
-            echo '<noscript><form   action="notes/search_by_labels/'; if(isset($tab)){echo $tab;};echo' " method="post" ></noscript> ';
+            echo '<noscript><form   action="notes/search_by_labels/'; if(isset($tab)){echo $tab;};echo' " method="Post" ></noscript> ';
             echo'<div class="checkbox,row"> <button  id="';echo $label->get_label_name();echo'" class="styled-link-button" data-checked="'; echo $label->is_check() ;echo' ">';
             if(!$label->is_check()){
             echo'

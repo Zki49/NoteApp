@@ -87,7 +87,7 @@ class ControllerNotes extends Controller{
       
       }
       if(empty($tab1)&&empty($tab2)){
-        $this->search();
+        $this->redirect("Notes","search"); 
       }else{
       $tab = array_merge($tab1, $tab2);
       $user =$this->get_user_or_redirect();
@@ -107,9 +107,18 @@ class ControllerNotes extends Controller{
       if(!$array_note && !$array_note_share ){
         (new View("error"))->show(["error"=>"this label not exist"]);
       }else{
-    
-      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"array_note_share"=>$array_note_share,"tab"=>Tools::url_safe_encode($tab)]);
+        //arrayTo strig == implode
+        $string_array_note=implode(",",$array_note);
+        $string_array_note_share=implode(",",$array_note_share);
+        $string_array_labels=implode(",",$label);
+
+       // $this->redirect("Notes","resarch",$string_array_labels,$string_array_note, $string_array_note_share);
+       // trover une solution pour le prg 
+       
+          (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"array_note_share"=>$array_note_share,"tab"=>Tools::url_safe_encode($tab)]);
       }
+
+     
 
       /*
       if(isset($_GET['param1'])){
@@ -128,6 +137,15 @@ class ControllerNotes extends Controller{
       }*/
     }
      }
+     private function research():void{
+      $labels= explode(",",$_GET['param1']);
+      $array_note= explode(",",$_GET['param2']);
+      $array_note_share= explode(",",$_GET['param3']);
+      $tab = array_merge($array_note, $array_note_share);
+      (new View("search"))->show(["labels"=>$labels, "array_notes"=>$array_note,"array_note_share"=>$array_note_share,"tab"=>Tools::url_safe_encode($tab)]);
+
+
+    }
     
     /*
     public function notes():void{
@@ -182,7 +200,7 @@ class ControllerNotes extends Controller{
 
     }
     public function seachshare_service():void{
-      
+
     }
 
     public function archived():void{
