@@ -79,6 +79,7 @@
        getNumberOfItems()
       $("#goBack").click(function(){
           event.preventDefault();
+          getItems();
           isModified();
       
       });
@@ -110,6 +111,7 @@
       $(AllItems).each(function(){
           $(this).click(function(){
               validateItems(this);
+              getAllValueInputsBeforeLeaving();
               uniqueItems();
           })
       })
@@ -132,8 +134,7 @@
       inputItem.bind("input",addItem);
 
       getNumberOfItems();
-      getAllValueInputsBeforeLeaving();
-      getItems();
+     
 
       //uniqueItems(valeursInputs);
       //validateItems();
@@ -555,17 +556,16 @@ function attachDeleteHandlers() {
   async function getItems(){
     console.log(idnote);
       valeursInputs = await $.getJSON("Notes/get_all_items_service/" + idnote);
-      console.log(valeursInputs);
      // displayItems();
   }
   function getAllValueInputsBeforeLeaving(numberOfItems){
     var AllItems = document.querySelectorAll('.itemclass');
+    val4input = [];
       for(var i = 0 ; i < AllItems.length ; i++) {
           var Input = AllItems[i];
           var InputValue = Input.value; 
           val4input.push(InputValue);
       } 
-      console.log(val4input);
 
   }
 
@@ -583,6 +583,34 @@ function attachDeleteHandlers() {
      if(inputTitle.val() !== titleAtFirst || descrAtFirst !== inputDescr.val()){
          hasBeenModified = true;
      }
+
+     console.log(valeursInputs);
+     console.log(val4input);
+
+     /*for (let i = 0; i < valeursInputs.length; i++) {
+        for (let j = 0; j < val4input.length; j++) {
+            if (valeursInputs[i].content.includes(val4input[j])) {
+                hasBeenModified = false;
+            }
+        }
+    }*/
+
+
+    for (let i = 0; i < valeursInputs.length; i++) {
+        if (valeursInputs[i].content) {  // S'assure que content est défini et non null
+            for (let j = 0; j < val4input.length; j++) {
+                if (valeursInputs[i].content.includes(val4input[j])) {
+                    return false; // Retourne faux dès la première correspondance
+                }
+            }
+        }
+    }
+
+    /*hasBeenModified = valeursInputs.every(item => {
+    return !val4input.some(str => valeursInputs.content.includes(str));
+    });*/
+  
+
 
      console.log(hasBeenModified);
      if(hasBeenModified){
