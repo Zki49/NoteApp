@@ -1075,9 +1075,12 @@ public function save():void{
     echo($res);
   }
   public function get_all_items_service() : void{
-    $note = Notecheck::get_note_by_id($_GET['param1']);
-    $noteJson = $note->get_all_items_service_as_json($note);
-    echo($noteJson);
+    if(isset($_GET['param1'])){
+      
+      $note = Notecheck::get_note_by_id($_GET['param1']);
+      $noteJson = $note->get_all_items_service_as_json($note);
+      echo($noteJson);
+  }
   }
 
 

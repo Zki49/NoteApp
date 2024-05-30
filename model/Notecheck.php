@@ -43,6 +43,7 @@ class Notecheck extends Note{
     }
 
     public static function get_all_items_service_as_json(Notecheck $note) : string{
+        sleep(5);
         $items = $note->get_items();
         $table = [];
         foreach($items as $item){
