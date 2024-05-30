@@ -18,17 +18,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    <script>
-    let tablabel;
+    let tablabel=[];
      $(document).ready(function(){
       $(".styled-link-button").click(function(){
-      /*  if(this.getAttribute('data-checked')== true){
-         $res="true";
-        }else{
-          $res="false"
-        }
-         
-            alert($res);*/
-            tablabel+=this.id;
+            tablabel.push(this.id);
             if(this.getAttribute('data-checked') == 'true'){
                this.innerHTML = `
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
@@ -58,19 +51,19 @@
       $.ajax({
             url: 'notes/search_service',
             method: 'POST',
-            dataType: 'json', // Indique que la réponse attendue est en JSON
-        contentType: 'application/json', // Indique que les données envoyées sont en JSON
-        data: JSON.stringify({
+        data: {
             labels: tablabel
-        }), 
+           
+        }, 
             success: function(response) {
+              console.log(tablabel);
                 $("#myNote").empty();
                 console.log(response);
                 $('#myNote').html(response);
                
             },
             error: function(xhr, status, error) {
-                
+              console.log(tablabel);
                 console.error('Erreur lors de la récupération des notes : ' + error);
             }
         });
