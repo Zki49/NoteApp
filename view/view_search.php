@@ -58,8 +58,23 @@
             success: function(response) {
               console.log(tablabel);
                 $("#myNote").empty();
-                console.log(response);
-                $('#myNote').html(response);
+                const jsonStringArray = JSON.parse(response);
+                const jsonObjectArray = jsonStringArray.map(jsonString => JSON.parse(jsonString));
+                console.log(jsonObjectArray)  
+                for (let i = 0; i < jsonObjectArray.length; i++) {
+                  if(jsonObjectArray[i].check==false){
+                    $("#myNote").append(displaynote(jsonObjectArray[i]))
+                  }else{
+                    $("#myNote").append(displaychecknote(jsonObjectArray[i]))
+                  }
+          }         
+               
+
+               
+                
+                
+          
+                //$('#myNote').html(response);
                
             },
             error: function(xhr, status, error) {
@@ -72,20 +87,54 @@
       $.ajax({
             url: 'notes/searchshare_service',
             method: 'POST',
-            dataType: 'json', // Indique que la réponse attendue est en JSON
-        contentType: 'application/json', // Indique que les données envoyées sont en JSON
-        data: JSON.stringify({
+        data:{
             labels: tablabel
-        }), 
+        }, 
             success: function(response) {
-                $(" #noteshare").empty();
-                $('#noteshare').html(response);
+                $("#noteshare").empty();
+                const jsonStringArray = JSON.parse(response);
+                const jsonObjectArray = jsonStringArray.map(jsonString => JSON.parse(jsonString));
+                console.log(jsonObjectArray)  
+                for (let i = 0; i < jsonObjectArray.length; i++) {
+                  if(jsonObjectArray[i].check==false){
+                    $("#noteshare").append(displaynote(jsonObjectArray[i]))
+                  }else{
+                    $("#noteshare").append(displaychecknote(jsonObjectArray[i]))
+                  }
+          }         
+               
             },
             error: function(xhr, status, error) {
                 
                 console.error('Erreur lors de la récupération des notes : ' + error);
             }
         });
+    }
+
+    function displaynote(note){
+
+      let html = ' <div  class="col-6 col-md-6 col-lg-3"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"'
+        html +='integrity="sha384-MQwA9UQGx909+8zz3bV5P1/zPr27R2aFWsUZt5Xz5a9Tq2XUn/6Zl3DSd0ZUEwC" crossorigin="anonymous">'
+        html +='<link href="css/style_view_note.css" rel="stylesheet">'
+        html+='     <div class="container">        <div class="card half-width"> <div class="card-body" id='+note.id+' >'
+        html += '<a href="notes/open/'+note.id+'">'
+        html += '  <h5 class="card-title">'+note.title+'</h5> <p class="card-text truncate-text">'
+       html += note.description
+       html+= ' </p></a>'
+       for (let i = 0; i < note.labels.length; i++) {
+        html += ' <span class="badge badge-secondary">'
+        html+=  note.labels[i].name
+        html += '</span>'
+       }
+       html+='     </div> </div> </div></div>'
+       return html
+       
+   
+        
+
+    }
+    function displaychecknote(note){
+       let html = ""
     }
 
    </script>

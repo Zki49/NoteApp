@@ -197,11 +197,13 @@ class ControllerNotes extends Controller{
 
     public function search_service():void{
       $user= $this->get_user_or_redirect();
-      // isset($_POST['labels']) ? json_decode($_POST['labels'], false) : [];
       $tab = $_POST['labels'];
       $array_note= Note::get_all_by_users_label($tab ,$user);
-      //var_dump($array_note);
-     echo json_encode($array_note);
+     $json = [];
+      foreach($array_note as $note){
+       $json[]= $note->to_json();
+      }
+     echo json_encode($json);
       
 
 
@@ -211,8 +213,12 @@ class ControllerNotes extends Controller{
      // $tab = isset($_POST['labels']) ? json_decode($_POST['labels'], true) : [];
      $tab = $_POST['labels'];
       $array_note_share = Sharenote::get_all_by_users_label($tab,$user);
-      echo json_encode($array_note_share);
-
+      $json = [];
+      foreach($array_note_share as $note){
+       $json[]= $note->to_json();
+      }
+     echo json_encode($json);
+      
     }
 
     public function archived():void{

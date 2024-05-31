@@ -120,6 +120,30 @@ class Notetext extends Note{
     DELETE from notes WHERE id = :id",["id"=>$this->get_id()]);
 
  }
+ public function to_json(): string {
+    $data = [
+        "title" => $this->get_title(),
+        "owner" => [
+            "id" => $this->owner()->get_id(),
+            "mail" => $this->owner()->get_mail(),
+            "fullname"=> $this->owner()->get_fullnam()
+        ],
+        "pinned" => $this->pinned(),
+        "archived" => $this->archived(),
+        "weight" => $this->get_weight(),
+        "id" => $this->get_id(),
+        "check"=>false,
+        "labels" =>  array_map(function($item) {
+            return [
+                "name" =>$item->get_label_name(),
+                "check"=>$item->is_check()
+            ];
+        }, $this->get_labels()),
+        "description" => $this->get_description()
+    ];
+    return json_encode($data);
+}
+
 
 }
 ?>

@@ -2,7 +2,7 @@
 require_once "model/Item.php";
 class Notecheck extends Note{
 
-    // a complete demain 
+    
     public function __construct( $title,$owner, $createat,$editedat, bool $pinned, bool $archived,int $weight,private array $content ,$id ,$labels) {
         parent::__construct($title,$owner,$createat,$editedat,$pinned,$archived,$weight,$id,$labels);
     }
@@ -228,6 +228,38 @@ class Notecheck extends Note{
         self::execute("update notes set title=:title where id=:id",["title"=>$title,"id"=>$this->get_id()]);
      }
 
+
+     public function to_json(): string {
+        $data = [
+            "title" => $this->get_title(),
+            "owner" => [
+                "id" => $this->owner()->get_id(),
+                "mail" => $this->owner()->get_mail(),
+                "fullname"=>$this->owner()->get_fullnam()
+            ],
+            "pinned" => $this->pinned(),
+            "archived" => $this->archived(),
+            "weight" => $this->get_weight(),
+            "id" => $this->get_id(),
+            "check"=>true,
+            "labels" =>  array_map(function($item) {
+                return [
+                    "name" =>$item->get_label_name(),
+                    "check"=>$item->is_check()
+                ];
+            }, $this->get_labels()),//$this->get_labels(),
+            "content" => array_map(function($item) {
+                return [
+                    "id" => $item->get_id(),
+                    "content" => $item->get_content(),
+                    "checked" => $item->item_checked()
+                ];
+            }, $this->content)
+        ];
+        return json_encode($data);
+    }
 }
+
+
 
 ?>
