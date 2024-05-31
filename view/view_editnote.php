@@ -389,7 +389,9 @@ function attachDeleteHandlers() {
   
   
   function addItem(){
-      const allItems = document.querySelectorAll('.items');
+      const allItems = document.querySelectorAll('.itemclass');
+      console.log(allItems);
+
       okAdd = false;
       errorAddItem.html("");
       if(!(/^.{1,60}$/).test(inputItem.val()) || inputItem.val() === ''){
@@ -397,7 +399,9 @@ function attachDeleteHandlers() {
           okAdd = true;
           inputItem.addClass('is-invalid');
       }else{
+        console.log(" add ");
           allItems.forEach(item =>{
+            
               if(inputItem.val() === item.value){
                   errorAddItem.append("<p>Item must be unique.</p>");
                   inputItem.addClass('is-invalid');
