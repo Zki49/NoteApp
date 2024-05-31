@@ -406,7 +406,11 @@ function attachDeleteHandlers() {
                   errorAddItem.append("<p>Item must be unique.</p>");
                   inputItem.addClass('is-invalid');
                   okAdd = true;
+              }else{
+                inputItem.removeClass('is-invalid');
+                inputItem.addClass('is-valid');
               }
+              
           });
          
       }
