@@ -206,9 +206,9 @@ class Notecheck extends Note{
          if(strlen($new)<1||strlen($new)>60){
            $result []= "The item must have between 1 and 60 characters";
          }
-         /*if($this->itemexist($new)){
+         if($this->itemexist($new)){
             $result [] = "item must be unique" ;
-         }*/
+         }
 
          return $result;
      }

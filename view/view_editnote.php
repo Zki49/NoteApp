@@ -710,8 +710,8 @@ function attachDeleteHandlers() {
          </div>
          
          ";
-
-            if (!empty($errors)) {
+              
+            if (is_array($errors)) {
                 echo "<h6>Your item has not been added because:</h6>";
                 echo "<ul>";
                 foreach ($errors as $error) {
