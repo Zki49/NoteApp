@@ -19,7 +19,7 @@
             <div class="card-body" id= <?= $notes->get_id() ?>>
                 
                 <!-- Formulaire caché -->
-                <a href=<?php if(!isset($share)){ 
+                <a  class ="modif"href=<?php if(!isset($share)){ 
                     if(isset($tab)){
                         echo'"notes/open/';
                         echo $notes->get_id();

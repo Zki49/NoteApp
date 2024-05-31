@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    <script>
-    let tablabel=[];
+    let tablabel=[],  currentUrl;
      $(document).ready(function(){
       $(".styled-link-button").click(function(){
         let self = this
@@ -53,9 +53,10 @@
             realodShare();
             reloadallnotes();
            }
-            
+          
+           redirect();
         });
-
+        redirect();
      })
 
     function reloadallnotes(){
@@ -95,6 +96,26 @@
             }
         });
 
+    }
+    function redirect(){
+      const jsonString = JSON.stringify(tablabel);
+      
+      
+      $('.modif').each(function() {
+        
+      var url = $(this).attr('href');
+      
+      console.log(jsonString);
+      url += "/" + jsonString;
+     $(this).attr('href', url);
+     
+     });
+
+      currentUrl = window.location.href;
+     var lastSlashIndex = currentUrl.lastIndexOf('/');
+     var urlBeforeLastSlash = currentUrl.substring(0, lastSlashIndex);
+     urlBeforeLastSlash+="/"+ jsonString;
+     window.history.pushState({ path: urlBeforeLastSlash }, '', urlBeforeLastSlash);
     }
     //realodallnote_share_service()
     function realodShare(){
@@ -212,7 +233,7 @@
         html +='integrity="sha384-MQwA9UQGx909+8zz3bV5P1/zPr27R2aFWsUZt5Xz5a9Tq2XUn/6Zl3DSd0ZUEwC" crossorigin="anonymous">'
         html +='<link href="css/style_view_note.css" rel="stylesheet">'
         html+='     <div class="container">        <div class="card half-width"> <div class="card-body" id='+note.id+' >'
-        html += '<a href="notes/open/'+note.id+'">'
+        html += '<a  class ="modif" href="notes/open/'+note.id+'">'
         html += '  <h5 class="card-title">'+note.title+'</h5> <p class="card-text truncate-text">'
        html += note.description ? note.description : "";
        html+= ' </p></a>'
@@ -233,7 +254,7 @@
            html+='integrity="sha384-MQwA9UQGx909+8zz3bV5P1/zPr27R2aFWsUZt5Xz5a9Tq2XUn/6Zl3DSd0ZUEwC" crossorigin="anonymous">'
            html +='<link href="css/style_view_noteCheck.css" rel="stylesheet"> <div class="container">'
           html+='<div class="card half-width"><div class="card-body" id='+  note.id +'>'
-          html+='<a href="notes/open/'+note.id+'>';
+          html+='<a class ="modif"  href="notes/open/'+note.id+'>';
           html+=' <h5 class="card-title">'+ note.title+'</h5><div class="hidden-checkboxes">'
           for (let i = 0; i < note.content.length; i++) {
             html +=  "<div class='form-check'> <input class='form-check-input' type='checkbox'  id='checkbox"+note.content[i].id+"'"
