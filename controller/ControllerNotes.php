@@ -928,7 +928,10 @@ public function save():void{
         $item->unchecked_checked();
         $item->persit();
         $idNote= $item->get_id_my_note();
-        $this->redirect("notes","open",$idNote);
+        $notes = Notecheck::get_note_by_id($idNote);
+        $mode = "edit";
+        (new View("editnote"))->show(["notes"=>$notes,"mode"=>$mode]);
+        //$this->redirect("notes","open",$idNote);
       }else{
         (new View('error'))->show(["error"=>"this item not exist"]);
       }
