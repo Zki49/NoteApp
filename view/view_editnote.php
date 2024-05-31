@@ -62,7 +62,7 @@
       
       idNote = $("#idnotes");
       idnote = idNote.val();
-     
+      console.log(idnote);
 
       errTitle = $("#errTitle");
       buttonGeneral = $("#buttonSave");
@@ -73,13 +73,13 @@
       tableItems = $("#listItems");
 
       errDescr= $("#errDescr");
-      console.log(errDescr);
 
        test = $("#modificationAlertModal");
 
-
+       getNumberOfItems()
       $("#goBack").click(function(){
           event.preventDefault();
+          getItems();
           isModified();
       
       });
@@ -90,7 +90,6 @@
 
 
       var testItem = document.querySelectorAll(".supItem");
-      console.log(testItem);
       $(".supItem").each(function(){
 
           $(this).click(function(){
@@ -109,10 +108,10 @@
           
       });
       var AllItems = document.querySelectorAll('.itemclass');
-      console.log(AllItems);
       $(AllItems).each(function(){
           $(this).click(function(){
               validateItems(this);
+              getAllValueInputsBeforeLeaving();
               uniqueItems();
           })
       })
@@ -135,7 +134,7 @@
       inputItem.bind("input",addItem);
 
       getNumberOfItems();
-      getAllValueInputs4Items(numberOfItems);
+     
 
       //uniqueItems(valeursInputs);
       //validateItems();
@@ -379,21 +378,8 @@ function attachDeleteHandlers() {
       });
   }
 
-  function getAllValueInputs4Items(numberOfItems){
-      for(var i = 0 ; i < numberOfItems ; i++) {
-          var valeurInput = document.getElementById(i);
-          val4input.push(valeurInput.value);
-      } 
-  }
-  function getNumberOfItems(){
-          var inputs = document.querySelectorAll('input[type="text"]');
-
-          for (var i = 0; i < inputs.length; i++) {
-              if (!isNaN(parseInt(inputs[i].id))) {
-                  numberOfItems++;
-              }
-          }
-  }
+  
+  
   function addItem(){
       const allItems = document.querySelectorAll('.items');
       okAdd = false;
@@ -421,27 +407,7 @@ function attachDeleteHandlers() {
           $(inputItem).addClass('is-valid');
       }
 
-      /*$(inputItem).on('input', function() {
-          var newItem = $(this).val();
-          //console.log(newItem);
-          errorAddItem.html("");
-          if (newItem.length < 1 || newItem.length > 60) {
-              $(this).addClass('is-invalid');
-              errorAddItem.append("Item lenght must be between 1 and 60");
-              $("#buttonSave").prop('disabled',true);
-          } if (newItem == "test "){
-              $(this).addClass('is-invalid');
-              errorAddItem.append("Item must be unique ");
-              $("#buttonSave").prop('disabled',true);
-              console.log("error");
-          }
-          else{
-              $(this).removeClass('is-invalid');
-              $(this).addClass('is-valid');
-              $("#buttonSave").prop('disabled',false);
-          }
-          
-      });   */
+      
 
   }
   function ItemAlreadyExist(arrayContent){
@@ -588,21 +554,64 @@ function attachDeleteHandlers() {
       
   }
   async function getItems(){
+    console.log(idnote);
       valeursInputs = await $.getJSON("Notes/get_all_items_service/" + idnote);
-
      // displayItems();
   }
-  function updateItem(){
-
+  function getAllValueInputsBeforeLeaving(numberOfItems){
+    var AllItems = document.querySelectorAll('.itemclass');
+    val4input = [];
+      for(var i = 0 ; i < AllItems.length ; i++) {
+          var Input = AllItems[i];
+          var InputValue = Input.value; 
+          val4input.push(InputValue);
+      } 
 
   }
 
+  function getNumberOfItems(){
+          var inputs = document.querySelectorAll('.itemclass');
+
+          for (var i = 0; i < inputs.length; i++) {
+              if (!isNaN(parseInt(inputs[i].id))) {
+                  numberOfItems++;
+              }
+          }
+  }
   function isModified(){
      var hasBeenModified = false;
      if(inputTitle.val() !== titleAtFirst || descrAtFirst !== inputDescr.val()){
-
          hasBeenModified = true;
      }
+
+     console.log(valeursInputs);
+     console.log(val4input);
+
+     /*for (let i = 0; i < valeursInputs.length; i++) {
+        for (let j = 0; j < val4input.length; j++) {
+            if (valeursInputs[i].content.includes(val4input[j])) {
+                hasBeenModified = false;
+            }
+        }
+    }*/
+
+
+    for (let i = 0; i < valeursInputs.length; i++) {
+        if (valeursInputs[i].content) {  // S'assure que content est défini et non null
+            for (let j = 0; j < val4input.length; j++) {
+                if (valeursInputs[i].content.includes(val4input[j])) {
+                    return false; // Retourne faux dès la première correspondance
+                }
+            }
+        }
+    }
+
+    /*hasBeenModified = valeursInputs.every(item => {
+    return !val4input.some(str => valeursInputs.content.includes(str));
+    });*/
+  
+
+
      console.log(hasBeenModified);
      if(hasBeenModified){
       test.modal("show");
@@ -642,7 +651,7 @@ function attachDeleteHandlers() {
                         
                         
                         <form action="notes/save" method="post">
-                        <input type="hidden" name="idnotes" value="<?= $notes->get_id()?>">
+                        <input type="hidden" id="idnotes" value="<?= $notes->get_id()?>">
                         <button type="submit" class="styled-link-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
                         <path d="M11 2H9v3h2z"/>
