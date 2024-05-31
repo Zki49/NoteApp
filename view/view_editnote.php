@@ -590,24 +590,31 @@ function attachDeleteHandlers() {
   }
   function isModified(){
      var hasBeenModified = false;
+     console.log(inputTitle.val());
+     console.log(titleAtFirst);
      if(inputTitle.val() !== titleAtFirst || descrAtFirst !== inputDescr.val()){
+        
+
          hasBeenModified = true;
-     }
+     }else{
 
-     var AllValueInputsBeforeLeaving = getAllValueInputs();
-     console.log(AllValueInputsBeforeLeaving);
-     console.log(AllValueInputsAtFirst);
+            var AllValueInputsBeforeLeaving = getAllValueInputs();
+            console.log(AllValueInputsBeforeLeaving);
+            console.log(AllValueInputsAtFirst);
 
-    for (let i = 0; i < AllValueInputsBeforeLeaving.length; i++) { 
-        for(let j = 0; j < AllValueInputsAtFirst.length; j++){
-            var content = AllValueInputsAtFirst[j];
-            if(!AllValueInputsBeforeLeaving[i].includes(content)){
-                hasBeenModified = true;
-            }else{
-                hasBeenModified = false;
+            for (let i = 0; i < AllValueInputsBeforeLeaving.length; i++) { 
+                for(let j = 0; j < AllValueInputsAtFirst.length; j++){
+                    var content = AllValueInputsAtFirst[j];
+                    if(!AllValueInputsBeforeLeaving[i].includes(content)){
+                        hasBeenModified = true;
+                }else{
+                    hasBeenModified = false;
+
+                }
             }
         }
-    }
+     }
+
 
 
     /*hasBeenModified = valeursInputs.every(item => {
@@ -637,7 +644,7 @@ function attachDeleteHandlers() {
   }
 
 
-  
+
 
 
 </script>
