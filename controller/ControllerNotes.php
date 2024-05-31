@@ -44,7 +44,7 @@ class ControllerNotes extends Controller{
       
       ( new view("viewNotes"))->show(["array_notes"=>$array_note,"tab_shared"=>$tab_shared,"mode"=>$mode]);
     }
-
+  
 
      public function search():void{
       $array_note= [];
@@ -207,6 +207,38 @@ class ControllerNotes extends Controller{
       
 
 
+    }
+    public function realodallnote_service():void{
+      $array_note=[];
+      $user = $this->get_user_or_redirect(); $user =$this->get_user_or_redirect();
+      $array_notes = Notetext::get_notes_by_user($user);
+       $array_notesCheck = Notecheck::get_notes_by_user($user);
+       $array_note_share= Sharenote::get_all_share_with_me($user);
+       if($array_notes && $array_notesCheck){
+            $array_note = array_merge($array_notes,$array_notesCheck);
+            usort($array_note, array($this, "comparenote"));
+        }elseif($array_notes){
+          $array_note = $array_notes;
+        }elseif($array_notesCheck){
+          $array_note = $array_notesCheck;
+        }
+     
+      $json = [];
+      foreach($array_note as $note){
+       $json[]= $note->to_json();
+      }
+     echo json_encode($json);
+     
+
+    }
+    public function realodallnote_share_service():void{
+      $user = $this->get_user_or_redirect();
+      $array_note_share= Sharenote::get_all_share_with_me($user);
+      $json = [];
+      foreach($array_note_share as $note){
+       $json[]= $note->to_json();
+      }
+     echo json_encode($json);
     }
     public function searchshare_service():void{
       $user= $this->get_user_or_redirect();

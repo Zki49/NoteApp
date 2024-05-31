@@ -121,6 +121,19 @@ class Notetext extends Note{
 
  }
  public function to_json(): string {
+
+
+    $labels = $this->get_labels();
+if (is_array($labels)) {
+    $labels_data = array_map(function($item) {
+        return [
+            "name" => $item->get_label_name(),
+            "check" => $item->is_check()
+        ];
+    }, $labels);
+} else {
+    $labels_data = [];
+}
     $data = [
         "title" => $this->get_title(),
         "owner" => [
@@ -133,12 +146,7 @@ class Notetext extends Note{
         "weight" => $this->get_weight(),
         "id" => $this->get_id(),
         "check"=>false,
-        "labels" =>  array_map(function($item) {
-            return [
-                "name" =>$item->get_label_name(),
-                "check"=>$item->is_check()
-            ];
-        }, $this->get_labels()),
+        "labels" => $labels_data,
         "description" => $this->get_description()
     ];
     return json_encode($data);

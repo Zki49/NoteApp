@@ -230,6 +230,29 @@ class Notecheck extends Note{
 
 
      public function to_json(): string {
+        $labels = $this->get_labels();
+        $content =$this->content;
+        if (is_array($labels)) {
+            $labels_data = array_map(function($item) {
+                return [
+                    "name" => $item->get_label_name(),
+                    "check" => $item->is_check()
+                ];
+            }, $labels);
+        } else {
+            $labels_data = [];
+        }
+        if($content){
+           $item_data= array_map(function($item) {
+                return [
+                    "id" => $item->get_id(),
+                    "content" => $item->get_content(),
+                    "checked" => $item->item_checked()
+                ];
+            }, $this->content);
+        }else{
+          $item_data=[];
+        }
         $data = [
             "title" => $this->get_title(),
             "owner" => [
@@ -242,19 +265,8 @@ class Notecheck extends Note{
             "weight" => $this->get_weight(),
             "id" => $this->get_id(),
             "check"=>true,
-            "labels" =>  array_map(function($item) {
-                return [
-                    "name" =>$item->get_label_name(),
-                    "check"=>$item->is_check()
-                ];
-            }, $this->get_labels()),//$this->get_labels(),
-            "content" => array_map(function($item) {
-                return [
-                    "id" => $item->get_id(),
-                    "content" => $item->get_content(),
-                    "checked" => $item->item_checked()
-                ];
-            }, $this->content)
+            "labels" =>  $labels_data,
+            "content" => $item_data
         ];
         return json_encode($data);
     }

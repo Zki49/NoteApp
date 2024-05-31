@@ -21,7 +21,18 @@
     let tablabel=[];
      $(document).ready(function(){
       $(".styled-link-button").click(function(){
-            tablabel.push(this.id);
+        let self = this
+        if (tablabel.includes(self.id)){
+           console.log('cc')
+          tablabel=  tablabel.filter(function(element) {
+              return element != self.id; 
+         });
+          
+        }else{
+        
+         tablabel.push(self.id);
+        }
+            
             if(this.getAttribute('data-checked') == 'true'){
                this.innerHTML = `
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
@@ -35,11 +46,95 @@
             </svg>`;
             this.setAttribute('data-checked', 'true');
             }
-
-            searchByLabel();
+            console.log(tablabel)
+           if(tablabel.length!=0){
+            searchByLabel()
+           }else{
+            realodShare();
+            reloadallnotes();
+           }
+            
         });
 
      })
+
+    function reloadallnotes(){
+
+      $.ajax({
+            url: 'notes/realodallnote_service',
+            method: 'POST',
+        data: {
+            labels: tablabel
+           
+        }, 
+            success: function(response) {
+             
+                $("#myNote").empty();
+                const jsonStringArray = JSON.parse(response);
+                const jsonObjectArray = jsonStringArray.map(jsonString => JSON.parse(jsonString));
+                console.log(jsonObjectArray)  
+                for (let i = 0; i < jsonObjectArray.length; i++) {
+                  if(jsonObjectArray[i].check==false){
+                    $("#myNote").append(displaynote(jsonObjectArray[i]))
+                  }else{
+                    $("#myNote").append(displaychecknote(jsonObjectArray[i]))
+                  }
+          }         
+               
+
+               
+                
+                
+          
+                //$('#myNote').html(response);
+               
+            },
+            error: function(xhr, status, error) {
+              console.log(tablabel);
+                console.error('Erreur lors de la récupération des notes : ' + error);
+            }
+        });
+
+    }
+    //realodallnote_share_service()
+    function realodShare(){
+      $.ajax({
+            url: 'notes/realodallnote_share_service',
+            method: 'POST',
+        data: {
+            labels: tablabel
+           
+        }, 
+            success: function(response) {
+              
+                $("#noteshare").empty();
+                console.log(response)
+                const jsonStringArray = JSON.parse(response);
+                const jsonObjectArray = jsonStringArray.map(jsonString => JSON.parse(jsonString));
+                for (let i = 0; i < jsonObjectArray.length; i++) {
+                  if(jsonObjectArray[i].check==false){
+                    $("#noteshare").append(displaynote(jsonObjectArray[i]))
+                  }else{
+                    $("#noteshare").append(displaychecknote(jsonObjectArray[i]))
+                  }
+          }         
+               
+
+               
+                
+                
+          
+                //$('#myNote').html(response);
+               
+            },
+            error: function(xhr, status, error) {
+              console.log(tablabel);
+                console.error('Erreur lors de la récupération des notes : ' + error);
+            }
+        });
+
+
+    }
 
     function searchByLabel(){
        search();
@@ -119,7 +214,7 @@
         html+='     <div class="container">        <div class="card half-width"> <div class="card-body" id='+note.id+' >'
         html += '<a href="notes/open/'+note.id+'">'
         html += '  <h5 class="card-title">'+note.title+'</h5> <p class="card-text truncate-text">'
-       html += note.description
+       html += note.description ? note.description : "";
        html+= ' </p></a>'
        for (let i = 0; i < note.labels.length; i++) {
         html += ' <span class="badge badge-secondary">'
@@ -134,7 +229,31 @@
 
     }
     function displaychecknote(note){
-       let html = ""
+       let html = '<div  class="col-6 col-md-6 col-lg-3"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"'
+           html+='integrity="sha384-MQwA9UQGx909+8zz3bV5P1/zPr27R2aFWsUZt5Xz5a9Tq2XUn/6Zl3DSd0ZUEwC" crossorigin="anonymous">'
+           html +='<link href="css/style_view_noteCheck.css" rel="stylesheet"> <div class="container">'
+          html+='<div class="card half-width"><div class="card-body" id='+  note.id +'>'
+          html+='<a href="notes/open/'+note.id+'>';
+          html+=' <h5 class="card-title">'+ note.title+'</h5><div class="hidden-checkboxes">'
+          for (let i = 0; i < note.content.length; i++) {
+            html +=  "<div class='form-check'> <input class='form-check-input' type='checkbox'  id='checkbox"+note.content[i].id+"'"
+            if(note.content[i].check==true){
+              html+='checked'
+             
+            }
+            html+= "disabled><label class='form-check-label' for='checkbox"+ note.content[i].id+"'>"
+            html+= note.content[i].content+"</label></div>"
+          }
+          
+          html+='</div></a>'
+        for (let i = 0; i < note.labels.length; i++) {
+               html += ' <span class="badge badge-secondary">'
+               html+=  note.labels[i].name
+               html += '</span>'
+       }
+       html+=    '</div></div></div>'
+       return html
+                    
     }
 
    </script>
