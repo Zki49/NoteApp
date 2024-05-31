@@ -375,7 +375,13 @@ class ControllerNotes extends Controller{
         if($user->acces($notes->get_id())){
           $is_editor = $user->editor($notes->get_id());
         if(isset($_GET['param2'])){
-        (new View("opennote"))->show(["notes"=>$notes ,"is_editor"=>$is_editor,"deleted"=>$_GET['param2']]);
+          $tab = Tools::url_safe_decode($_GET['param2']);
+          if(!is_array($tab)){
+            (new View("opennote"))->show(["notes"=>$notes ,"is_editor"=>$is_editor,"deleted"=>$_GET['param2']]);
+          }else{
+            (new View("opennote"))->show(["notes"=>$notes,"is_editor"=>$is_editor,"tab"=>$_GET['param2']]);
+          }
+        
         }
         else{
         (new View("opennote"))->show(["notes"=>$notes,"is_editor"=>$is_editor]);

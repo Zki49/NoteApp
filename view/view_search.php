@@ -295,11 +295,13 @@
                  </div>
                  <noscript></form></noscript>';
             }
-           // echo'    </form>';
          }
          echo' </div>';
         
          if($array_notes){
+          if(!isset($tab)){
+            $tab="";
+          }
           
           echo"<h5 >your Notes</h5>";
          
@@ -309,10 +311,10 @@
            if($notes->are_you_check()){
              
              echo ' <div  class="col-6 col-md-6 col-lg-3">';
-             (new View("notecheck"))->show(["notes"=>$notes]);
+             (new View("notecheck"))->show(["notes"=>$notes,"tab"=>$tab ,"retour"=>"research"]);
            }else{
              echo '<div  class="col-6 col-md-6 col-lg-3">';
-             (new View("note"))->show(["notes"=>$notes]);
+             (new View("note"))->show(["notes"=>$notes ,"tab"=>$tab,"retour"=>"research"]);
            }
            echo"</div>"; 
 
@@ -327,10 +329,10 @@
           if($notes->are_you_check()){
             
             echo ' <div  class="col-6 col-md-6 col-lg-3">';
-            (new View("notecheck"))->show(["notes"=>$notes]);
+            (new View("notecheck"))->show(["notes"=>$notes ,"tab"=>$tab,"retour"=>"research" ]);
           }else{
             echo '<div  class="col-6 col-md-6 col-lg-3">';
-            (new View("note"))->show(["notes"=>$notes]);
+            (new View("note"))->show(["notes"=>$notes ,"tab"=>$tab ,"retour"=>"research"]);
           }
           echo"</div>"; 
 

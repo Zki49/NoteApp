@@ -22,7 +22,7 @@
 
             <a href=<?php if(!isset($share)){ echo'"notes/open/';
                     echo $notes->get_id();
-                    echo'"'; 
+                    echo '/'.$tab.'"'; 
                 }else{
                      echo'"notes/openshare/';
                      echo $notes->get_id();

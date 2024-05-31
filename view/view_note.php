@@ -17,11 +17,23 @@
     <div class="container">
         <div class="card half-width">
             <div class="card-body" id= <?= $notes->get_id() ?>>
-            
+                
                 <!-- Formulaire caché -->
-                <a href=<?php if(!isset($share)){ echo'"notes/open/';
-                    echo $notes->get_id();
-                    echo'"'; 
+                <a href=<?php if(!isset($share)){ 
+                    if(isset($tab)){
+                        echo'"notes/open/';
+                        echo $notes->get_id();
+                        echo '/'.$tab.'"'; 
+                    }
+                    
+                    if(!isset($tab)&&!isset($retour)){
+                        echo'"notes/open/';
+                        echo $notes->get_id();
+                        echo '"'; 
+                    }
+
+                    
+                    //
                 }else{
                      echo'"notes/openshare/';
                      echo $notes->get_id();
