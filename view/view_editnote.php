@@ -25,6 +25,7 @@
   var arrayError = [];
   var val4input = [];
   var numberOfItems = 0;
+  var AllValueInputsAtFirst = [];
 
 
   
@@ -52,6 +53,7 @@
       inputDescr = $("#textArea");
       titleAtFirst = inputTitle.val();
       descrAtFirst = inputDescr.val();
+      
 
       var modificationAlertModal = $('#modificationAlertModal');
       
@@ -76,7 +78,7 @@
 
        test = $("#modificationAlertModal");
 
-       getNumberOfItems()
+       AllValueInputsAtFirst  = getAllValueInputs();
       $("#goBack").click(function(){
           event.preventDefault();
           getItems();
@@ -115,6 +117,12 @@
               uniqueItems();
           })
       })
+
+      AllItems.forEach(function(input){
+        input.addEventListener('input',function(){
+            getAllValueInputsBeforeLeaving();
+        })
+      }) 
 
     /*  const items = document.querySelector("#form-check-input");
       console.log(items);
@@ -558,16 +566,16 @@ function attachDeleteHandlers() {
       valeursInputs = await $.getJSON("Notes/get_all_items_service/" + idnote);
      // displayItems();
   }
-  function getAllValueInputsBeforeLeaving(numberOfItems){
+  function getAllValueInputs() {
     var AllItems = document.querySelectorAll('.itemclass');
-    val4input = [];
-      for(var i = 0 ; i < AllItems.length ; i++) {
-          var Input = AllItems[i];
-          var InputValue = Input.value; 
-          val4input.push(InputValue);
-      } 
-
-  }
+    var val4input = []; 
+    for (var i = 0; i < AllItems.length; i++) {
+        var Input = AllItems[i];
+        var InputValue = Input.value;
+        val4input.push(InputValue);
+    }
+    return val4input; // Renvoie le tableau
+}
 
   function getNumberOfItems(){
           var inputs = document.querySelectorAll('.itemclass');
@@ -584,27 +592,21 @@ function attachDeleteHandlers() {
          hasBeenModified = true;
      }
 
-     console.log(valeursInputs);
-     console.log(val4input);
+     var AllValueInputsBeforeLeaving = getAllValueInputs();
+     console.log(AllValueInputsBeforeLeaving);
+     console.log(AllValueInputsAtFirst);
 
-     /*for (let i = 0; i < valeursInputs.length; i++) {
-        for (let j = 0; j < val4input.length; j++) {
-            if (valeursInputs[i].content.includes(val4input[j])) {
+    for (let i = 0; i < AllValueInputsBeforeLeaving.length; i++) { 
+        for(let j = 0; j < AllValueInputsAtFirst.length; j++){
+            var content = AllValueInputsAtFirst[j];
+            if(!AllValueInputsBeforeLeaving[i].includes(content)){
+                hasBeenModified = true;
+            }else{
                 hasBeenModified = false;
             }
         }
-    }*/
-
-
-    for (let i = 0; i < valeursInputs.length; i++) {
-        if (valeursInputs[i].content) {  // S'assure que content est défini et non null
-            for (let j = 0; j < val4input.length; j++) {
-                if (valeursInputs[i].content.includes(val4input[j])) {
-                    return false; // Retourne faux dès la première correspondance
-                }
-            }
-        }
     }
+
 
     /*hasBeenModified = valeursInputs.every(item => {
     return !val4input.some(str => valeursInputs.content.includes(str));
