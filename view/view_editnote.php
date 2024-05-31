@@ -441,6 +441,7 @@ function attachDeleteHandlers() {
           },
           success: function(response){
               console.log('removable'+response);
+              AllValueInputsAtFirst  = getAllValueInputs();
               var moha = document.getElementById('removable'+response);
               console.log(moha);
               moha.remove();
@@ -465,6 +466,7 @@ function attachDeleteHandlers() {
               tableItems.prepend(newInputItem);
               testItem = document.querySelectorAll(".supItem");
               console.log(testItem);
+              AllValueInputsAtFirst  = getAllValueInputs();
 
               $(".supItem").each(function(){
                   $(this).click(function(){
